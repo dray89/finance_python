@@ -12,11 +12,16 @@ import matplotlib
 stocks = ['goog', 'aapl']
 
 for stock in stocks:
+    '''
+    get stocks from yahoo finance
+    '''
     y = get_stocks(stocks)
+    '''
+    Plot Volatility and Change in Returns
+    '''
     y['log_ret'] = np.log(y['Close']/y['Close'].shift(1))
     y['volatility'] = np.std(y['log_ret'])*np.sqrt(y.shape[0])
     y['volatility'].plot(subplots=True, color='Blue', figsize=(8,6))
 
-'''
-Plot Volatility and Change in Returns
-'''
+
+
