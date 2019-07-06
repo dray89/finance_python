@@ -4,8 +4,19 @@ Created on Thu Jul  4 19:44:25 2019
 
 @author: rayde
 """
+from stock_scraper import get_stocks
+from statistics import stdev
+import pandas as pd
+import matplotlib
 
-runfile('stock_scraper.py')
+stocks = ['goog', 'aapl']
 
-y['log_ret'] = np.log(y['Close']/y['Close'].shift(1))
-y['volatility'] = pd.rolling_std(y['Log_Ret'], window=252)*np.sqrt(252)
+for stock in stocks:
+    y = get_stocks(stocks)
+    y['log_ret'] = np.log(y['Close']/y['Close'].shift(1))
+    y['volatility'] = np.std(y['log_ret'])*np.sqrt(y.shape[0])
+    y['volatility'].plot(subplots=True, color='Blue', figsize=(8,6))
+
+'''
+Plot Volatility and Change in Returns
+'''

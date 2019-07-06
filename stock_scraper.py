@@ -4,12 +4,13 @@ Created on Thu Jul  4 19:34:10 2019
 
 @author: rayde
 """
+import numpy as np
 import pandas as pd
-from pandas import rolling_std
+import pandas_datareader as pdr
+from pandas_datareader import data as web
 
-stocks = ['goog', 'aapl']
-
-for stock in stocks:
-    y = get_stocks(stocks)
-    print(y)
+def get_stocks(stocks):
+    for val in stocks:
+        stock = web.DataReader(val, data_source = 'yahoo', start = '7/1/2018', end='7/4/2019')
+        return stock
     
