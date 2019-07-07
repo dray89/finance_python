@@ -57,5 +57,6 @@ Delta: Probability an option will expire in the money
 Gamma: How much delta will change when the stock price changes
         The rate of change of delta, Gamma decreases as Delta approaches 1 because Delta's rate of change slows approaching 1
 Theta: Time loss
+    
 Vega: Option price sensitivity to underlying stock
 Rho: Sensitivity to changes in bond prices 

@@ -16,6 +16,16 @@ for stock in stocks:
     get stocks from yahoo finance
     '''
     y = get_stocks(stocks)
+    
+    '''
+    Send to Stata
+    '''
+    
+    y.to_stata("filename.dta", convert_dates=None, write_index=True,
+               encoding='latin-1', byteorder=None, time_stamp=None,
+               data_label=None, variable_labels=None,
+               version=16, convert_strl=None)
+    
     '''
     Plot Volatility and Change in Returns
     '''
