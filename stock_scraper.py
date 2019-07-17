@@ -8,7 +8,7 @@ from pandas_datareader import DataReader
 from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
 from pandas_datareader.yahoo.quotes import YahooQuotesReader
 
-class stocks:
+class __stocks__:
     def __init__(self, symbol, source, start, end, sort=True):
         '''parameters'''
         self.symbol = symbol
@@ -22,7 +22,6 @@ class stocks:
         self.div = YahooDivReader(symbol, start, end)
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(symbol,start,end)
-        self.basic = self.stats()
     
     def stock(self):
         ''' Returns Adj Close '''
@@ -33,11 +32,8 @@ class stocks:
         data = self.yar.read()
         return data[data['action'] == 'DIVIDEND']
     
-    def stats(self):
-        return __stats__(self, self.symbol, self.source, self.start, self.end).__all__()
-    
-class __stats__(stocks):
-    def __init__(cls, self, symbol, source, start, end, sort=True):  
+class __stats__(__stocks__):
+    def __init__(self, symbol, source, start, end, sort=True):  
         super().__init__(symbol, source, start, end, sort=True)
         self.data = self.quote.read()
         self.currency = self.currency()
@@ -119,6 +115,13 @@ class __stats__(stocks):
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):  
         super(__stats__).__init__(symbol, source, start, end, sort=True)
+        self.beta = self.beta()
+        self.Div_Beta = self.Div_Beta()
+        self.Total_Return = self.Total_Return()
+        self.R_Beta = self.R_Beta()
+        self.Price_Cap = self.Price_Cap()
+        self.Outstanding_Cap = self.Outstanding_Cap()
+        self.one_pe = self.one_pe()
         
     def Beta(self):	
         pass
