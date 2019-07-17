@@ -37,19 +37,21 @@ class __stats__(__stocks__):
         super().__init__(symbol, source, start, end, sort=True)
         self.data = self.quote.read()
         self.currency = self.currency()
+        self.perc_change = self.perc_change()
         self.fiftyDayAverage = self.fiftyDayAverage()
         self.trailingPE = self.trailingPE()
         self.forwardPE = self.forwardPE()
         self.marketcap = self.marketCap()
         self.priceToBook = self.priceToBook()
-        self.quoteSourceName = self.quoteSourceName()
+        #self.quoteSourceName = self.quoteSourceName()
         self.price = self.regularMarketPrice()
         self.sourceInterval = self.sourceInterval()
         self.dividend = self.dividend()
         self.quoteType = self.quoteType()
         self.avgchg200day = self.avgchg200day()
         self.avgpctchg200day = self.avgpctchg200day()
-        self.__stats__ = self.__stats__()
+        self.div_r = self.Dividend_Yield()
+        self.outstand = self.outstand()
         self.__all__ = self.__all__()
         
     def __all__(self):
@@ -58,8 +60,8 @@ class __stats__(__stocks__):
     def quoteType(self):
         return self.data.iloc[0]['quoteType']
     
-    def quoteSourceName(self):
-        return self.data.iloc[0]['quoteSourceName']
+    #def quoteSourceName(self):
+        #return self.data.iloc[0]['quoteSourceName']
     
     def currency(self):
         return self.data.iloc[0]['currency']
@@ -114,23 +116,23 @@ class __stats__(__stocks__):
 
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):  
-        super(__stats__).__init__(symbol, source, start, end, sort=True)
-        self.beta = self.beta()
+        super().__init__(symbol, source, start, end, sort=True)
+        self.beta = self.Beta()
         self.Div_Beta = self.Div_Beta()
-        self.Total_Return = self.Total_Return()
+        self.t_r = self.Total_Return()
         self.R_Beta = self.R_Beta()
         self.Price_Cap = self.Price_Cap()
         self.Outstanding_Cap = self.Outstanding_Cap()
         self.one_pe = self.one_pe()
         
     def Beta(self):	
-        pass
+        return 1
     
     def Div_Beta(self):
         return self.div_r/self.beta
     
     def Total_Return(self):	
-        return self.div_r + self.yoy
+        return self.div_r + self.perc_change
     
     def R_Beta(self):
         return self.t_r/self.beta
@@ -142,4 +144,4 @@ class calculations(__stats__):
         return self.outstand/self.marketcap
     
     def one_pe(self):
-        return 1/self.pe    
+        return 1/self.trailingPE 
