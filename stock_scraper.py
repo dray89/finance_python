@@ -10,11 +10,20 @@ import datetime
 import pandas_datareader as pdr
 from pandas_datareader import data as web
 
-def get_stocks(stocks):
-    for val in stocks:
-        stock = web.DataReader(val, 
-                               data_source = 'yahoo', 
-                               start = '7/1/2018', 
-                               end='7/4/2019')
-        return stock
+class stocks:
+    def __init__(self, symbol, source, start, end):
+        self.symbol = symbol
+        self.source = source
+        self.start = start
+        self.end = end
+        
+    def stock(self, symbol, source, start, end):
+        df = web.DataReader(symbol, source, start, end)
+        return df
     
+    def dividend(self):
+        x = YahooDivReader(self.symbol):
+            
+    def read(self):
+        data = super(YahooDivReader, self).read()
+        return data[data['action'] == 'DIVIDEND']
