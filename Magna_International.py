@@ -19,3 +19,4 @@ end = datetime(2019, 7, 19)
 magna = stocks(symbol, source, start, end)
 
 
+magna.dividend
