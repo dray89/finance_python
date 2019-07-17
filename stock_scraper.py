@@ -4,11 +4,6 @@ Created on Thu Jul  4 19:34:10 2019
 
 @author: rayde
 """
-import numpy as np
-import pandas
-import datetime
-import pandas_datareader as pdr
-from pandas_datareader import data as web
 
 class stocks:
     def __init__(self, symbol, source, start, end):
@@ -16,14 +11,17 @@ class stocks:
         self.source = source
         self.start = start
         self.end = end
+        self.stock = self.stock()
+        self.dividend = self.dividend()
         
-    def stock(self, symbol, source, start, end):
-        df = web.DataReader(symbol, source, start, end)
+    def stock(self):
+        df = web.DataReader(self.symbol, self.source, self.start, self.end)
         return df
     
     def dividend(self):
-        x = YahooDivReader(self.symbol):
-            
-    def read(self):
-        data = super(YahooDivReader, self).read()
+        x = YahooDivReader(self.symbol)
+        data = x.read()
         return data[data['action'] == 'DIVIDEND']
+    
+    def read(self):
+        pass
