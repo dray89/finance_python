@@ -22,9 +22,7 @@ class stocks:
         self.div = YahooDivReader(symbol, start, end)
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(symbol,start,end)
-        self.basic = self.__run_basic__()
-       # self.avgchg200day = self.avgchg200day()
-       #self.avgpctchg200day = self.avgpctchg200day()
+        self.basic = self.stats()
     
     def stock(self):
         ''' Returns Adj Close '''
@@ -35,149 +33,16 @@ class stocks:
         data = self.yar.read()
         return data[data['action'] == 'DIVIDEND']
     
-    def quoteType(self):
-        data = self.quote.read()
-        return data.iloc[0]['quoteType']
+    def stats(self):
+        return __stats__(self, self.symbol, self.source, self.start, self.end).__all__()
     
-    def quoteSourceName(self):
-        data = self.quote.read()
-        return data.iloc[0]['quoteSourceName']
-    
-    def currency(self):
-        data = self.quote.read()
-        return data.iloc[0]['currency']
-    
-   # def avgchg200day(self):
-    #    x = YahooDivReader(self.symbol)
-     #   data = x.read()
-      #  return data.iloc[0]['avgchg200day']
-    
-    #def avgpctchg200day(self):
-     #   x = YahooDivReader(self.symbol)
-      #  data = x.read()
-       # return data.iloc[0]['avgchg200day']
-    
-    def marketCap(self):
-        data = self.quote.read()
-        return data.iloc[0]['marketCap']
-    
-    def forwardPE(self):
-        data = self.quote.read()
-        return data.iloc[0]['forwardPE']
-    
-    def priceToBook(self):
-        data = self.quote.read()
-        return data.iloc[0]['priceToBook']
-    
-    def sourceInterval(self):
-        data = self.quote.read()
-        return data.iloc[0]['sourceInterval']
-    
-    def regularMarketPrice(self):
-        data = self.quote.read()
-        return data.iloc[0]['regularMarketPrice']
-    
-    def fiftyDayAverage(self):
-        data = self.quote.read()
-        return data.iloc[0]['fiftyDayAverage']
-    
-    def __stats__(self):
-        data = self.quote.read()
-        return data.iloc[0]
-        
-    def price(self):	
-        data = self.quote.read()
-        return data.iloc[0]['price']
-
-    def Industry(self):	
-        pass
-    
-    def Dividend_Yield(self):	
-       return self.dividend/self.Price
-        
-    def Beta(self):	
-        pass
-    
-    def Div_Beta(self):
-        return self.div_r/self.beta
-    
-    def perc_Chg(self):	
-        pass
-    
-    def Total_Return(self):	
-        return self.div_r + self.yoy
-    
-    def R_Beta(self):
-        return self.t_r/self.beta
-    
-    def perc_change(self)	
-        pass 
-    
-    def High(self):
-        pass
-    
-    def Price_Target(self):	
-        pass
-    
-    def Capital_Gains(self):	
-        pass
-    
-    def MktCap_Avg(self):	
-        pass
-    
-    def Price_Cap(self):	
-        return self.price/self.marketcap
-    
-    def Outstanding_Cap(self):
-        return self.outstand/self.marketcap
-    
-    def one_pe(self):
-        
-    def volume(self):
-    
-    def outstand(self):	
-        data = self.quote.read()
-        return data.iloc[0]['sharesOutstanding']
-    
-    def Description(self):	
-        pass
-    
-    def FCF(self):
-        pass
-    
-    def Debt(self):
-        pass
-    
-    def Net_debt(self):
-        pass
-    
-    def Debt_Cap(self):
-        pass
-    
-    def EBITDA(self):	
-        pass
-    
-    def EV(self):
-        pass
-    
-    def EBITDA_EV(self):	
-        pass
-    
-    def P_B(self):
-        pass
-    
-    def P_CASH(self):
-        pass
-    
-    def buyback_Yield(self):
-        pass
-    
-    def P_S(self):
-        pass
-
-    def __run_basic__(self):
+class __stats__(stocks):
+    def __init__(cls, self, symbol, source, start, end, sort=True):  
+        super().__init__(symbol, source, start, end, sort=True)
+        self.data = self.quote.read()
         self.currency = self.currency()
         self.fiftyDayAverage = self.fiftyDayAverage()
+        self.trailingPE = self.trailingPE()
         self.forwardPE = self.forwardPE()
         self.marketcap = self.marketCap()
         self.priceToBook = self.priceToBook()
@@ -186,4 +51,92 @@ class stocks:
         self.sourceInterval = self.sourceInterval()
         self.dividend = self.dividend()
         self.quoteType = self.quoteType()
-        self.__stats__ = self.__stats__()        
+        self.avgchg200day = self.avgchg200day()
+        self.avgpctchg200day = self.avgpctchg200day()
+        self.__stats__ = self.__stats__()
+        self.__all__ = self.__all__()
+        
+    def __all__(self):
+        return self.data.iloc[0]    
+    
+    def quoteType(self):
+        return self.data.iloc[0]['quoteType']
+    
+    def quoteSourceName(self):
+        return self.data.iloc[0]['quoteSourceName']
+    
+    def currency(self):
+        return self.data.iloc[0]['currency']
+    
+    def avgchg200day(self):
+        return self.data.iloc[0]['twoHundredDayAverageChange']
+    
+    def avgpctchg200day(self):
+        return self.data.iloc[0]['twoHundredDayAverageChangePercent']
+    
+    def marketCap(self):
+        return self.data.iloc[0]['marketCap']
+    
+    def forwardPE(self):
+        return self.data.iloc[0]['forwardPE']
+    
+    def trailingPE(self):
+        return self.data.iloc[0]['trailingPE']
+    
+    def priceToBook(self):
+        return self.data.iloc[0]['priceToBook']
+    
+    def sourceInterval(self):
+        return self.data.iloc[0]['sourceInterval']
+    
+    def regularMarketPrice(self):
+        return self.data.iloc[0]['regularMarketPrice']
+    
+    def fiftyDayAverage(self):
+        return self.data.iloc[0]['fiftyDayAverage']
+        
+    def price(self):	
+        return self.data.iloc[0]['price']
+    
+    def Dividend_Yield(self):	
+        return self.data.iloc[0]['trailingAnnualDividendYield']
+    
+    def perc_change(self):	
+        return self.data.iloc[0]['fiftyTwoWeekHighChangePercent']
+    
+    def High(self):
+        return self.data.iloc[0]['fiftyTwoWeekHigh']
+    
+    def volume(self):
+        return self.data.iloc[0]['regularMarketVolume']
+    
+    def outstand(self):	
+        return self.data.iloc[0]['sharesOutstanding']
+    
+    def P_B(self):
+        return self.data.iloc[0]['priceToBook']
+
+class calculations(__stats__):
+    def __init__(self, symbol, source, start, end, sort=True):  
+        super(__stats__).__init__(symbol, source, start, end, sort=True)
+        
+    def Beta(self):	
+        pass
+    
+    def Div_Beta(self):
+        return self.div_r/self.beta
+    
+    def Total_Return(self):	
+        return self.div_r + self.yoy
+    
+    def R_Beta(self):
+        return self.t_r/self.beta
+    
+    def Price_Cap(self):	
+        return self.price/self.marketcap
+    
+    def Outstanding_Cap(self):
+        return self.outstand/self.marketcap
+    
+    def one_pe(self):
+        return 1/self.pe    
