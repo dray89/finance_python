@@ -5,9 +5,10 @@ Created on Thu Jul  4 19:34:10 2019
 @author: rayde
 """
 import numpy as np
-import pandas as pd
+import pandas
+import datetime
 import pandas_datareader as pdr
-from pdr import data as web
+from pandas_datareader import data as web
 
 def get_stocks(stocks):
     for val in stocks:
