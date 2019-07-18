@@ -16,19 +16,20 @@ class __stocks__:
         self.start = start
         self.end = end
         '''Grab Basic Current Info '''
-        self.stock = self.stock()
+        self.stock = self.__stock__()
         '''Generate Dividend and Split info'''
         self.yar = YahooActionReader(symbol, start, end)
         self.div = YahooDivReader(symbol, start, end)
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(symbol,start,end)
+        self.dividend = self.__dividend__()
     
-    def stock(self):
+    def __stock__(self):
         ''' Returns Adj Close '''
         df = DataReader(self.symbol, self.source, self.start, self.end)
         return df
     
-    def dividend(self):
+    def __dividend__(self):
         data = self.yar.read()
         return data[data['action'] == 'DIVIDEND']
     
@@ -46,7 +47,6 @@ class __stats__(__stocks__):
         #self.quoteSourceName = self.quoteSourceName()
         self.price = self.regularMarketPrice()
         self.sourceInterval = self.sourceInterval()
-        self.dividend = self.dividend()
         self.quoteType = self.quoteType()
         self.avgchg200day = self.avgchg200day()
         self.avgpctchg200day = self.avgpctchg200day()
