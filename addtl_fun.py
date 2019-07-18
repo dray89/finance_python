@@ -8,8 +8,8 @@ from stock_scraper import calculations
 from yahoofinancials import YahooFinancials
 
 class balance_sheet(calculations):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, symbol, source, start, end):
+        super().__init__(symbol, source, start, end)
         self.yahoo = YahooFinancials(self.symbol)
         self.bsd = self.get_bs()
         self.earn = self.get_earn()

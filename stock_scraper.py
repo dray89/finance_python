@@ -8,6 +8,7 @@ from pandas_datareader import DataReader
 from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
 from pandas_datareader.yahoo.quotes import YahooQuotesReader
 from pandas import DataFrame
+import numpy as np
 
 class __stocks__:
     def __init__(self, symbol, source, start, end, sort=True):
@@ -23,16 +24,28 @@ class __stocks__:
         self.div = YahooDivReader(symbol, start, end)
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(symbol,start,end)
-        self.dividend = self.__dividend__()
+        self.div_history = self.__div_history__()
+        self.dividend = self.dividend()
         
     def __stock__(self):
         ''' Returns Adj Close '''
         df = DataReader(self.symbol, self.source, self.start, self.end)
         return df
 
-    def __dividend__(self):
-        data = self.yar.read()
-        return data[data['action'] == 'DIVIDEND']
+    def __div_history__(self):
+        try:
+            data = self.yar.read()
+            data = data[data['action'] == 'DIVIDEND']
+        except:
+            data = np.nan
+        return data
+    
+    def dividend(self):
+        try:
+            x = self.dividend.iloc[0][1]
+        except:
+            x = np.nan
+        return x
     
     def Industry(self):	
         pass
@@ -84,10 +97,18 @@ class __stats__(__stocks__):
         return self.data.iloc[0]['marketCap']
 
     def forwardPE(self):
-        return self.data.iloc[0]['forwardPE']
+        try:
+            x = self.data.iloc[0]['forwardPE']
+        except:
+            x = np.nan
+        return x
 
     def trailingPE(self):
-        return self.data.iloc[0]['trailingPE']
+        try:
+            x = self.data.iloc[0]['trailingPE']
+        except:
+            x = np.nan
+        return x
 
     def priceToBook(self):
         return self.data.iloc[0]['priceToBook']
@@ -105,7 +126,11 @@ class __stats__(__stocks__):
         return self.data.iloc[0]['price']
 
     def Dividend_Yield(self):
-        return self.data.iloc[0]['trailingAnnualDividendYield']
+        try:
+            x = self.data.iloc[0]['trailingAnnualDividendYield']
+        except:
+            x = np.nan
+        return x
 
     def perc_change(self):
         return self.data.iloc[0]['fiftyTwoWeekHighChangePercent']
@@ -180,6 +205,6 @@ class calculations(__stats__):
                           'avgpctchg200day':[self.avgpctchg200day],
                           'dividend yield':[self.div_r],
                           'shares outstanding': [self.outstand],
-                          'dividend': [self.dividend.iloc[0][1]]}
+                          'dividend': [self.dividend]}
         
         return DataFrame.from_dict(data, orient= 'index', columns = [self.symbol])

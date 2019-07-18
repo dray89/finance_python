@@ -2,23 +2,23 @@
 name,Magna International Inc.
 beta,1
 Div_Beta,0.022268504
-total_return,-0.202805876
-R_Beta,-0.202805876
-Price_Cap,3.1021409197650432e-09
-Outstanding_Cap,0.9999999922478745
-one_pe,0.12952471940412413
+total_return,-0.208386246
+R_Beta,-0.208386246
+Price_Cap,3.1021410407037002e-09
+Outstanding_Cap,1.00000003123342
+one_pe,0.13046421647040282
 currency,CAD
-perc_change,-0.22507438
+perc_change,-0.23065475
 fiftyDayAverage,62.01361
-trailingPE,7.720534
-forwardPE,8.691238
-marketcap,20144152576
-priceToBook,1.7530719
-price,62.49
+trailingPE,7.664937
+forwardPE,8.628651
+marketcap,19999090688
+priceToBook,1.7404478
+price,62.04
 sourceInterval,15
 quoteType,EQUITY
-avgchg200day,-3.6509361
-avgpctchg200day,-0.05519934
+avgchg200day,-4.100937
+avgpctchg200day,-0.062003005
 dividend yield,0.022268504
 shares outstanding,322358016
 dividend,0.49

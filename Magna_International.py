@@ -38,3 +38,16 @@ def div_chg(self):
     return div_chg*100
 
 div_chg(div)
+
+bsd['balanceSheetHistoryQuarterly']['MG.TO'][0]['2019-03-31']['retainedEarnings']
+n = bsd['balanceSheetHistoryQuarterly']['MG.TO'][0]['2019-03-31']['longTermDebt'] 
+b = bsd['balanceSheetHistoryQuarterly']['MG.TO'][1]['2018-12-31']['longTermDebt']
+chg_debt = n-b
+
+n = bsd['balanceSheetHistoryQuarterly']['MG.TO'][0]['2019-03-31']['netReceivables'] 
+b = bsd['balanceSheetHistoryQuarterly']['MG.TO'][1]['2018-12-31']['netReceivables']
+rec = n - b
+
+n = bsd['balanceSheetHistoryQuarterly']['MG.TO'][0]['2019-03-31']['totalStockholderEquity'] 
+b = bsd['balanceSheetHistoryQuarterly']['MG.TO'][1]['2018-12-31']['totalStockholderEquity']
+eq = n-b
