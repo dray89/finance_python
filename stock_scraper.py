@@ -33,7 +33,13 @@ class __stocks__:
     def __dividend__(self):
         data = self.yar.read()
         return data[data['action'] == 'DIVIDEND']
-
+    
+    def Industry(self):	
+        pass
+    
+    def set_desc(self, description):
+        self.description = description    
+        
 class __stats__(__stocks__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)

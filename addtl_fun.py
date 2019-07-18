@@ -11,6 +11,10 @@ class balance_sheet(calculations):
     def __init__(self):
         super().__init__()
         self.yahoo = YahooFinancials(self.symbol)
+        self.bsd = self.get_bs()
+        self.earn = self.get_earn()
+        self.retained_earnings = self.retained_earnings()
+        self.debt = self.Debt()
         
     def get_bs(self):
         self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
@@ -26,13 +30,7 @@ class balance_sheet(calculations):
     def Debt(self):
         return 'longTermDebt'
 
-class addtl(calculations):
-    def Industry(self):	
-        pass
-
-    def Description(self):	
-        pass    
-    
+class addtl(calculations):    
     def buyback_Yield(self):
         pass
     
