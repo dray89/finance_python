@@ -10,6 +10,7 @@ Magna International Analysis
 
 from stock_scraper import calculations
 from datetime import datetime
+from pandas import DataFrame
 
 #pip install pandas-datareader
 symbol = "MG.TO"
@@ -22,3 +23,6 @@ magna = calculations(symbol, source, start, end)
 magna.dividend
 ''' verify special dividend or delete '''
 magna.dividend.drop(x.index[2])
+df = magna.df()
+
+df.to_csv('magna.csv')
