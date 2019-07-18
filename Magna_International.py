@@ -18,5 +18,7 @@ start = datetime(2018, 7, 19)
 end = datetime(2019, 7, 19)
 magna = calculations(symbol, source, start, end)
 
-
+''' clean data '''
 magna.dividend
+''' verify special dividend or delete '''
+magna.dividend.drop(x.index[2])
