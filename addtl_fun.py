@@ -6,6 +6,7 @@ Created on Wed Jul 17 15:41:04 2019
 """
 from stock_scraper import calculations
 from yahoofinancials import YahooFinancials
+from pandas import DataFrame
 
 class balance_sheet(calculations):
     def __init__(self, symbol, source, start, end):
@@ -64,12 +65,16 @@ class earnings(balance_sheet):
         self.earn = self.__get_earn__()
     
     def __get_earn__(self):
-        earnings_data = self.yahoo.get_stock_earnings_data()
-        return earnings_data
+        data = self.yahoo.get_stock_earnings_data()
+        return data
     
-class addtl(calculations):
-    def __init__(self, symbol):
-        super().__init__(symbol)
+    def __earndata__(self):
+        df = DataFrame(self.earn[self.symbol]['earningsData']['quarterly'][-1])
+        return df
+    
+class addtl(earnings):
+    def __init__(self, symbol, source, start, end):
+        super().__init__(symbol, source, start, end)
         self.beta = self.Beta()
         self.Div_Beta = self.Div_Beta()
         self.R_Beta = self.R_Beta()

@@ -168,6 +168,8 @@ class calculations(__stats__):
 
     def __df__(self):
         data = {'name':[self.name], 
+                'sourceInterval':[self.sourceInterval],
+                          'quoteType': [self.quoteType],
                           'total_return':[self.t_r],
                           'Price_Cap': [self.Price_Cap],
                           'Outstanding_Cap':[self.Outstanding_Cap],
@@ -180,8 +182,6 @@ class calculations(__stats__):
                           'marketcap':[self.marketcap],
                           'priceToBook':[self.priceToBook],
                           'price':[self.price],
-                          'sourceInterval':[self.sourceInterval],
-                          'quoteType': [self.quoteType],
                           'avgchg200day':[self.avgchg200day],
                           'avgpctchg200day':[self.avgpctchg200day],
                           'dividend yield':[self.div_r],
