@@ -11,26 +11,46 @@ class balance_sheet(calculations):
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)
         self.yahoo = YahooFinancials(self.symbol)
-        self.bsd = self.get_bs()
-        self.earn = self.get_earn()
-        self.retained_earnings = self.retained_earnings()
-        self.debt = self.Debt()
+        self.bsd = self.__get_bs__()
+        self.retained_earnings = self.__retained_earnings__()
+        self.debt = self.__Debt__()
+        self.cash = self.__cash__()
         
-    def get_bs(self):
+    def __get_bs__(self):
         self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
         return self.bsd
     
-    def get_earn(self):
+    def __retained_earnings__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['retainedEarnings']
+        
+    def __Debt__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['longTermDebt'] 
+    
+    def __cash__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['cash'] 
+
+class earnings(balance_sheet):
+    def __init__(self, symbol, source, start, end):
+        super().__init__(symbol, source, start, end)
+        self.earn = self.__get_earn__()
+    
+    def __get_earn__(self):
         earnings_data = self.yahoo.get_stock_earnings_data()
         return earnings_data
     
-    def retained_earnings(self):
-        pass
-    
-    def Debt(self):
-        return 'longTermDebt'
+class addtl(calculations):
+    def __init__(self, symbol):
+        super().__init__(symbol)
+        self.beta = self.Beta()
+        self.Div_Beta = self.Div_Beta()
+        self.R_Beta = self.R_Beta()
+     #   'beta':[self.beta],
+      #  'Div_Beta': [self.Div_Beta],
+       # 'R_Beta':[self.R_Beta],
 
-class addtl(calculations):    
     def buyback_Yield(self):
         pass
     
@@ -67,3 +87,11 @@ class addtl(calculations):
     def MktCap_Avg(self):	
         pass
     
+    def Beta(self):
+        return 1
+
+    def Div_Beta(self):
+        return self.div_r/self.beta
+    
+    def R_Beta(self):
+        return self.t_r/self.beta
