@@ -15,6 +15,10 @@ class balance_sheet(calculations):
         self.retained_earnings = self.__retained_earnings__()
         self.debt = self.__Debt__()
         self.cash = self.__cash__()
+        self.netrec = self.__netrec__()
+        self.equity = self.__equity__()
+        self.assets = self.__assets__()
+        self.liabilities = self.__liabilities__()
         
     def __get_bs__(self):
         self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
@@ -31,7 +35,29 @@ class balance_sheet(calculations):
     def __cash__(self):
         x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
         return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['cash'] 
-
+    
+    def __netrec__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['netReceivables'] 
+    
+    def __equity__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalStockholderEquity'] 
+    
+    def __assets__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalAssets'] 
+    
+    def __liabilities__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalCurrentLiabilities'] 
+    
+    def __netassets__(self):
+        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        a = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalAssets'] 
+        b = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalCurrentLiabilities']
+        return  a - b
+     
 class earnings(balance_sheet):
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)
