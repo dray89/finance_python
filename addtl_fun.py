@@ -59,7 +59,7 @@ class balance_sheet(calculations):
         b = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalCurrentLiabilities']
         return  a - b
      
-class earnings(balance_sheet):
+class earnings(balance_sheet): 
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)
         self.earn = self.__get_earn__()
@@ -69,7 +69,7 @@ class earnings(balance_sheet):
         return data
     
     def __earndata__(self):
-        df = DataFrame(self.earn[self.symbol]['earningsData']['quarterly'][-1])
+        df = DataFrame.from_dict(self.earn[self.symbol]['earningsData']['quarterly'][-1])
         return df
     
 class addtl(earnings):
