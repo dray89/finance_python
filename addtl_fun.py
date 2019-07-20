@@ -63,6 +63,7 @@ class earnings(balance_sheet):
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)
         self.earn = self.__get_earn__()
+        self.earndata = self.__earndata__()
     
     def __get_earn__(self):
         data = self.yahoo.get_stock_earnings_data()

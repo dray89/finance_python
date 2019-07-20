@@ -7,7 +7,7 @@ Created on Thu Jul 18 21:12:29 2019
 from stock_scraper import calculations
 from datetime import datetime
 from pandas import DataFrame
-from addtl_fun import addtl, balance_sheet
+from addtl_fun import addtl, balance_sheet, earnings
 
 symbol = "WEED.TO"
 source = "yahoo"
