@@ -4,13 +4,11 @@ Created on Wed Jul 17 15:41:04 2019
 
 @author: rayde
 """
-from stock_scraper import calculations
 from yahoofinancials import YahooFinancials
 from pandas import DataFrame
 
-class balance_sheet(calculations):
+class balance_sheet:
     def __init__(self, symbol, source, start, end):
-        super().__init__(symbol, source, start, end)
         self.yahoo = YahooFinancials(self.symbol)
         self.bsd = self.__get_bs__()
         self.last_quarter = self.__last_quarter__()

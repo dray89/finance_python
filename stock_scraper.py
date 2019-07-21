@@ -17,22 +17,27 @@ class __stocks__:
         self.source = source
         self.start = start
         self.end = end
+        self.__basic__()
+        self.__readers__()
+        self.__df__()
+        self.__div_history__()
+
+    def __basic__(self):
         '''Grab Basic Current Info '''
         self.stock = self.__stock__()
         self.description = self.set_desc()
         self.industry = self.__industry__()
+    
+    def __readers__(self): 
         '''Generate Dividend and Split info'''
-        self.yar = YahooActionReader(symbol, start, end)
-        self.div = YahooDivReader(symbol, start, end)
+        self.yar = YahooActionReader(self.symbol, self.start, self.end)
+        self.div = YahooDivReader(self.symbol, self.start, self.end)
         ''' Generate Intermediate Data'''
-        self.quote = YahooQuotesReader(symbol,start,end)
-        self.div_history = self.__div_history__()
-        self.dividend = self.__dividend__()
+        self.quote = YahooQuotesReader(self.symbol, self.start, self.end)
         
-    def __stock__(self):
+    def __df__(self):
         ''' Returns Adj Close '''
-        df = DataReader(self.symbol, self.source, self.start, self.end)
-        return df
+        self.df = DataReader(self.symbol, self.source, self.start, self.end)
 
     def __div_history__(self):
         try:
@@ -40,14 +45,14 @@ class __stocks__:
             data = data[data['action'] == 'DIVIDEND']
         except:
             data = np.nan
-        return data
-    
-    def __dividend__(self):
+        finally:
+            self.div_history = data
         try:
             x = self.dividend.iloc[0][1]
         except:
             x = np.nan
-        return x
+        finally:
+            self.dividend = x
     
     def __industry__(self):	
         industry = input("Please enter industry: ")
@@ -61,69 +66,65 @@ class __stats__(__stocks__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
         self.data = self.quote.read()
-        self.currency = self.__currency__()
+        self.all = self.data.iloc[0]  
+        self.name = self.data.iloc[0]['longName']
+        self.quoteType = self.data.iloc[0]['quoteType']
+        self.currency = self.data.iloc[0]['currency']
+        self.__attributes__()
+        
+    def __attributes__(self):              
         self.perc_change = self.__perc_change__()
         self.fiftyDayAverage = self.__fiftyDayAverage__()
-        self.trailingPE = self.__trailingPE__()
-        self.forwardPE = self.__forwardPE__()
-        self.marketcap = self.__marketCap__()
+        self.__PE__()
+        self.__avgchg200day__()
+        self.__marketCap__()
         self.priceToBook = self.__priceToBook__()
-        self.price = self.__regularMarketPrice__()
-        self.sourceInterval = self.__sourceInterval__()
-        self.quoteType = self.__quoteType__()
-        self.avgchg200day = self.__avgchg200day__()
-        self.avgpctchg200day = self.__avgpctchg200day__()
+        self.__regularMarketPrice__()
         self.div_r = self.__Dividend_Yield__()
         self.outstand = self.__outstand__()
-        self.name = self.__longName__()
-        self.all = self.__all__()
-
-    def __all__(self):
-        return self.data.iloc[0]
-
-    def __quoteType__(self):
-        return self.data.iloc[0]['quoteType']
-
-    def __currency__(self):
-        return self.data.iloc[0]['currency']
 
     def __avgchg200day__(self):
-        return self.data.iloc[0]['twoHundredDayAverageChange']
-
-    def __avgpctchg200day__(self):
-        return self.data.iloc[0]['twoHundredDayAverageChangePercent']
-
+        try:
+            change = self.data.iloc[0]['twoHundredDayAverageChange']
+            percent = self.data.iloc[0]['twoHundredDayAverageChangePercent']
+        except:
+            change = np.nan
+            percent = np.nan
+        finally:
+            self.avgchg200day = change
+            self.avgpctchg200day = percent
+            
     def __marketCap__(self):
-        return self.data.iloc[0]['marketCap']
-
-    def __forwardPE__(self):
         try:
-            x = self.data.iloc[0]['forwardPE']
+            cap = self.data.iloc[0]['marketCap']
         except:
-            x = np.nan
-        return x
-
-    def __trailingPE__(self):
+            cap = np.nan
+        finally:
+            self.marketcap = cap
+            
+    def __PE__(self):
         try:
-            x = self.data.iloc[0]['trailingPE']
+            forward = self.data.iloc[0]['forwardPE']
+            trailing = self.data.iloc[0]['trailingPE']
+            one_pe = 1/trailing
         except:
-            x = np.nan
-        return x
+            forward = np.nan
+            trailing = np.nan
+            one_pe = np.nan
+        finally:
+            self.forwardpe = forward
+            self.trailingpe = trailing
+            self.one_pe = one_pe
 
     def __priceToBook__(self):
         return self.data.iloc[0]['priceToBook']
 
-    def __sourceInterval__(self):
-        return self.data.iloc[0]['sourceInterval']
-
     def __regularMarketPrice__(self):
-        return self.data.iloc[0]['regularMarketPrice']
-
+        self.pricereg = self.data.iloc[0]['regularMarketPrice']
+        self.price = self.data.iloc[0]['price']
+        
     def __fiftyDayAverage__(self):
         return self.data.iloc[0]['fiftyDayAverage']
-
-    def __price__(self):
-        return self.data.iloc[0]['price']
 
     def __Dividend_Yield__(self):
         try:
@@ -133,10 +134,15 @@ class __stats__(__stocks__):
         return x
 
     def __perc_change__(self):
-        return self.data.iloc[0]['fiftyTwoWeekHighChangePercent']
-
-    def __High__(self):
-        return self.data.iloc[0]['fiftyTwoWeekHigh']
+        try:
+            change = self.data.iloc[0]['fiftyTwoWeekHighChangePercent']
+            high = self.data.iloc[0]['fiftyTwoWeekHigh']
+        except:
+            change = np.nan
+            high = np.nan
+        finally:
+            self.perc_change = change
+            self.high = high
 
     def __volume__(self):
         return self.data.iloc[0]['regularMarketVolume']
@@ -144,12 +150,6 @@ class __stats__(__stocks__):
     def __outstand__(self):
         return self.data.iloc[0]['sharesOutstanding']
 
-    def __P_B__(self):
-        return self.data.iloc[0]['priceToBook']
-    
-    def __longName__(self):
-        return self.data.iloc[0]['longName']
-    
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
@@ -166,9 +166,6 @@ class calculations(__stats__):
 
     def __Outstanding_Cap__(self):
         return (self.price*self.outstand)/self.marketcap
-
-    def __one_pe__(self):
-        return 1/self.trailingPE
 
     def __df__(self):
         data = {'name':[self.name], 
