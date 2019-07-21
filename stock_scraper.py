@@ -17,16 +17,15 @@ class __stocks__:
         self.source = source
         self.start = start
         self.end = end
-        self.__basic__()
         self.__readers__()
-        self.__df__()
-        self.__div_history__()
+        self.__basic__()
 
     def __basic__(self):
         '''Grab Basic Current Info '''
-        self.stock = self.__stock__()
+        self.__daily__()
         self.description = self.set_desc()
         self.industry = self.__industry__()
+        self.__div_history__()
     
     def __readers__(self): 
         '''Generate Dividend and Split info'''
@@ -35,24 +34,21 @@ class __stocks__:
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(self.symbol, self.start, self.end)
         
-    def __df__(self):
+    def __daily__(self):
         ''' Returns Adj Close '''
-        self.df = DataReader(self.symbol, self.source, self.start, self.end)
+        self.daily = DataReader(self.symbol, self.source, self.start, self.end)
 
     def __div_history__(self):
         try:
             data = self.yar.read()
-            data = data[data['action'] == 'DIVIDEND']
+            history = data[data['action'] == 'DIVIDEND']
+            dividend = self.dividend.iloc[0][1]
         except:
-            data = np.nan
+            history = np.nan
+            dividend = np.nan
         finally:
-            self.div_history = data
-        try:
-            x = self.dividend.iloc[0][1]
-        except:
-            x = np.nan
-        finally:
-            self.dividend = x
+            self.div_history = history
+            self.dividend = dividend
     
     def __industry__(self):	
         industry = input("Please enter industry: ")
@@ -73,7 +69,6 @@ class __stats__(__stocks__):
         self.__attributes__()
         
     def __attributes__(self):              
-        self.perc_change = self.__perc_change__()
         self.fiftyDayAverage = self.__fiftyDayAverage__()
         self.__PE__()
         self.__avgchg200day__()
@@ -82,6 +77,7 @@ class __stats__(__stocks__):
         self.__regularMarketPrice__()
         self.div_r = self.__Dividend_Yield__()
         self.outstand = self.__outstand__()
+        self.__perc_change__()
 
     def __avgchg200day__(self):
         try:
@@ -128,10 +124,10 @@ class __stats__(__stocks__):
 
     def __Dividend_Yield__(self):
         try:
-            x = self.data.iloc[0]['trailingAnnualDividendYield']
+            divyield = self.data.iloc[0]['trailingAnnualDividendYield']
         except:
-            x = np.nan
-        return x
+            divyield = np.nan
+        return divyield
 
     def __perc_change__(self):
         try:
@@ -153,13 +149,15 @@ class __stats__(__stocks__):
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
-        self.t_r = self.__Total_Return__()
+        self.__Total_Return__()
         self.Price_Cap = self.__Price_Cap__()
         self.Outstanding_Cap = self.__Outstanding_Cap__()
-        self.one_pe = self.__one_pe__()
 
     def __Total_Return__(self):
-        return self.div_r + self.perc_change
+        if np.isnan(self.div_r):
+            self.t_r = self.perc_change
+        else:
+            self.t_r = self.div_r + self.perc_change
 
     def __Price_Cap__(self):
         return self.price/self.marketcap
