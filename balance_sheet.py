@@ -15,6 +15,18 @@ class balance_sheet:
         self.__split__()
         self.__keys__()
         self.__components__()
+    
+    def __get_bs__(self):
+        '''Retrieve balance sheet from yahoo '''
+        self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
+        return self.bsd
+    
+    def __keys__(self):
+        '''Get Dates'''
+        self.x = list(self.last_quarter.keys())
+        self.x1 = list(self.previous.keys())
+        self.x2 = list(self.nine_months.keys())
+        self.x3 = list(self.one_year.keys())
         
     def __split__(self):
         self.last_quarter = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0]
@@ -31,18 +43,6 @@ class balance_sheet:
         self.__equity__()
         self.__assets__()
         self.__liabilities__()
-    
-    def __get_bs__(self):
-        '''Retrieve balance sheet from yahoo '''
-        self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
-        return self.bsd
-    
-    def __keys__(self):
-        '''Get Dates'''
-        self.x = list(self.last_quarter.keys())
-        self.x1 = list(self.previous.keys())
-        self.x2 = list(self.nine_months.keys())
-        self.x3 = list(self.one_year.keys())
          
     def __retained_earnings__(self):
         ''' Calculate Retained Earnings '''

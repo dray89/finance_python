@@ -4,6 +4,8 @@ Created on Sat Jul 20 20:11:21 2019
 
 @author: rayde
 """
+from yahoofinancials import YahooFinancials
+from pandas import DataFrame
 
 class earnings: 
     def __init__(self, symbol, source, start, end):
