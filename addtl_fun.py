@@ -13,6 +13,7 @@ class balance_sheet(calculations):
         super().__init__(symbol, source, start, end)
         self.yahoo = YahooFinancials(self.symbol)
         self.bsd = self.__get_bs__()
+        self.last_quarter = self.__last_quarter__()
         self.retained_earnings = self.__retained_earnings__()
         self.debt = self.__Debt__()
         self.cash = self.__cash__()
@@ -20,41 +21,55 @@ class balance_sheet(calculations):
         self.equity = self.__equity__()
         self.assets = self.__assets__()
         self.liabilities = self.__liabilities__()
-        
+    
     def __get_bs__(self):
+        '''Retrieve balance sheet from yahoo '''
         self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
         return self.bsd
     
+    def __last_quarter__(self):
+        '''return most recent quarter'''
+        last = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0]
+        return last
+    
     def __retained_earnings__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
-        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['retainedEarnings']
+        ''' Most Recent Quarter Retained Earnings '''
+        x = list(self.last_quarter.keys())
+        return self.last_quarter[x[0]]['retainedEarnings']
         
     def __Debt__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
-        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['longTermDebt'] 
+        '''Most Recent Quarter Long Term Debt '''
+        x = list(self.last_quarter.keys())
+        return self.last_quarter[x[0]]['longTermDebt'] 
     
     def __cash__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
-        return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['cash'] 
+        ''' Most Recent Quarter Cash '''
+        x = list(self.last_quarter.keys())
+        return self.last_quarter[x[0]]['cash'] 
     
     def __netrec__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        ''' Most Recent Quarter Net Receivables '''
+        x = list(self.last_quarter.keys())
         return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['netReceivables'] 
     
     def __equity__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        '''Most Recent Quarter Equity '''
+        x = list(self.last_quarter.keys())
         return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalStockholderEquity'] 
     
     def __assets__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        ''' Most Recent Quarter Assets'''
+        x = list(self.last_quarter.keys())
         return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalAssets'] 
     
     def __liabilities__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        '''Most Recent Quarter Liabilities'''
+        x = list(self.last_quarter.keys())
         return self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalCurrentLiabilities'] 
     
     def __netassets__(self):
-        x = list(self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0].keys())
+        ''' Most Recent Quarter Net Assets '''
+        x = list(self.last_quarter.keys())
         a = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalAssets'] 
         b = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0][x[0]]['totalCurrentLiabilities']
         return  a - b
@@ -66,10 +81,12 @@ class earnings(balance_sheet):
         self.earndata = self.__earndata__()
     
     def __get_earn__(self):
+        '''Get Earnings From Yahoo '''
         data = self.yahoo.get_stock_earnings_data()
         return data
     
     def __earndata__(self):
+        '''Get Quarterly Earnings Data '''
         df = DataFrame.from_dict(self.earn[self.symbol]['earningsData']['quarterly'][-1])
         return df
     

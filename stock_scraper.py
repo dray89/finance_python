@@ -19,6 +19,8 @@ class __stocks__:
         self.end = end
         '''Grab Basic Current Info '''
         self.stock = self.__stock__()
+        self.description = self.set_desc()
+        self.industry = self.__industry__()
         '''Generate Dividend and Split info'''
         self.yar = YahooActionReader(symbol, start, end)
         self.div = YahooDivReader(symbol, start, end)
@@ -47,11 +49,13 @@ class __stocks__:
             x = np.nan
         return x
     
-    def Industry(self):	
-        pass
+    def __industry__(self):	
+        industry = input("Please enter industry: ")
+        return industry
     
-    def set_desc(self, description):
-        self.description = description    
+    def set_desc(self):    
+        description = input("Please describe this stock: ")
+        return description
         
 class __stats__(__stocks__):
     def __init__(self, symbol, source, start, end, sort=True):
