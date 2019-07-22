@@ -42,7 +42,7 @@ class __stocks__:
         try:
             data = self.yar.read()
             history = data[data['action'] == 'DIVIDEND']
-            dividend = self.dividend.iloc[0][1]
+            dividend = history.iloc[0][1]
         except:
             history = np.nan
             dividend = np.nan
