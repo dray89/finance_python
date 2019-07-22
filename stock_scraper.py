@@ -152,6 +152,7 @@ class calculations(__stats__):
         self.__Total_Return__()
         self.Price_Cap = self.__Price_Cap__()
         self.Outstanding_Cap = self.__Outstanding_Cap__()
+        self.calcdf = self.__df__()
 
     def __Total_Return__(self):
         if np.isnan(self.div_r):
@@ -167,7 +168,6 @@ class calculations(__stats__):
 
     def __df__(self):
         data = {'name':[self.name], 
-                'sourceInterval':[self.sourceInterval],
                           'quoteType': [self.quoteType],
                           'total_return':[self.t_r],
                           'Price_Cap': [self.Price_Cap],
@@ -176,8 +176,8 @@ class calculations(__stats__):
                           'currency':[self.currency],
                           'perc_change' : [self.perc_change],
                           'fiftyDayAverage':[self.fiftyDayAverage],
-                          'trailingPE':[self.trailingPE],
-                          'forwardPE':[self.forwardPE],
+                          'trailingPE':[self.trailingpe],
+                          'forwardPE':[self.forwardpe],
                           'marketcap':[self.marketcap],
                           'priceToBook':[self.priceToBook],
                           'price':[self.price],
