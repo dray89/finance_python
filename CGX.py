@@ -8,14 +8,15 @@ import pandas
 from stock_scraper import calculations
 from datetime import datetime
 from pandas import DataFrame
-from addtl_fun import addtl, balance_sheet, earnings
+from balance_sheet import balance_sheet
 
-symbol = "CGX.TO"
+symbol = "CJR-b.TO"
 source = "yahoo"
 start = datetime(2018, 7, 19)
 end = datetime(2019, 7, 19)
 
-entertainment = ['tva-b', 'ray-b.to', 'kew.to', 'dhx.to', 'cgx.to', 'cjr-b.to']
+entertainment = 
+['tva-b', 'ray-b.to', 'kew.to', 'dhx.to', 'cgx.to', 'cjr-b.to']
 for symbol in entertainment: 
     calculations(symbol, source, start, end)
 
@@ -56,7 +57,7 @@ price = cgx.stock
 div = cgx.dividend
 chg_pct = ((price['Close']['2019-03-29'] - price['Close']['2019-07-18'])/price['Close']['2019-03-29'])*100
 
-bsd_cgx = balance_sheet(symbol, source, start, end)
+bsd_cgx = balance_sheet(symbol)
 
 bsd_cgx.retained_earnings
 bsd_cgx.debt
