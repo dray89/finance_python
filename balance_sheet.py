@@ -102,7 +102,8 @@ class balance_sheet:
 class addtl(balance_sheet):
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)
-        self.beta = self.Beta()
+        self.beta 
+        self.Beta()
         self.Div_Beta = self.Div_Beta()
         self.R_Beta = self.R_Beta()
      #   'beta':[self.beta],

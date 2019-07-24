@@ -4,6 +4,7 @@ Created on Thu Jul  4 19:34:10 2019
 
 @author: rayde
 """
+import pandas
 from pandas_datareader import DataReader
 from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
 from pandas_datareader.yahoo.quotes import YahooQuotesReader
@@ -73,7 +74,7 @@ class __stats__(__stocks__):
         self.__PE__()
         self.__avgchg200day__()
         self.__marketCap__()
-        self.priceToBook = self.__priceToBook__()
+        self.__priceToBook__()
         self.__regularMarketPrice__()
         self.div_r = self.__Dividend_Yield__()
         self.outstand = self.__outstand__()
@@ -113,7 +114,12 @@ class __stats__(__stocks__):
             self.one_pe = one_pe
 
     def __priceToBook__(self):
-        return self.data.iloc[0]['priceToBook']
+        try:
+            pb = self.data.iloc[0]['priceToBook']
+        except:
+            pb = np.nan
+        finally:
+            self.pricetobook = pb
 
     def __regularMarketPrice__(self):
         self.pricereg = self.data.iloc[0]['regularMarketPrice']
@@ -165,7 +171,23 @@ class calculations(__stats__):
 
     def __Outstanding_Cap__(self):
         return (self.price*self.outstand)/self.marketcap
-
+    
+    def industry_averages(self, df_list):
+        self.df_list = df_list
+        self.concat_df = pandas.concat(df_list, axis=1)
+        self.avg_return = self.concat_df.iloc[2].mean()
+        self.avg_one_pe = self.concat_df.iloc[5].mean()
+        self.avg_dividend = self.concat_df.iloc[-1].mean()
+        self.avg_pb = self.concat_df.iloc[12].mean()
+        self.avg_mc = self.concat_df.iloc[11].mean()
+        self.avg_so = self.concat_df.iloc[17].mean()
+    
+    def industry_ratios(self):
+        print(self.df_list.iloc[2].divide(self.avg_return))
+        print(self.df_list.iloc[5].divide(self.avg_one_pe))
+        print(self.df_list.iloc[-1].divide(self.avg_dividend))
+        print(self.df_list.iloc[12].divide(self.avg_pb))
+    
     def __df__(self):
         data = {'name':[self.name], 
                           'quoteType': [self.quoteType],
@@ -179,7 +201,7 @@ class calculations(__stats__):
                           'trailingPE':[self.trailingpe],
                           'forwardPE':[self.forwardpe],
                           'marketcap':[self.marketcap],
-                          'priceToBook':[self.priceToBook],
+                          'priceToBook':[self.pricetobook],
                           'price':[self.price],
                           'avgchg200day':[self.avgchg200day],
                           'avgpctchg200day':[self.avgpctchg200day],
