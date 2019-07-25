@@ -172,22 +172,6 @@ class calculations(__stats__):
     def __Outstanding_Cap__(self):
         return (self.price*self.outstand)/self.marketcap
     
-    def industry_averages(self, df_list):
-        self.df_list = df_list
-        self.concat_df = pandas.concat(df_list, axis=1)
-        self.avg_return = self.concat_df.iloc[2].mean()
-        self.avg_one_pe = self.concat_df.iloc[5].mean()
-        self.avg_dividend = self.concat_df.iloc[-1].mean()
-        self.avg_pb = self.concat_df.iloc[12].mean()
-        self.avg_mc = self.concat_df.iloc[11].mean()
-        self.avg_so = self.concat_df.iloc[17].mean()
-    
-    def industry_ratios(self):
-        print(self.df_list.iloc[2].divide(self.avg_return))
-        print(self.df_list.iloc[5].divide(self.avg_one_pe))
-        print(self.df_list.iloc[-1].divide(self.avg_dividend))
-        print(self.df_list.iloc[12].divide(self.avg_pb))
-    
     def __df__(self):
         data = {'name':[self.name], 
                           'quoteType': [self.quoteType],
@@ -210,3 +194,31 @@ class calculations(__stats__):
                           'dividend': [self.dividend]}
         
         return DataFrame.from_dict(data, orient= 'index', columns = [self.symbol])
+    
+class industry(calculations):
+        def __init__(self, df_list):
+            self.__industry_averages__(df_list)
+            self.__industry_ratios__()
+    
+        def __industry_averages__(self, df_list):
+            self.df_list = df_list
+            self.concat_df = pandas.concat(df_list, axis=1)
+            self.avg_return = self.concat_df.iloc[2].mean()
+            self.avg_one_pe = self.concat_df.iloc[5].mean()
+            self.avg_dividend = self.concat_df.iloc[-1].mean()
+            self.avg_pb = self.concat_df.iloc[12].mean()
+            self.avg_mc = self.concat_df.iloc[11].mean()
+            self.avg_so = self.concat_df.iloc[17].mean()
+            
+        def __industry_ratios__(self):
+            self.over_avgr = self.concat_df.iloc[2].divide(self.avg_return)
+            self.over_avg1pe = self.concat_df.iloc[5].divide(self.avg_one_pe)
+            self. over_avgdiv = self.concat_df.iloc[-1].divide(self.avg_dividend)
+            self.over_avgpb = self.concat_df.iloc[12].divide(self.avg_pb)
+            self.over_mc = self.concat_df.iloc[11].divide(self.avg_mc)
+            self.over_so = self.concat_df.iloc[17].divide(self.avg_so)
+        
+        def __othercalc__(self):
+            self.price_cap = self.concat_df.iloc[-6].divide(self.marketcap)
+            self.pt = self.concat_df.iloc[-6].divide(self.over_mc)
+            self.cg = self.concat_df.iloc[-6].subtract(self.pt)
