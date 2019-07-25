@@ -195,11 +195,11 @@ class calculations(__stats__):
         
         return DataFrame.from_dict(data, orient= 'index', columns = [self.symbol])
     
-class industry(calculations):
+class industry:
         def __init__(self, df_list):
             self.__industry_averages__(df_list)
             self.__industry_ratios__()
-    
+            
         def __industry_averages__(self, df_list):
             self.df_list = df_list
             self.concat_df = pandas.concat(df_list, axis=1)
@@ -209,16 +209,21 @@ class industry(calculations):
             self.avg_pb = self.concat_df.iloc[12].mean()
             self.avg_mc = self.concat_df.iloc[11].mean()
             self.avg_so = self.concat_df.iloc[17].mean()
+            self.averages = {'avg_return': self.avg_return,
+                             'avg_one_pe': self.avg_one_pe,
+                             'avg_dividend': self.avg_dividend,
+                             'avg_pb': self.avg_pb,
+                             'avg_mc': self.avg_mc,
+                             'avg_so': self.avg_so}
             
         def __industry_ratios__(self):
-            self.over_avgr = self.concat_df.iloc[2].divide(self.avg_return)
-            self.over_avg1pe = self.concat_df.iloc[5].divide(self.avg_one_pe)
-            self. over_avgdiv = self.concat_df.iloc[-1].divide(self.avg_dividend)
-            self.over_avgpb = self.concat_df.iloc[12].divide(self.avg_pb)
-            self.over_mc = self.concat_df.iloc[11].divide(self.avg_mc)
-            self.over_so = self.concat_df.iloc[17].divide(self.avg_so)
-        
-        def __othercalc__(self):
-            self.price_cap = self.concat_df.iloc[-6].divide(self.marketcap)
-            self.pt = self.concat_df.iloc[-6].divide(self.over_mc)
-            self.cg = self.concat_df.iloc[-6].subtract(self.pt)
+            self.industry_dict = {'to avg_return': self.concat_df.iloc[2].divide(self.avg_return),
+                                'to avg_pe': self.concat_df.iloc[5].divide(self.avg_one_pe),
+                                'to avg_dividend': self.concat_df.iloc[-1].divide(self.avg_dividend),
+                                'to avg_pb': self.concat_df.iloc[12].divide(self.avg_pb),
+                                'to avg_mc': self.concat_df.iloc[11].divide(self.avg_mc),
+                                'to avg_so': self.concat_df.iloc[17].divide(self.avg_so),
+                                'price to mc': self.concat_df.iloc[-6].divide(self.concat_df.iloc[11]),
+                                'price*avgmc/mc': self.concat_df.iloc[-6].divide(self.concat_df.iloc[-3]),
+                                'cg': self.concat_df.iloc[-6].subtract(self.concat_df.iloc[-1])}
+            self.industry_df = pandas.DataFrame.from_dict(self.industry_dict).T

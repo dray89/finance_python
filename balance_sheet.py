@@ -137,15 +137,6 @@ class addtl(balance_sheet):
     def P_CASH(self):
         pass
     
-    def Price_Target(self):	
-        pass
-    
-    def Capital_Gains(self):	
-        pass
-    
-    def MktCap_Avg(self):	
-        pass
-    
     def Beta(self):
         return 1
 
