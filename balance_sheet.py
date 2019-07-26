@@ -4,8 +4,11 @@ Created on Wed Jul 17 15:41:04 2019
 
 @author: rayde
 """
+import sys
 from yahoofinancials import YahooFinancials
 from pandas import DataFrame
+from bs4 import BeautifulSoup as soup
+from urllib.request import urlopen
 
 class balance_sheet:
     def __init__(self, symbol):
@@ -60,11 +63,16 @@ class balance_sheet:
         self.debt3 = self.one_year[self.x3[0]]['longTermDebt']
         
     def __cash__(self):
-        ''' get cash '''       
-        self.cash = self.last_quarter[self.x[0]]['cash'] 
-        self.cash1 = self.previous[self.x1[0]]['cash'] 
-        self.cash2 = self.nine_months[self.x2[0]]['cash'] 
-        self.cash3 = self.one_year[self.x3[0]]['cash']
+        ''' get cash '''     
+        try:
+            self.cash = self.last_quarter[self.x[0]]['cash'] 
+            self.cash1 = self.previous[self.x1[0]]['cash'] 
+            self.cash2 = self.nine_months[self.x2[0]]['cash'] 
+            self.cash3 = self.one_year[self.x3[0]]['cash']
+        except:
+            print(sys.lastvalue)
+        finally:
+            return 0
         
     def __netrec__(self):
         ''' Most Recent Quarter Net Receivables '''
@@ -102,13 +110,6 @@ class balance_sheet:
 class addtl(balance_sheet):
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)
-        self.beta 
-        self.Beta()
-        self.Div_Beta = self.Div_Beta()
-        self.R_Beta = self.R_Beta()
-     #   'beta':[self.beta],
-      #  'Div_Beta': [self.Div_Beta],
-       # 'R_Beta':[self.R_Beta],
 
     def buyback_Yield(self):
         pass
@@ -136,12 +137,3 @@ class addtl(balance_sheet):
     
     def P_CASH(self):
         pass
-    
-    def Beta(self):
-        return 1
-
-    def Div_Beta(self):
-        return self.div_r/self.beta
-    
-    def R_Beta(self):
-        return self.t_r/self.beta

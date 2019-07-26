@@ -10,6 +10,7 @@ from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
 from pandas_datareader.yahoo.quotes import YahooQuotesReader
 from pandas import DataFrame
 import numpy as np
+from yahoo_scrape import scrape
 
 class __stocks__:
     def __init__(self, symbol, source, start, end, sort=True):
@@ -24,8 +25,8 @@ class __stocks__:
     def __basic__(self):
         '''Grab Basic Current Info '''
         self.__daily__()
-        self.description = self.set_desc()
-        self.industry = self.__industry__()
+        self.__set_desc__()
+        self.__industry__()
         self.__div_history__()
     
     def __readers__(self): 
@@ -52,12 +53,12 @@ class __stocks__:
             self.dividend = dividend
     
     def __industry__(self):	
-        industry = input("Please enter industry: ")
-        return industry
+        s = scrape(self.symbol).__profile__()
+        self.industry = s.find('span', string='Industry').find_next().text
     
-    def set_desc(self):    
-        description = input("Please describe this stock: ")
-        return description
+    def __set_desc__(self): 
+        s = scrape(self.symbol).__profile__()
+        self.description = s.find('span', string='Description').find_next().text
         
 class __stats__(__stocks__):
     def __init__(self, symbol, source, start, end, sort=True):
@@ -159,13 +160,18 @@ class calculations(__stats__):
         self.Price_Cap = self.__Price_Cap__()
         self.Outstanding_Cap = self.__Outstanding_Cap__()
         self.calcdf = self.__df__()
+        self.Beta()
 
     def __Total_Return__(self):
         if np.isnan(self.div_r):
             self.t_r = self.perc_change
         else:
             self.t_r = self.div_r + self.perc_change
-
+            
+    def Beta(self):
+        soup_page = scrape(self.symbol).__quote__()
+        self.beta = soup_page.find('span', string = 'Beta (3Y Monthly)').find_next().text
+    
     def __Price_Cap__(self):
         return self.price/self.marketcap
 
