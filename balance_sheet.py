@@ -57,10 +57,15 @@ class balance_sheet:
         
     def __Debt__(self):
         '''calulate debt '''
-        self.debt = self.last_quarter[self.x[0]]['longTermDebt'] 
-        self.debt1 = self.previous[self.x1[0]]['longTermDebt']
-        self.debt2 = self.nine_months[self.x2[0]]['longTermDebt']
-        self.debt3 = self.one_year[self.x3[0]]['longTermDebt']
+        try:
+            self.debt = self.last_quarter[self.x[0]]['longTermDebt'] 
+            self.debt1 = self.previous[self.x1[0]]['longTermDebt']
+            self.debt2 = self.nine_months[self.x2[0]]['longTermDebt']
+            self.debt3 = self.one_year[self.x3[0]]['longTermDebt']
+        except:
+            print(sys.lastvalue)
+        finally:
+            return 0
         
     def __cash__(self):
         ''' get cash '''     
