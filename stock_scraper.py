@@ -28,7 +28,7 @@ class __stocks__:
         self.__set_desc__()
         self.__industry__()
         self.__div_history__()
-    
+        
     def __readers__(self): 
         '''Generate Dividend and Split info'''
         self.yar = YahooActionReader(self.symbol, self.start, self.end)
