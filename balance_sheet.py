@@ -9,6 +9,7 @@ from yahoofinancials import YahooFinancials
 from pandas import DataFrame
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
+import numpy as np
 
 class balance_sheet:
     def __init__(self, symbol):
@@ -26,17 +27,41 @@ class balance_sheet:
     
     def __keys__(self):
         '''Get Dates'''
-        self.x = list(self.last_quarter.keys())
-        self.x1 = list(self.previous.keys())
-        self.x2 = list(self.nine_months.keys())
-        self.x3 = list(self.one_year.keys())
-        
+        try:
+            x = list(self.last_quarter.keys())
+            x1 = list(self.previous.keys())
+            x2 = list(self.nine_months.keys())
+            x3 = list(self.one_year.keys())
+        except:
+            x = np.nan
+            x1 = np.nan
+            x2 = np.nan
+            x3 = np.nan
+        finally:
+            self.x = x
+            self.x1 = x1
+            self.x2 = x2
+            self.x3 = x3
+    
     def __split__(self):
-        self.last_quarter = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0]
-        self.previous = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][1]
-        self.nine_months = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][2]
-        self.one_year = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][3]
-        self.all = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0:]
+        try:
+            last_quarter = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0]
+            previous = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][1]
+            nine_months = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][2]
+            one_year = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][3]
+            all_quarters = self.bsd['balanceSheetHistoryQuarterly'][self.symbol][0:]
+        except:
+            last_quarter = np.nan
+            previous = np.nan
+            nine_months = np.nan
+            one_year = np.nan
+            all_quarters = np.nan
+        finally:
+            self.last_quarter = last_quarter
+            self.previous = previous
+            self.nine_months = nine_months
+            self.one_year = one_year
+            self.all_quarters = all_quarters
         
     def __components__(self):
         self.__retained_earnings__()
@@ -46,72 +71,151 @@ class balance_sheet:
         self.__equity__()
         self.__assets__()
         self.__liabilities__()
+        self.__yearlychgs__()
          
     def __retained_earnings__(self):
-        ''' Calculate Retained Earnings '''
-        self.retained_earnings = self.last_quarter[self.x[0]]['retainedEarnings']
-        self.retained_earnings1 = self.previous[self.x1[0]]['retainedEarnings']
-        self.retained_earnings2 = self.nine_months[self.x2[0]]['retainedEarnings']
-        self.retained_earnings3 = self.one_year[self.x3[0]]['retainedEarnings']
-        '''Calculate Change in Retained Earnings '''
-        
+        try:
+            ''' Calculate Retained Earnings '''
+            retained_earnings = self.last_quarter[self.x[0]]['retainedEarnings']
+            retained_earnings1 = self.previous[self.x1[0]]['retainedEarnings']
+            retained_earnings2 = self.nine_months[self.x2[0]]['retainedEarnings']
+            retained_earnings3 = self.one_year[self.x3[0]]['retainedEarnings']
+            '''Calculate Change in Retained Earnings '''
+        except:
+            retained_earnings = np.nan
+            retained_earnings1 = np.nan
+            retained_earnings2 = np.nan
+            retained_earnings3 = np.nan
+        finally:
+            self.retained_earnings = retained_earnings
+            self.retained_earnings1 = retained_earnings1
+            self.retained_earnings2 = retained_earnings2
+            self.retained_earnings3 = retained_earnings3
+            
     def __Debt__(self):
         '''calulate debt '''
         try:
-            self.debt = self.last_quarter[self.x[0]]['longTermDebt'] 
-            self.debt1 = self.previous[self.x1[0]]['longTermDebt']
-            self.debt2 = self.nine_months[self.x2[0]]['longTermDebt']
-            self.debt3 = self.one_year[self.x3[0]]['longTermDebt']
+            debt = self.last_quarter[self.x[0]]['longTermDebt'] 
+            debt1 = self.previous[self.x1[0]]['longTermDebt']
+            debt2 = self.nine_months[self.x2[0]]['longTermDebt']
+            debt3 = self.one_year[self.x3[0]]['longTermDebt']
         except:
-            print(sys.lastvalue)
+            debt = np.nan
+            debt1 = np.nan
+            debt2 = np.nan
+            debt3 = np.nan
         finally:
-            return 0
+            self.debt = debt
+            self.debt1 = debt1
+            self.debt2 = debt2
+            self.debt3 = debt3
         
     def __cash__(self):
         ''' get cash '''     
         try:
-            self.cash = self.last_quarter[self.x[0]]['cash'] 
-            self.cash1 = self.previous[self.x1[0]]['cash'] 
-            self.cash2 = self.nine_months[self.x2[0]]['cash'] 
-            self.cash3 = self.one_year[self.x3[0]]['cash']
+            cash = self.last_quarter[self.x[0]]['cash'] 
+            cash1 = self.previous[self.x1[0]]['cash'] 
+            cash2 = self.nine_months[self.x2[0]]['cash'] 
+            cash3 = self.one_year[self.x3[0]]['cash']
         except:
-            print(sys.lastvalue)
+            cash = np.nan
+            cash1 = np.nan
+            cash2 = np.nan
+            cash3 = np.nan
         finally:
-            return 0
+            self.cash = cash
+            self.cash1 = cash1
+            self.cash2 = cash2
+            self.cash3 = cash3
         
     def __netrec__(self):
-        ''' Most Recent Quarter Net Receivables '''
-        self.netrec = self.last_quarter[self.x[0]]['netReceivables'] 
-        self.netrec1 = self.previous[self.x1[0]]['netReceivables'] 
-        self.netrec2 = self.nine_months[self.x2[0]]['netReceivables'] 
-        self.netrec3 = self.one_year[self.x3[0]]['netReceivables']
+        try:
+            ''' Most Recent Quarter Net Receivables '''
+            netrec = self.last_quarter[self.x[0]]['netReceivables'] 
+            netrec1 = self.previous[self.x1[0]]['netReceivables'] 
+            netrec2 = self.nine_months[self.x2[0]]['netReceivables'] 
+            netrec3 = self.one_year[self.x3[0]]['netReceivables']
+        except:
+            netrec = np.nan
+            netrec1 = np.nan
+            netrec2 = np.nan
+            netrec3 = np.nan
+        finally:
+            self.netrec = netrec
+            self.netrec1 = netrec1
+            self.netrec2 = netrec2
+            self.netrec3 = netrec3
     
     def __equity__(self):
-        '''Most Recent Quarter Equity '''
-        self.equity = self.last_quarter[self.x[0]]['totalStockholderEquity'] 
-        self.equity1 = self.previous[self.x1[0]]['totalStockholderEquity'] 
-        self.equity2 = self.nine_months[self.x2[0]]['totalStockholderEquity'] 
-        self.equity3 = self.one_year[self.x3[0]]['totalStockholderEquity']
-    
+        try:
+            '''Most Recent Quarter Equity '''
+            equity = self.last_quarter[self.x[0]]['totalStockholderEquity'] 
+            equity1 = self.previous[self.x1[0]]['totalStockholderEquity'] 
+            equity2 = self.nine_months[self.x2[0]]['totalStockholderEquity'] 
+            equity3 = self.one_year[self.x3[0]]['totalStockholderEquity']
+        except:
+            equity = np.nan
+            equity1 = np.nan
+            equity2 = np.nan
+            equity3 = np.nan  
+        finally:
+            self.equity = equity
+            self.equity1 = equity1
+            self.equity2 = equity2
+            self.equity3 = equity3 
+        
     def __assets__(self):
-        ''' Most Recent Quarter Assets'''
-        self.assets = self.last_quarter[self.x[0]]['totalAssets'] 
-        self.assets1 = self.previous[self.x1[0]]['totalAssets'] 
-        self.assets2 = self.nine_months[self.x2[0]]['totalAssets'] 
-        self.assets3 = self.one_year[self.x3[0]]['totalAssets']
+        try:
+            ''' Most Recent Quarter Assets'''
+            assets = self.last_quarter[self.x[0]]['totalAssets'] 
+            assets1 = self.previous[self.x1[0]]['totalAssets'] 
+            assets2 = self.nine_months[self.x2[0]]['totalAssets'] 
+            assets3 = self.one_year[self.x3[0]]['totalAssets']
+        except:
+            assets = np.nan
+            assets1 = np.nan
+            assets2 = np.nan
+            assets3 = np.nan  
+        finally:
+            self.assets = assets
+            self.assets1 = assets1
+            self.assets2 = assets2
+            self.assets3 = assets3
     
     def __liabilities__(self):
-        '''Most Recent Quarter Liabilities'''
-        self.liabilities = self.last_quarter[self.x[0]]['totalCurrentLiabilities'] 
-        self.liabilities1 = self.previous[self.x1[0]]['totalCurrentLiabilities'] 
-        self.liabilities2 = self.nine_months[self.x2[0]]['totalCurrentLiabilities'] 
-        self.liabilities3 = self.one_year[self.x3[0]]['totalCurrentLiabilities']
-
+        try:
+            '''Most Recent Quarter Liabilities'''
+            liabilities = self.last_quarter[self.x[0]]['totalCurrentLiabilities'] 
+            liabilities1 = self.previous[self.x1[0]]['totalCurrentLiabilities'] 
+            liabilities2 = self.nine_months[self.x2[0]]['totalCurrentLiabilities'] 
+            liabilities3 = self.one_year[self.x3[0]]['totalCurrentLiabilities']
+        except:
+            liabilities = np.nan
+            liabilities1 = np.nan
+            liabilities2 = np.nan
+            liabilities3 = np.nan  
+        finally:
+            self.liabilities = liabilities
+            self.liabilities1 = liabilities1
+            self.liabilities2 = liabilities2
+            self.liabilities3 = liabilities3
+        
     def __netassets__(self):
         ''' Most Recent Quarter Net Assets '''
-        a = self.last_quarter[self.x[0]]['totalAssets'] - self.last_quarter[self.x[0]]['totalCurrentLiabilities']
+        try:
+            a = self.last_quarter[self.x[0]]['totalAssets'] - self.last_quarter[self.x[0]]['totalCurrentLiabilities']
+        except:
+            a = 0
         return  a     
-    
+
+    def __yearlychgs__(self):
+        self.chg_earnings = (self.retained_earnings - self.retained_earnings3)/self.retained_earnings3
+        self.chg_debt = (self.debt - self.debt3)/self.debt3
+        self.chg_equity = (self.equity - self.equity3)/self.equity3
+        self.chg_liabilities = (self.liabilities - self.liabilities3)/self.liabilities3
+        self.chg_assets = (self.assets - self.assets3)/self.assets3
+        self.chg_netrec = (self.netrec - self.netrec3)/self.netrec3
+        
 class addtl(balance_sheet):
     def __init__(self, symbol, source, start, end):
         super().__init__(symbol, source, start, end)

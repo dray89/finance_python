@@ -28,7 +28,7 @@ class __stocks__:
         self.__set_desc__()
         self.__industry__()
         self.__div_history__()
-        
+    
     def __readers__(self): 
         '''Generate Dividend and Split info'''
         self.yar = YahooActionReader(self.symbol, self.start, self.end)
@@ -64,22 +64,17 @@ class __stats__(__stocks__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
         self.data = self.quote.read()
-        self.all = self.data.iloc[0]  
-        self.name = self.data.iloc[0]['longName']
-        self.quoteType = self.data.iloc[0]['quoteType']
-        self.currency = self.data.iloc[0]['currency']
         self.__attributes__()
         
     def __attributes__(self):              
-        self.fiftyDayAverage = self.__fiftyDayAverage__()
         self.__PE__()
         self.__avgchg200day__()
         self.__marketCap__()
         self.__priceToBook__()
         self.__regularMarketPrice__()
-        self.div_r = self.__Dividend_Yield__()
-        self.outstand = self.__outstand__()
+        self.__Dividend_Yield__()
         self.__perc_change__()
+        self.__other__()
 
     def __avgchg200day__(self):
         try:
@@ -125,16 +120,14 @@ class __stats__(__stocks__):
     def __regularMarketPrice__(self):
         self.pricereg = self.data.iloc[0]['regularMarketPrice']
         self.price = self.data.iloc[0]['price']
-        
-    def __fiftyDayAverage__(self):
-        return self.data.iloc[0]['fiftyDayAverage']
 
     def __Dividend_Yield__(self):
         try:
             divyield = self.data.iloc[0]['trailingAnnualDividendYield']
         except:
             divyield = np.nan
-        return divyield
+        finally:
+            self.div_r = divyield
 
     def __perc_change__(self):
         try:
@@ -147,20 +140,23 @@ class __stats__(__stocks__):
             self.perc_change = change
             self.high = high
 
-    def __volume__(self):
-        return self.data.iloc[0]['regularMarketVolume']
-
-    def __outstand__(self):
-        return self.data.iloc[0]['sharesOutstanding']
-
+    def __other__(self):
+        self.volume = self.data.iloc[0]['regularMarketVolume']
+        self.outstand = self.data.iloc[0]['sharesOutstanding']
+        self.fiftyDayAverage = self.data.iloc[0]['fiftyDayAverage']
+        self.name = self.data.iloc[0]['longName']
+        self.quoteType = self.data.iloc[0]['quoteType']
+        self.currency = self.data.iloc[0]['currency']
+        self.all = self.data.T
+        
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
         self.__Total_Return__()
-        self.Price_Cap = self.__Price_Cap__()
-        self.Outstanding_Cap = self.__Outstanding_Cap__()
+        self.__capitalization__()
+        self.__Beta__()
+        self.__riskadj__()
         self.calcdf = self.__df__()
-        self.Beta()
 
     def __Total_Return__(self):
         if np.isnan(self.div_r):
@@ -168,37 +164,46 @@ class calculations(__stats__):
         else:
             self.t_r = self.div_r + self.perc_change
             
-    def Beta(self):
-        soup_page = scrape(self.symbol).__quote__()
-        self.beta = soup_page.find('span', string = 'Beta (3Y Monthly)').find_next().text
+    def __Beta__(self):
+        try:
+            soup_page = scrape(self.symbol).__quote__()
+            beta = soup_page.find('span', string = 'Beta (3Y Monthly)').find_next().text
+        except:
+            beta = np.nan
+        finally:
+            self.beta = beta
     
-    def __Price_Cap__(self):
-        return self.price/self.marketcap
-
-    def __Outstanding_Cap__(self):
-        return (self.price*self.outstand)/self.marketcap
-    
+    def __riskadj__(self):
+        if np.isnan(float(self.beta)):
+            self.returns_adj = self.t_r
+        else:
+            self.returns_adj = self.t_r/float(self.beta)
+            
+    def __capitalization__(self):
+        self.price_cap = (self.price*self.outstand)/self.marketcap
+        self.Outstanding_Cap = self.price/self.marketcap
+        
     def __df__(self):
         data = {'name':[self.name], 
                           'quoteType': [self.quoteType],
-                          'total_return':[self.t_r],
-                          'Price_Cap': [self.Price_Cap],
-                          'Outstanding_Cap':[self.Outstanding_Cap],
-                          'one_pe':[self.one_pe],
-                          'currency':[self.currency],
+                          'price':[self.price],
                           'perc_change' : [self.perc_change],
+                          'dividend yield':[self.div_r],
+                          'total_return':[self.t_r],
+                          'beta':[float(self.beta)],
+                          'returns (adj)':[self.returns_adj],
+                          'priceToBook':[self.pricetobook],
+                          '1/PE':[self.one_pe],
+                          'marketcap':[self.marketcap],
+                          'price/mktcap':[self.price_cap],
+                          'shares outstanding': [self.outstand],
+                          'Shares Outstanding/mktcap':[self.Outstanding_Cap],
                           'fiftyDayAverage':[self.fiftyDayAverage],
                           'trailingPE':[self.trailingpe],
                           'forwardPE':[self.forwardpe],
-                          'marketcap':[self.marketcap],
-                          'priceToBook':[self.pricetobook],
-                          'price':[self.price],
                           'avgchg200day':[self.avgchg200day],
                           'avgpctchg200day':[self.avgpctchg200day],
-                          'dividend yield':[self.div_r],
-                          'shares outstanding': [self.outstand],
-                          'dividend': [self.dividend]}
-        
+                          'dividend': [self.dividend]}   
         return DataFrame.from_dict(data, orient= 'index', columns = [self.symbol])
     
 class industry:
@@ -209,27 +214,26 @@ class industry:
         def __industry_averages__(self, df_list):
             self.df_list = df_list
             self.concat_df = pandas.concat(df_list, axis=1)
-            self.avg_return = self.concat_df.iloc[2].mean()
-            self.avg_one_pe = self.concat_df.iloc[5].mean()
-            self.avg_dividend = self.concat_df.iloc[-1].mean()
-            self.avg_pb = self.concat_df.iloc[12].mean()
-            self.avg_mc = self.concat_df.iloc[11].mean()
-            self.avg_so = self.concat_df.iloc[17].mean()
-            self.averages = {'avg_return': self.avg_return,
+            self.avg_divr = self.concat_df.iloc[4].mean()
+            self.avg_return = self.concat_df.iloc[5].mean()
+            self.avg_beta = self.concat_df.iloc[6].mean()
+            self.avg_pb = self.concat_df.iloc[8].mean()
+            self.avg_one_pe = self.concat_df.iloc[9].mean()
+            self.avg_mc = self.concat_df.iloc[10].mean()
+            self.avg_so = self.concat_df.iloc[12].mean()
+            self.averages = {'avg_divr': self.avg_divr,
+                            'avg_return': self.avg_return,
+                            'avg_beta': self.avg_beta,
                              'avg_one_pe': self.avg_one_pe,
-                             'avg_dividend': self.avg_dividend,
                              'avg_pb': self.avg_pb,
                              'avg_mc': self.avg_mc,
                              'avg_so': self.avg_so}
             
         def __industry_ratios__(self):
-            self.industry_dict = {'to avg_return': self.concat_df.iloc[2].divide(self.avg_return),
-                                'to avg_pe': self.concat_df.iloc[5].divide(self.avg_one_pe),
-                                'to avg_dividend': self.concat_df.iloc[-1].divide(self.avg_dividend),
+            self.industry_dict = {'to avg_return': (1-self.concat_df.iloc[2].divide(self.avg_return),
+                                'to avg_1pe': (1-self.concat_df.iloc[5].divide(self.avg_one_pe)),
+                                'to avg_divr': (1-self.concat_df.iloc[-1].divide(self.avg_dividend)),
                                 'to avg_pb': self.concat_df.iloc[12].divide(self.avg_pb),
                                 'to avg_mc': self.concat_df.iloc[11].divide(self.avg_mc),
-                                'to avg_so': self.concat_df.iloc[17].divide(self.avg_so),
-                                'price to mc': self.concat_df.iloc[-6].divide(self.concat_df.iloc[11]),
-                                'price*avgmc/mc': self.concat_df.iloc[-6].divide(self.concat_df.iloc[-3]),
-                                'cg': self.concat_df.iloc[-6].subtract(self.concat_df.iloc[-1])}
+                                'to avg_so': self.concat_df.iloc[17].divide(self.avg_so)}
             self.industry_df = pandas.DataFrame.from_dict(self.industry_dict).T

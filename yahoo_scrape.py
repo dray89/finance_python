@@ -15,11 +15,20 @@ class scrape:
     def __init__(self, symbol):
         self.symbol = symbol 
         
-    def __general__(url):
+    def __general__(self, url):
+        try:
             Client=urlopen(url)
             xml_page=Client.read()
             Client.close()
             soup_page=soup(xml_page,"xml")
+        except:
+            print(sys.last_value)
+            url2 = "https://finance.yahoo.com/quote/" + self.symbol
+            Client=urlopen(url2)
+            xml_page=Client.read()
+            Client.close()
+            soup_page=soup(xml_page,"xml")
+        finally:
             return soup_page
         
     def __quote__(self):         
@@ -27,7 +36,8 @@ class scrape:
         try:
             soup_page = self.__general__(url)
         except:
-            print(sys.lastvalue)
+            print(sys.last_value)
+            soup_page = self.__general__("https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol)
         finally:
             return soup_page 
     
@@ -40,6 +50,7 @@ class scrape:
             soup_page=soup(xml_page,"xml")
         except:
             print(sys.last_value)
+            soup_page = self.__general__("https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol)
         finally:
             return soup_page 
 
