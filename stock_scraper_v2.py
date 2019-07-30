@@ -118,14 +118,6 @@ class __stats__(__stocks__):
         finally:
             self.div_r = float(divyield)
 
-    def __perc_change__(self):
-        try:
-            change = self.data.iloc[0]['fiftyTwoWeekHighChangePercent']
-        except:
-            change = np.nan
-        finally:
-            self.perc_change = float(change)
-
     def __other__(self):
         self.outstand = self.data.iloc[0]['sharesOutstanding']
         try:
@@ -140,7 +132,6 @@ class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
         self.__Total_Return__()
-        self.__capitalization__()
         self.__Beta__()
         self.__riskadj__()
         self.calcdf = self.__df__()
@@ -164,12 +155,8 @@ class calculations(__stats__):
         if np.isnan(float(self.beta)):
             self.returns_adj = self.div_r
         else:
-            self.returns_adj = abs(self.div_r/self.beta)
-            
-    def __capitalization__(self):
-        self.price_cap = (self.price*self.outstand)/self.marketcap
-        self.Outstanding_Cap = self.price/self.marketcap
-        
+            self.returns_adj = abs(self.div_r/self.beta)            
+      
     def __df__(self):
         data = {'name':[self.name], 
                           'price':[self.price],
@@ -181,9 +168,7 @@ class calculations(__stats__):
                           'priceToBook':[self.pricetobook],
                           '1/PE':[self.one_pe],
                           'marketcap':[self.marketcap],
-                          'price/mktcap':[self.price_cap],
                           'shares outstanding': [self.outstand],
-                          'Shares Outstanding/mktcap':[self.Outstanding_Cap],
                           'trailingPE':[self.trailingpe],
                           'forwardPE':[self.forwardpe],
                           'pricetocash':[self.pricetocash],
@@ -195,6 +180,17 @@ class industry:
         def __init__(self, df_list):
             self.__industry_averages__(df_list)
             self.__industry_ratios__()
+        
+        def __perc_change__(self):
+            try:
+                self.change = list(map(lambda x, y: self.industry_dict[y][x].daily['Adj Close'][-1] - d[y][x].daily['Adj Close'][0], self.df_list, range(0, len(self.df_list))))
+            except:
+                change = np.nan
+            finally:
+                self.perc_change = float(change)
+                self.perc_change = list(map(lambda x, y: change[y]/d[y][x].daily['Adj Close'][0], indust_list, range(0, len(indust_list))))
+                self.average = pandas.Series(perc_change).mean()
+                self.perc_avg = list(map(lambda x: perc_change[x] - average, range(0, len(perc_change))))
             
         def __industry_averages__(self, df_list):
             self.df_list = df_list
