@@ -5,11 +5,17 @@ Created on Wed Jul 17 15:41:04 2019
 @author: rayde
 """
 import sys
+from yahoo_scrape import scrape
 from yahoofinancials import YahooFinancials
+import pandas as pd
 from pandas import DataFrame
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 import numpy as np
+import lxml
+from lxml import html
+import requests
+
 
 class balance_sheet:
     def __init__(self, symbol):
@@ -216,10 +222,23 @@ class balance_sheet:
         self.chg_assets = (self.assets - self.assets3)/self.assets3
         self.chg_netrec = (self.netrec - self.netrec3)/self.netrec3
         
-class addtl(balance_sheet):
-    def __init__(self, symbol, source, start, end):
-        super().__init__(symbol, source, start, end)
-
+class financials:
+    def __init__(self, symbol):
+        self.symbol = symbol
+        self.data_frame()
+        
+    def data_frame(self):
+        self.tab = scrape(self.symbol).__financials__()
+        df = pd.read_html(lxml.etree.tostring(self.tab[0], method='xml'))[0]
+        df = df.drop(24)
+        df = df.set_index(0)
+        self.items = list(df.index)
+        df = df.replace('-', np.nan)
+        cols = list(df.iloc[0])
+        df = df.set_axis(cols, axis='columns', inplace=False)
+        df = df.set_axis(self.items, axis='rows', inplace=False)
+        self.df = df.drop('Revenue')
+    
     def buyback_Yield(self):
         pass
     
@@ -235,14 +254,11 @@ class addtl(balance_sheet):
     def Debt_Cap(self):
         pass
     
-    def EBITDA(self):	
-        pass
+    def EBIT(self):    
+        pass 
     
     def EV(self):
         pass
     
-    def EBITDA_EV(self):	
-        pass
-    
-    def P_CASH(self):
+    def EBITDA_EV(self):    
         pass

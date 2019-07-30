@@ -86,6 +86,7 @@ class earnings(balance_sheet):
     def __earndata__(self):
         '''Get Quarterly Earnings Data '''
         df = DataFrame.from_dict(self.earn[self.symbol]['earningsData']['quarterly'][-1])
+        df.setindex[1]
         return df
     
 class addtl(earnings):

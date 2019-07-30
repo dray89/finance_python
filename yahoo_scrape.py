@@ -10,6 +10,9 @@ from urllib.request import urlopen
 from datetime import datetime, date, timedelta
 from newspaper import Article
 import numpy as np 
+import lxml
+from lxml import html
+import requests
 
 class scrape:
     def __init__(self, symbol):
@@ -32,25 +35,34 @@ class scrape:
             return soup_page
         
     def __quote__(self):         
-        url="https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol + "/xml"
+        url="https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol
         try:
             soup_page = self.__general__(url)
         except:
             print(sys.last_value)
-            soup_page = self.__general__("https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol)
+            soup_page = self.__general__("https://finance.yahoo.com/")
         finally:
             return soup_page 
     
-    def __profile__(self):
-        url="https://finance.yahoo.com/quote/" + self.symbol + "/profile?p=" + self.symbol + "/xml"
+    def __financials__(self):
+        url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
         try:
-            Client=urlopen(url)
-            xml_page=Client.read()
-            Client.close()
-            soup_page=soup(xml_page,"xml")
+            page = requests.get(url)
+            tree = html.fromstring(page.content)
+            table = tree.xpath('//table')
         except:
             print(sys.last_value)
-            soup_page = self.__general__("https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol)
+            table = self.__general__(url)            
+        finally:
+            return table
+
+    def __profile__(self):
+        url="https://finance.yahoo.com/quote/" + self.symbol + "/profile?p=" + self.symbol
+        try:
+            soup_page = self.__general__(url)
+        except:
+            print(sys.last_value)
+            soup_page = self.__general__("https://finance.yahoo.com/")
         finally:
             return soup_page 
 

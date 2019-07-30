@@ -10,6 +10,7 @@ from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
 from pandas_datareader.yahoo.quotes import YahooQuotesReader
 from pandas import DataFrame
 import numpy as np
+from balance_sheet import balance_sheet
 from yahoo_scrape import scrape
 
 class __stocks__:
@@ -147,6 +148,7 @@ class __stats__(__stocks__):
         self.name = self.data.iloc[0]['longName']
         self.quoteType = self.data.iloc[0]['quoteType']
         self.currency = self.data.iloc[0]['currency']
+        self.pricetocash = self.price/balance_sheet(self.symbol).cash
         self.all = self.data.T
         
 class calculations(__stats__):
@@ -203,6 +205,7 @@ class calculations(__stats__):
                           'forwardPE':[self.forwardpe],
                           'avgchg200day':[self.avgchg200day],
                           'avgpctchg200day':[self.avgpctchg200day],
+                          'pricetocash':[self.pricetocash],
                           'dividend': [self.dividend]}   
         return DataFrame.from_dict(data, orient= 'index', columns = [self.symbol])
     
@@ -230,9 +233,9 @@ class industry:
                              'avg_so': self.avg_so}
             
         def __industry_ratios__(self):
-            self.industry_dict = {'to avg_return': (1-self.concat_df.iloc[2].divide(self.avg_return),
+            self.industry_dict = {'to avg_return': (1-self.concat_df.iloc[2].divide(self.avg_return)),
                                 'to avg_1pe': (1-self.concat_df.iloc[5].divide(self.avg_one_pe)),
-                                'to avg_divr': (1-self.concat_df.iloc[-1].divide(self.avg_dividend)),
+                                'to avg_divr': (1-self.concat_df.iloc[-1].divide(self.avg_divr)),
                                 'to avg_pb': self.concat_df.iloc[12].divide(self.avg_pb),
                                 'to avg_mc': self.concat_df.iloc[11].divide(self.avg_mc),
                                 'to avg_so': self.concat_df.iloc[17].divide(self.avg_so)}
