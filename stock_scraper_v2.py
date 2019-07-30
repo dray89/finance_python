@@ -51,7 +51,7 @@ class __stocks__:
             dividend = np.nan
         finally:
             self.div_history = history
-            self.dividend = dividend
+            self.dividend = float(dividend)
     
     def __industry__(self):	
         s = scrape(self.symbol).__profile__()
@@ -82,7 +82,7 @@ class __stats__(__stocks__):
         except:
             cap = np.nan
         finally:
-            self.marketcap = cap
+            self.marketcap = float(cap)
             
     def __PE__(self):
         try:
@@ -94,9 +94,9 @@ class __stats__(__stocks__):
             trailing = np.nan
             one_pe = np.nan
         finally:
-            self.forwardpe = forward
-            self.trailingpe = trailing
-            self.one_pe = one_pe
+            self.forwardpe = float(forward)
+            self.trailingpe = float(trailing)
+            self.one_pe = float(one_pe)
 
     def __priceToBook__(self):
         try:
@@ -104,7 +104,7 @@ class __stats__(__stocks__):
         except:
             pb = np.nan
         finally:
-            self.pricetobook = pb
+            self.pricetobook = float(pb)
 
     def __regularMarketPrice__(self):
         self.pricereg = self.data.iloc[0]['regularMarketPrice']
@@ -116,25 +116,21 @@ class __stats__(__stocks__):
         except:
             divyield = np.nan
         finally:
-            self.div_r = divyield
+            self.div_r = float(divyield)
 
     def __perc_change__(self):
         try:
             change = self.data.iloc[0]['fiftyTwoWeekHighChangePercent']
-            high = self.data.iloc[0]['fiftyTwoWeekHigh']
         except:
             change = np.nan
-            high = np.nan
         finally:
-            self.perc_change = change
-            self.high = high
+            self.perc_change = float(change)
 
     def __other__(self):
         self.volume = self.data.iloc[0]['regularMarketVolume']
         self.outstand = self.data.iloc[0]['sharesOutstanding']
         self.name = self.data.iloc[0]['longName']
-        self.pricetocash = self.price/balance_sheet(self.symbol).cash
-        self.all = self.data.T
+        self.pricetocash = float(self.price/(balance_sheet(self.symbol).cash/self.outstand))
         
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
@@ -147,9 +143,9 @@ class calculations(__stats__):
 
     def __Total_Return__(self):
         if np.isnan(self.div_r):
-            self.t_r = self.perc_change
+            self.t_r = float(self.perc_change)
         else:
-            self.t_r = self.div_r + self.perc_change
+            self.t_r = float(self.div_r + self.perc_change)
             
     def __Beta__(self):
         try:
@@ -158,13 +154,13 @@ class calculations(__stats__):
         except:
             beta = np.nan
         finally:
-            self.beta = beta
+            self.beta = float(beta)
     
     def __riskadj__(self):
         if np.isnan(float(self.beta)):
             self.returns_adj = self.div_r
         else:
-            self.returns_adj = abs(self.div_r/float(self.beta))
+            self.returns_adj = abs(self.div_r/self.beta)
             
     def __capitalization__(self):
         self.price_cap = (self.price*self.outstand)/self.marketcap
