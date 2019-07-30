@@ -32,7 +32,6 @@ class __stocks__:
     def __readers__(self): 
         '''Generate Dividend and Split info'''
         self.yar = YahooActionReader(self.symbol, self.start, self.end)
-        self.div = YahooDivReader(self.symbol, self.start, self.end)
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(self.symbol, self.start, self.end)
         self.daily = DataReader(self.symbol, self.source, self.start, self.end)
