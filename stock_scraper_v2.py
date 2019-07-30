@@ -12,6 +12,7 @@ from pandas import DataFrame
 import numpy as np
 from balance_sheet import balance_sheet
 from yahoo_scrape import scrape
+import sys
 
 class __stocks__:
     def __init__(self, symbol, source, start, end, sort=True):
@@ -20,14 +21,12 @@ class __stocks__:
         self.source = source
         self.start = start
         self.end = end
-        self.__readers__()
         self.__basic__()
 
     def __basic__(self):
         '''Grab Basic Current Info '''
-        self.__daily__()
-        self.__set_desc__()
-        self.__industry__()
+        self.__readers__()
+        self.__description__()
         self.__div_history__()
     
     def __readers__(self): 
@@ -36,9 +35,6 @@ class __stocks__:
         self.div = YahooDivReader(self.symbol, self.start, self.end)
         ''' Generate Intermediate Data'''
         self.quote = YahooQuotesReader(self.symbol, self.start, self.end)
-        
-    def __daily__(self):
-        ''' Returns Adj Close '''
         self.daily = DataReader(self.symbol, self.source, self.start, self.end)
 
     def __div_history__(self):
@@ -53,28 +49,40 @@ class __stocks__:
             self.div_history = history
             self.dividend = float(dividend)
     
-    def __industry__(self):	
-        s = scrape(self.symbol).__profile__()
-        self.industry = s.find('span', string='Industry').find_next().text
-    
-    def __set_desc__(self): 
-        s = scrape(self.symbol).__profile__()
-        self.description = s.find('span', string='Description').find_next().text
+    def __description__(self):
+        try:
+            s = scrape(self.symbol).__profile__()
+            industry = s.find('span', string='Industry').find_next().text
+            description = s.find('span', string='Description').find_next().text
+        except:
+            print(sys.last_value)
+        finally:
+            self.industry=industry
+            self.description = description
         
+
 class __stats__(__stocks__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
         self.data = self.quote.read()
         self.__attributes__()
         
-    def __attributes__(self):              
-        self.__PE__()
-        self.__marketCap__()
-        self.__priceToBook__()
-        self.__regularMarketPrice__()
-        self.__Dividend_Yield__()
+    def __attributes__(self):
         self.__perc_change__()
+        self.__marketCap__()              
+        self.__PE__()
+        self.__priceToBook__()
+        self.__Dividend_Yield__()
         self.__other__()
+
+    def __perc_change__(self):
+        try:
+            change = self.daily['Adj Close'][-1] - self.daily['Adj Close'][0]
+            perc_change = change/self.daily['Adj Close'][0]
+        except:
+            perc_change = np.nan
+        finally:
+            self.perc_change = float(perc_change)
 
     def __marketCap__(self):
         try:
@@ -106,10 +114,6 @@ class __stats__(__stocks__):
         finally:
             self.pricetobook = float(pb)
 
-    def __regularMarketPrice__(self):
-        self.pricereg = self.data.iloc[0]['regularMarketPrice']
-        self.price = self.data.iloc[0]['price']
-
     def __Dividend_Yield__(self):
         try:
             divyield = self.data.iloc[0]['trailingAnnualDividendYield']
@@ -119,12 +123,14 @@ class __stats__(__stocks__):
             self.div_r = float(divyield)
 
     def __other__(self):
+        self.price = self.data.iloc[0]['price']
         self.outstand = self.data.iloc[0]['sharesOutstanding']
         try:
-            self.pricetocash = float(self.price/(balance_sheet(self.symbol).cash/self.outstand))
+            pricetocash = float(self.price/(balance_sheet(self.symbol).cash/self.outstand))
         except:
-            self.pricetocash = np.nan
+            pricetocash = np.nan
         finally:
+            self.pricetocash = pricetocash
             self.volume = self.data.iloc[0]['regularMarketVolume']
             self.name = self.data.iloc[0]['longName']
         
@@ -178,23 +184,12 @@ class calculations(__stats__):
     
 class industry:
         def __init__(self, df_list):
+            self.df_list = df_list
+            self.concat_df = pandas.concat(df_list, axis=1)
             self.__industry_averages__(df_list)
             self.__industry_ratios__()
         
-        def __perc_change__(self):
-            try:
-                self.change = list(map(lambda x, y: self.industry_dict[y][x].daily['Adj Close'][-1] - d[y][x].daily['Adj Close'][0], self.df_list, range(0, len(self.df_list))))
-            except:
-                change = np.nan
-            finally:
-                self.perc_change = float(change)
-                self.perc_change = list(map(lambda x, y: change[y]/d[y][x].daily['Adj Close'][0], indust_list, range(0, len(indust_list))))
-                self.average = pandas.Series(perc_change).mean()
-                self.perc_avg = list(map(lambda x: perc_change[x] - average, range(0, len(perc_change))))
-            
-        def __industry_averages__(self, df_list):
-            self.df_list = df_list
-            self.concat_df = pandas.concat(df_list, axis=1)
+        def __industry_averages__(self):
             self.avg_divr = self.concat_df.iloc[3].mean()
             self.avg_return = self.concat_df.iloc[2].mean()
             self.avg_beta = self.concat_df.iloc[5].mean()
