@@ -82,7 +82,7 @@ class __stats__(__stocks__):
         except:
             cap = np.nan
         finally:
-            self.marketcap = float(cap)
+            self.marketcap = int(cap)
             
     def __PE__(self):
         try:
@@ -127,10 +127,14 @@ class __stats__(__stocks__):
             self.perc_change = float(change)
 
     def __other__(self):
-        self.volume = self.data.iloc[0]['regularMarketVolume']
         self.outstand = self.data.iloc[0]['sharesOutstanding']
-        self.name = self.data.iloc[0]['longName']
-        self.pricetocash = float(self.price/(balance_sheet(self.symbol).cash/self.outstand))
+        try:
+            self.pricetocash = float(self.price/(balance_sheet(self.symbol).cash/self.outstand))
+        except:
+            self.pricetocash = np.nan
+        finally:
+            self.volume = self.data.iloc[0]['regularMarketVolume']
+            self.name = self.data.iloc[0]['longName']
         
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
