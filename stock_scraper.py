@@ -177,9 +177,9 @@ class calculations(__stats__):
     
     def __riskadj__(self):
         if np.isnan(float(self.beta)):
-            self.returns_adj = self.t_r
+            self.returns_adj = self.div_r
         else:
-            self.returns_adj = self.t_r/float(self.beta)
+            self.returns_adj = abs(self.div_r/float(self.beta))
             
     def __capitalization__(self):
         self.price_cap = (self.price*self.outstand)/self.marketcap
@@ -233,9 +233,9 @@ class industry:
                              'avg_so': self.avg_so}
             
         def __industry_ratios__(self):
-            self.industry_dict = {'to avg_return': (1-self.concat_df.iloc[2].divide(self.avg_return)),
-                                'to avg_1pe': (1-self.concat_df.iloc[5].divide(self.avg_one_pe)),
-                                'to avg_divr': (1-self.concat_df.iloc[-1].divide(self.avg_divr)),
+            self.industry_dict = {'to avg_return': (self.concat_df.iloc[2].subtract(self.avg_return)),
+                                'to avg_1pe': (1-self.concat_df.iloc[5].subtract(self.avg_one_pe)),
+                                'to avg_divr': (1-self.concat_df.iloc[-1].subtract(self.avg_divr)),
                                 'to avg_pb': self.concat_df.iloc[12].divide(self.avg_pb),
                                 'to avg_mc': self.concat_df.iloc[11].divide(self.avg_mc),
                                 'to avg_so': self.concat_df.iloc[17].divide(self.avg_so)}
