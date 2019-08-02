@@ -27,6 +27,7 @@ class financials:
         self.__stats__()
         self.__cashflow__()
         self.__analysis__()
+        self.__balancesheet__()
         
     def __financials__(self):
         symbol = self.symbol
@@ -94,4 +95,26 @@ class financials:
             self.earnings_history = np.nan
             self.eps_trend = np.nan
             self.eps_trend = np.nan
-            self.growth_estimates = np.nan        
+            self.growth_estimates = np.nan
+        
+    def __balancesheet__(self):
+        symbol = self.symbol
+        try:
+            bs = scrape(symbol).balance_sheet()
+            df = list(map(lambda x: pd.read_html(lxml.etree.tostring(bs[x], method='xml'))[0], range(0,len(bs))))
+            df[0].iloc[0][0] = 'Dates'
+            df = pd.concat(df)
+            cols = df.iloc[0]
+            df = df.set_axis(cols, axis='columns', inplace=False)
+            df = df.set_index('Dates')
+            rows = list(df.index)
+            df = df.replace('-', np.nan)
+            df = df.set_axis(rows, axis='rows', inplace=False)
+            self.current_assets = df[2:15]
+            self.current_liabilities = df.iloc[17:25, :]
+            self.stockholders_equity = df[18:]
+        except:
+            print(sys.last_value)
+            self.current_assets = np.nan
+            self.current_liabilities = np.nan
+            self.stockholders_equity = np.nan

@@ -105,7 +105,20 @@ class scrape:
             table = tree.xpath('//table')
         except:
             print(sys.last_value)
-            print('error in flow method')
+            print('error in analysis method')
+            table = self.__general__(url).findAll('span')
+        finally:
+            return table
+    
+    def balance_sheet(self):
+        url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
+        try:
+            page = requests.get(url)
+            tree = html.fromstring(page.content)
+            table = tree.xpath('//table')
+        except:
+            print(sys.last_value)
+            print('error in balance sheet method')
             table = self.__general__(url).findAll('span')
         finally:
             return table
