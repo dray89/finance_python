@@ -10,8 +10,8 @@ from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
 from pandas_datareader.yahoo.quotes import YahooQuotesReader
 from pandas import DataFrame
 import numpy as np
-from balance_sheet import balance_sheet
-from yahoo_scrape import scrape
+import balance_sheet
+from scrape import scrape
 import sys
 
 class __stocks__:

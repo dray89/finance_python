@@ -5,8 +5,7 @@ Created on Wed Jul 17 15:41:04 2019
 @author: rayde
 """
 import sys
-from yahoo_scrape import scrape
-from yahoofinancials import YahooFinancials
+from scrape import scrape
 import pandas as pd
 from pandas import DataFrame
 from bs4 import BeautifulSoup as soup
@@ -20,15 +19,25 @@ import requests
 class balance_sheet:
     def __init__(self, symbol):
         self.symbol = symbol
-        self.yahoo = YahooFinancials(symbol)
-        self.__get_bs__()
+        self.__getbs__()
         self.__split__()
         self.__keys__()
         self.__components__()
     
-    def __get_bs__(self):
+    def __getbs__(self):
         '''Retrieve balance sheet from yahoo '''
-        self.bsd = self.yahoo.get_financial_stmts('quarterly', 'balance')
+        try:
+            page = scrape(self.symbol).__quote__()
+            df = = lambda x: pd.read_html(lxml.etree.tostring(page, method='xml'))
+            df = pd.concat(df)
+            df = df.set_index(0)
+            df.columns = self.symbol
+            df = df.set_axis(df.index, axis='rows', inplace=False)
+        except:
+            print(sys.last_value)
+            df = np.nan
+        finally:
+            self.stats = df
         return self.bsd
     
     def __keys__(self):
@@ -221,44 +230,41 @@ class balance_sheet:
         self.chg_liabilities = (self.liabilities - self.liabilities3)/self.liabilities3
         self.chg_assets = (self.assets - self.assets3)/self.assets3
         self.chg_netrec = (self.netrec - self.netrec3)/self.netrec3
-        
-class financials:
-    def __init__(self, symbol):
-        self.symbol = symbol
-        self.data_frame()
-        
-    def data_frame(self):
-        self.tab = scrape(self.symbol).__financials__()
-        df = pd.read_html(lxml.etree.tostring(self.tab[0], method='xml'))[0]
-        df = df.drop(24)
-        df = df.set_index(0)
-        self.items = list(df.index)
-        df = df.replace('-', np.nan)
-        cols = list(df.iloc[0])
-        df = df.set_axis(cols, axis='columns', inplace=False)
-        df = df.set_axis(self.items, axis='rows', inplace=False)
-        self.df = df.drop('Revenue')
+
+class earnings:
+    def __init__(self, __symbol__):
+        self.symbol = __symbol__
+        self.yahoo = YahooFinancials(self.symbol)
+        self.__getearn__()
+        self.__quarterly__()
+        self.__yearly__()
     
-    def buyback_Yield(self):
-        pass
+    def __getearn__(self):
+        '''Get Earnings From Yahoo '''
+        try:
+            __data__ = self.yahoo.get_stock_earnings_data()
+        except:
+            print(sys.last_value)
+            __data__ = np.nan
+        finally:
+            self.data = __data__
     
-    def P_S(self):
-        pass
-    
-    def FCF(self):
-        pass
-    
-    def Net_debt(self):
-        pass
-    
-    def Debt_Cap(self):
-        pass
-    
-    def EBIT(self):    
-        pass 
-    
-    def EV(self):
-        pass
-    
-    def EBITDA_EV(self):    
-        pass
+    def __quarterly__(self):
+        data = self.data
+        try:
+            qtrdata = data[self.symbol]['earningsData']['quarterly']
+        except:
+            print(sys.last_value)
+            qtrdata = {self.symbol: np.nan}
+        finally:
+            self.quarterly = qtrdata
+
+    def __yearly__(self):
+        data = self.data
+        try:
+            yrdata = data[self.symbol]['financialsData']['yearly']
+        except:
+            print(sys.last_value)
+            yrdata = {self.symbol: np.nan}
+        finally:
+            self.yearly = yrdata

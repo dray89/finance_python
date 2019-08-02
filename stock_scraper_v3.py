@@ -11,7 +11,7 @@ from pandas_datareader.yahoo.quotes import YahooQuotesReader
 from pandas import DataFrame
 import numpy as np
 from balance_sheet import balance_sheet
-from yahoo_scrape import scrape
+from scrape import scrape
 import sys
 
 class __stocks__:
@@ -152,10 +152,13 @@ class calculations(__stats__):
         except:
             beta = np.nan
         finally:
-            self.beta = float(beta)
-    
+            if isinstance(beta, str):
+                self.beta = np.nan
+            else:
+                self.beta = beta
+                
     def __riskadj__(self):
-        if np.isnan(float(self.beta)):
+        if np.isnan(self.beta):
             self.returns_adj = self.div_r
         else:
             self.returns_adj = abs(self.div_r/self.beta)            
