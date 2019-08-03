@@ -46,7 +46,7 @@ class financials:
             self.financials = df.iloc[1:]
         except:
             print(sys.last_value)
-            self.financials = pd.nan
+            self.financials = np.nan
     
     def __stats__(self):
         symbol = self.symbol
@@ -110,9 +110,9 @@ class financials:
             rows = list(df.index)
             df = df.replace('-', np.nan)
             df = df.set_axis(rows, axis='rows', inplace=False)
-            self.current_assets = df[2:15]
-            self.current_liabilities = df.iloc[17:25, :]
-            self.stockholders_equity = df[18:]
+            self.current_assets = df[2:15].astype(int, copy=True, errors='ignore')
+            self.current_liabilities = df.iloc[17:25, :].astype(int, copy=True, errors='ignore')
+            self.stockholders_equity = df[28:].astype(int, copy=True, errors='ignore')
         except:
             print(sys.last_value)
             self.current_assets = np.nan
