@@ -103,14 +103,6 @@ class __stats__(__stocks__):
             self.trailingpe = float(trailing)
             self.one_pe = float(one_pe)
 
-    def __priceToBook__(self):
-        try:
-            pb = self.data.iloc[0]['priceToBook']
-        except:
-            pb = np.nan
-        finally:
-            self.pricetobook = float(pb)
-
     def __Dividend_Yield__(self):
         try:
             divyield = self.data.iloc[0]['trailingAnnualDividendYield']
@@ -122,15 +114,9 @@ class __stats__(__stocks__):
     def __other__(self):
         self.price = self.data.iloc[0]['price']
         self.outstand = self.data.iloc[0]['sharesOutstanding']
-        try:
-            pricetocash = float(self.price/(balance_sheet(self.symbol).cash/self.outstand))
-        except:
-            pricetocash = np.nan
-        finally:
-            self.pricetocash = pricetocash
-            self.volume = self.data.iloc[0]['regularMarketVolume']
-            self.name = self.data.iloc[0]['longName']
-        
+        self.volume = self.data.iloc[0]['regularMarketVolume']
+        self.name = self.data.iloc[0]['longName']
+    
 class calculations(__stats__):
     def __init__(self, symbol, source, start, end, sort=True):
         super().__init__(symbol, source, start, end, sort=True)
@@ -188,28 +174,39 @@ class industry:
             self.concat_df = pandas.concat(df_list, axis=1)
             self.__industry_averages__()
             self.__industry_ratios__()
-        
-        def __industry_averages__(self):
-            self.avg_divr = self.concat_df.iloc[3].mean()
-            self.avg_return = self.concat_df.iloc[2].mean()
-            self.avg_beta = self.concat_df.iloc[5].mean()
-            self.avg_pb = self.concat_df.iloc[7].mean()
-            self.avg_one_pe = self.concat_df.iloc[8].mean()
-            self.avg_mc = self.concat_df.iloc[9].mean()
-            self.avg_so = self.concat_df.iloc[11].mean()
-            self.averages = {'avg_divr': self.avg_divr,
-                            'avg_return': self.avg_return,
-                            'avg_beta': self.avg_beta,
-                             'avg_one_pe': self.avg_one_pe,
-                             'avg_pb': self.avg_pb,
-                             'avg_mc': self.avg_mc,
-                             'avg_so': self.avg_so}
             
+        def __industry_averages__(self):
+            '''format NaN ''' 
+            d = self.concat_df
+            d = d.fillna(np.nan)
+            d = d.infer_objects()
+            
+            '''Create Average Column '''
+            d['Average'] = d[1:].mean(axis=1)
+            d['Average'] = pandas.to_numeric(d['Average'], errors='coerce')
+            d['Average'] = d.iloc[1:].mean(axis=1)
+            self.averages = d['Average']
+            
+            '''Style DataFrame '''
+            transposed_df = d.T.style.format({'perc_change': lambda x: "{:.2f}%".format(x*100), 
+                                    'price': lambda x: "${:.2f}".format(x), 
+                                    'dividend yield': lambda x: "{:.2f}%".format(x*100), 
+                                    'total_return': lambda x: "{:.2f}%".format(x*100), 
+                                    'returns (adj)': lambda x: "{:.2f}%".format(x*100), 
+                                    '1/PE': lambda x: "{:.2f}%".format(x*100), 
+                                    'dividend': lambda x: "${:.2f}".format(x),
+                                    'volume': lambda x: "{:,.0f}".format(x),
+                                    'marketcap': lambda x: "{:,.0f}".format(x),
+                                    'shares outstanding': lambda x: "{:,.0f}".format(x) })
+            return transposed_df
+        
         def __industry_ratios__(self):
-            self.industry_dict = {'to avg_return': (self.concat_df.iloc[2].subtract(self.avg_return)),
-                                'to avg_1pe': (1-self.concat_df.iloc[8].subtract(self.avg_one_pe)),
-                                'to avg_divr': (1-self.concat_df.iloc[3].subtract(self.avg_divr)),
-                                'to avg_pb': self.concat_df.iloc[7].divide(self.avg_pb),
-                                'to avg_mc': self.concat_df.iloc[9].divide(self.avg_mc),
-                                'to avg_so': self.concat_df.iloc[11].divide(self.avg_so)}
+            sub = lambda x: self.d.iloc[x].subtract(self.averages[x])
+            div = lambda x: self.d.iloc[x].divide(self.averages[x])
+            self.industry_dict = {'to avg_return': (sub(4)),
+                                'to avg_1pe': (1-sub(8)),
+                                'to avg_divr': (1-sub(3)),
+                                'to avg_pb': div(7),
+                                'to avg_mc': div(9),
+                                'to avg_so': div(11)}
             self.industry_df = pandas.DataFrame.from_dict(self.industry_dict).T

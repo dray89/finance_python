@@ -52,9 +52,9 @@ class balance_sheet(financials):
         '''combine''' 
         self.bs = pd.DataFrame([retained_earnings, equity, net_tangibles,
                      debt, liabilities, netrec, total_assets, int_assets,
-                     cash]).fillna(0).astype(int, errors='ignore')
+                     cash, net_assets]).fillna(0).astype(int, errors='ignore')
         self.bs.columns.name = self.symbol.upper()
             
         diff = np.subtract(self.bs.T.iloc[0], self.bs.T.iloc[1])
         self.changes = np.divide(diff, self.bs.T.iloc[1])
-        self.changes.name = symbol.upper()
+        self.changes.name = self.symbol.upper()
