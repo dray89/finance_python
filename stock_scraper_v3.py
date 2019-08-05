@@ -73,7 +73,7 @@ class get_data:
             change = np.subtract(float(close[len(close)-1]), float(close[0]))
             self.perc_change = float(change)/float(close[0])
         except:
-            print('error occurred in perc_change method')
+            print(self.symbol, ': error occurred in perc_change method')
 
     def __divr__(self):
         try:
@@ -88,14 +88,20 @@ class get_data:
                 self.div_r = 0
             
     def __Total_Return__(self):
-        if self.div_r==0:
-            self.t_r = float(self.perc_change)
+        if hasattr(self, 'stockholders_equity'):
+            if self.div_r==0:
+                self.t_r = float(self.perc_change)
+            else:
+                self.t_r = float(self.div_r + self.perc_change)
         else:
-            self.t_r = float(self.div_r + self.perc_change)
+            self.t_r = np.nan
             
     def __riskadj__(self):
-        if np.isnan(self.bsd.beta[0]):
-            self.returns_adj = self.div_r
+        if hasattr(self, 'stockholders_equity'):
+            if np.isnan(self.bsd.beta[0]):
+                self.returns_adj = self.div_r
+            else:
+                self.returns_adj = abs(self.div_r/self.bsd.beta)   
         else:
-            self.returns_adj = abs(self.div_r/self.bsd.beta)            
+            self.returns_adj = self.div_r
       

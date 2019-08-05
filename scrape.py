@@ -54,8 +54,8 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')        
         except:
-            print('error in statistics method: ' , sys.last_value)
-            table = self.__general__(url)
+            print('error in statistics method: ')
+            table = html.fromstring(page.content)
         finally:
             return table
         
@@ -88,7 +88,7 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')
         except:
-            print('error in flow method:' , sys.last_value)
+            print('error in flow method:')
             table = self.__general__(url).findAll('span')            
         finally:
             return table

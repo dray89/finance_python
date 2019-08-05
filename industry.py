@@ -4,6 +4,9 @@ Created on Sun Aug  4 11:02:44 2019
 
 @author: rayde
 """
+import pandas
+from pandas import DataFrame
+import numpy as np
 
     
 class industry:
@@ -11,7 +14,6 @@ class industry:
             self.df_list = df_list
             self.concat_df = pandas.concat(df_list, axis=1)
             self.__industry_averages__()
-            self.__industry_ratios__()
             
         def __industry_averages__(self):
             '''format NaN ''' 
@@ -24,9 +26,10 @@ class industry:
             d['Average'] = pandas.to_numeric(d['Average'], errors='coerce')
             d['Average'] = d.iloc[1:].mean(axis=1)
             self.averages = d['Average']
-            
+            self.d = d
             '''Style DataFrame '''
-            transposed_df = d.T.style.format({'perc_change': lambda x: "{:.2f}%".format(x*100), 
+        def __style__(self):
+            transposed_df = self.d.T.style.format({'perc_change': lambda x: "{:.2f}%".format(x*100), 
                                     'price': lambda x: "${:.2f}".format(x), 
                                     'dividend yield': lambda x: "{:.2f}%".format(x*100), 
                                     'total_return': lambda x: "{:.2f}%".format(x*100), 
@@ -39,8 +42,9 @@ class industry:
             return transposed_df
         
         def __industry_ratios__(self):
-            sub = lambda x: self.d.iloc[x].subtract(self.averages[x])
-            div = lambda x: self.d.iloc[x].divide(self.averages[x])
+            d = self.d
+            sub = lambda x: d.iloc[x].subtract(self.averages[x])
+            div = lambda x: d.iloc[x].divide(self.averages[x])
             self.industry_dict = {'to avg_return': (sub(4)),
                                 'to avg_1pe': (1-sub(8)),
                                 'to avg_divr': (1-sub(3)),
