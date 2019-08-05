@@ -15,7 +15,6 @@ from urllib.request import urlopen
 import numpy as np
 import lxml
 from lxml import html
-import requests
     
 class financials:
     def __init__(self, symbol):
@@ -59,9 +58,13 @@ class financials:
             df = df.set_index('Item')
             rows = list(df.index)
             self.stats = df.set_axis(rows, axis='rows', inplace=False)
+            dex = list(self.stats.index)
         except:
             print(sys.last_value)
             self.stats = np.nan
+        finally:             
+            index_beta = dex.index('Beta (3Y Monthly)')
+            self.beta = self.stats.iloc[index_beta].astype(float)
    
     def __cashflow__(self):
         symbol = self.symbol

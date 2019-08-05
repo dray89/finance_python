@@ -5,20 +5,18 @@ Created on Thu Jul  4 19:34:10 2019
 @author: rayde
 """
 import pandas
-from pandas_datareader import DataReader
-from pandas_datareader.yahoo.actions import YahooActionReader, YahooDivReader
-from pandas_datareader.yahoo.quotes import YahooQuotesReader
 from pandas import DataFrame
 import numpy as np
-from balance_sheet import balance_sheet
 from scrape import scrape
 import sys
+import lxml
+from lxml import html
+from balance_sheet import balance_sheet
 
-class __stocks__:
-    def __init__(self, symbol, source, start, end, sort=True):
+class get_data:
+    def __init__(self, symbol, start, end, sort=True):
         '''parameters'''
         self.symbol = symbol
-        self.source = source
         self.start = start
         self.end = end
         self.__basic__()
@@ -28,185 +26,76 @@ class __stocks__:
         self.__readers__()
         self.__description__()
         self.__div_history__()
-    
+        self.__perc_change__()
+        self.__divr__()
+        self.__Total_Return__()
+        self.__riskadj__()
+        
     def __readers__(self): 
-        '''Generate Dividend and Split info'''
-        self.yar = YahooActionReader(self.symbol, self.start, self.end)
-        ''' Generate Intermediate Data'''
-        self.quote = YahooQuotesReader(self.symbol, self.start, self.end)
-        self.daily = DataReader(self.symbol, self.source, self.start, self.end)
-        self.data = self.quote.read()
+        '''Generate Dividend'''
+        self.yar = scrape(self.symbol).dividends()
+        self.profile = scrape(self.symbol).__profile__()
+        self.daily = scrape(self.symbol).history(self.start, self.end)
+        self.bsd = balance_sheet(self.symbol)
         
     def __div_history__(self):
+        dividends = self.yar
         try:
-            history = self.yar.read()
-            dividend = history.iloc[0][1]
+            df = list(map(lambda x: pandas.read_html(lxml.etree.tostring(dividends[x], method='xml'))[0], range(0,len(dividends))))
+            df = pandas.concat(df)
+            df = df.drop(4)
+            df = df.set_index('Date')
+            df  = df['Dividends']
+            self.dividends = df.str.replace(r'\Dividend', '').astype(float)
         except:
-            history = np.nan
-            dividend = np.nan
-        finally:
-            self.div_history = history
-            self.dividend = float(dividend)
-            
+            self.dividends = 0
+        
     def __description__(self):
+        s = self.profile
         try:
-            s = scrape(self.symbol).__profile__()
             industry = s.find('span', string='Industry').find_next().text
             description = s.find('span', string='Description').find_next().text
         except:
-            print(sys.last_value)
+            industry = "no industry found"
+            description = "no description found"
         finally:
-            self.industry=industry
+            self.industry= industry
             self.description = description
         
-class __stats__(__stocks__):
-    def __init__(self, symbol, source, start, end, sort=True):
-        super().__init__(symbol, source, start, end, sort=True)
-        self.__attributes__()
-        
-    def __attributes__(self):
-        self.__perc_change__()
-        self.__marketCap__()              
-        self.__PE__()
-        self.__priceToBook__()
-        self.__Dividend_Yield__()
-        self.__other__()
-
     def __perc_change__(self):
+        daily = self.daily
         try:
-            change = self.daily['Adj Close'][-1] - self.daily['Adj Close'][0]
-            perc_change = change/self.daily['Adj Close'][0]
+            df = list(map(lambda x: pandas.read_html(lxml.etree.tostring(daily[x], method='xml'))[0], range(0,len(daily))))
+            df = pandas.concat(df).astype(float, errors='ignore')
+            df = df.drop(len(df) - 1)
+            self.history = df.set_index('Date')
+            close = self.history['Close*']
+            change = np.subtract(float(close[len(close)-1]), float(close[0]))
+            self.perc_change = float(change)/float(close[0])
         except:
-            perc_change = np.nan
-        finally:
-            self.perc_change = float(perc_change)
+            print('error occurred in perc_change method')
 
-    def __marketCap__(self):
+    def __divr__(self):
         try:
-            cap = self.data.iloc[0]['marketCap']
+            self.price = float(self.history['Close*'][0])       
         except:
-            cap = np.nan
-        finally:
-            self.marketcap = int(cap)
+            self.price = 0
+            print(self.symbol , ': This stock probably has no price information.')
+        finally: 
+            try:
+                self.div_r = np.divide(self.dividends[0], self.price)
+            except:
+                self.div_r = 0
             
-    def __PE__(self):
-        try:
-            forward = self.data.iloc[0]['forwardPE']
-            trailing = self.data.iloc[0]['trailingPE']
-            one_pe = 1/trailing
-        except:
-            forward = np.nan
-            trailing = np.nan
-            one_pe = np.nan
-        finally:
-            self.forwardpe = float(forward)
-            self.trailingpe = float(trailing)
-            self.one_pe = float(one_pe)
-
-    def __Dividend_Yield__(self):
-        try:
-            divyield = self.data.iloc[0]['trailingAnnualDividendYield']
-        except:
-            divyield = np.nan
-        finally:
-            self.div_r = float(divyield)
-
-    def __other__(self):
-        self.price = self.data.iloc[0]['price']
-        self.outstand = self.data.iloc[0]['sharesOutstanding']
-        self.volume = self.data.iloc[0]['regularMarketVolume']
-        self.name = self.data.iloc[0]['longName']
-    
-class calculations(__stats__):
-    def __init__(self, symbol, source, start, end, sort=True):
-        super().__init__(symbol, source, start, end, sort=True)
-        self.__Total_Return__()
-        self.__Beta__()
-        self.__riskadj__()
-        self.calcdf = self.__df__()
-
     def __Total_Return__(self):
-        if np.isnan(self.div_r):
+        if self.div_r==0:
             self.t_r = float(self.perc_change)
         else:
             self.t_r = float(self.div_r + self.perc_change)
             
-    def __Beta__(self):
-        try:
-            soup_page = scrape(self.symbol).__quote__()
-            beta = soup_page.find('span', string = 'Beta (3Y Monthly)').find_next().text
-        except:
-            beta = np.nan
-        finally:
-            if isinstance(beta, str):
-                self.beta = np.nan
-            else:
-                self.beta = beta
-                
     def __riskadj__(self):
-        if np.isnan(self.beta):
+        if np.isnan(self.bsd.beta[0]):
             self.returns_adj = self.div_r
         else:
-            self.returns_adj = abs(self.div_r/self.beta)            
+            self.returns_adj = abs(self.div_r/self.bsd.beta)            
       
-    def __df__(self):
-        data = {'name':[self.name], 
-                          'price':[self.price],
-                          'perc_change' : [self.perc_change],
-                          'dividend yield':[self.div_r],
-                          'total_return':[self.t_r],
-                          'beta':[float(self.beta)],
-                          'returns (adj)':[self.returns_adj],
-                          'priceToBook':[self.pricetobook],
-                          '1/PE':[self.one_pe],
-                          'marketcap':[self.marketcap],
-                          'shares outstanding': [self.outstand],
-                          'trailingPE':[self.trailingpe],
-                          'forwardPE':[self.forwardpe],
-                          'pricetocash':[self.pricetocash],
-                          'dividend': [self.dividend],
-                          'volume': [self.volume]}   
-        return DataFrame.from_dict(data, orient= 'index', columns = [self.symbol])
-    
-class industry:
-        def __init__(self, df_list):
-            self.df_list = df_list
-            self.concat_df = pandas.concat(df_list, axis=1)
-            self.__industry_averages__()
-            self.__industry_ratios__()
-            
-        def __industry_averages__(self):
-            '''format NaN ''' 
-            d = self.concat_df
-            d = d.fillna(np.nan)
-            d = d.infer_objects()
-            
-            '''Create Average Column '''
-            d['Average'] = d[1:].mean(axis=1)
-            d['Average'] = pandas.to_numeric(d['Average'], errors='coerce')
-            d['Average'] = d.iloc[1:].mean(axis=1)
-            self.averages = d['Average']
-            
-            '''Style DataFrame '''
-            transposed_df = d.T.style.format({'perc_change': lambda x: "{:.2f}%".format(x*100), 
-                                    'price': lambda x: "${:.2f}".format(x), 
-                                    'dividend yield': lambda x: "{:.2f}%".format(x*100), 
-                                    'total_return': lambda x: "{:.2f}%".format(x*100), 
-                                    'returns (adj)': lambda x: "{:.2f}%".format(x*100), 
-                                    '1/PE': lambda x: "{:.2f}%".format(x*100), 
-                                    'dividend': lambda x: "${:.2f}".format(x),
-                                    'volume': lambda x: "{:,.0f}".format(x),
-                                    'marketcap': lambda x: "{:,.0f}".format(x),
-                                    'shares outstanding': lambda x: "{:,.0f}".format(x) })
-            return transposed_df
-        
-        def __industry_ratios__(self):
-            sub = lambda x: self.d.iloc[x].subtract(self.averages[x])
-            div = lambda x: self.d.iloc[x].divide(self.averages[x])
-            self.industry_dict = {'to avg_return': (sub(4)),
-                                'to avg_1pe': (1-sub(8)),
-                                'to avg_divr': (1-sub(3)),
-                                'to avg_pb': div(7),
-                                'to avg_mc': div(9),
-                                'to avg_so': div(11)}
-            self.industry_df = pandas.DataFrame.from_dict(self.industry_dict).T

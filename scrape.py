@@ -4,21 +4,18 @@ Created on Thu Jul 25 18:06:26 2019
 
 @author: rayde
 """
-import sys
+import sys, time, datetime, os, re, lxml, requests
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from datetime import datetime, date, timedelta
 from newspaper import Article
 import numpy as np 
-import lxml
 from lxml import html
-import requests
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
-import re
+
 import pandas as pd
-import os
 
 class scrape:
     def __init__(self, symbol):
@@ -45,7 +42,7 @@ class scrape:
         try:
             soup_page = self.__general__(url)
         except:
-            print(sys.last_value)
+            print('error in profile method :' , sys.last_value)
             soup_page = self.__general__("https://finance.yahoo.com/")
         finally:
             return soup_page 
@@ -57,7 +54,7 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')        
         except:
-            print(sys.last_value)
+            print('error in statistics method: ' , sys.last_value)
             table = self.__general__(url)
         finally:
             return table
@@ -67,7 +64,7 @@ class scrape:
         try:
             soup_page = self.__general__(url)
         except:
-            print(sys.last_value)
+            print('error in quote method: ' + sys.last_value)
             soup_page = self.__general__("https://finance.yahoo.com/")
         finally:
             return soup_page 
@@ -79,7 +76,7 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')
         except:
-            print(sys.last_value)
+            print('error in financials method: ' , sys.last_value)
             table = self.__general__(url)            
         finally:
             return table
@@ -91,8 +88,7 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')
         except:
-            print(sys.last_value)
-            print('error in flow method')
+            print('error in flow method:' , sys.last_value)
             table = self.__general__(url).findAll('span')            
         finally:
             return table
@@ -104,8 +100,7 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')
         except:
-            print(sys.last_value)
-            print('error in analysis method')
+            print('error in analysis method:' , sys.last_value)
             table = self.__general__(url).findAll('span')
         finally:
             return table
@@ -117,8 +112,29 @@ class scrape:
             tree = html.fromstring(page.content)
             table = tree.xpath('//table')
         except:
-            print(sys.last_value)
-            print('error in balance sheet method')
+            print('error in balance sheet method:' , sys.last_value)
+            table = self.__general__(url).findAll('span')
+        finally:
+            return table
+    
+    def history(self, start, end):
+        symbol = self.symbol
+        start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        url = "https://finance.yahoo.com/quote/" + symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
+        page = requests.get(url)
+        tree = html.fromstring(page.content)
+        table = tree.xpath('//table')
+        return table
+    
+    def dividends(self):
+        url = "https://finance.yahoo.com/quote/" + self.symbol + "/history?interval=div%7Csplit&filter=div&frequency=1d"
+        try:
+            page = requests.get(url)
+            tree = html.fromstring(page.content)
+            table = tree.xpath('//table')
+        except:
+            print('error in dividends method: ' , sys.last_value)
             table = self.__general__(url).findAll('span')
         finally:
             return table
