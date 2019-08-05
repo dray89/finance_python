@@ -45,23 +45,19 @@ class balance_sheet(financials):
             int_assets = self.current_assets.iloc[9].astype(int, errors = 'ignore')
             cash = self.current_assets.iloc[0].astype(int, errors = 'ignore')
             '''calculations'''
-            if (isinstance(total_assets, str) or isinstance(liabilities, str)):
-                net_assets = np.nan
-            elif(np.isnan(total_assets) or np.isnan(liabilities)):
-                net_assets = np.nan
-            else:
-                net_assets = np.subtract(total_assets.astype(int), liabilities.astype(int))
+            try:
+                net_assets = np.subtract(total_assets, liabilities)
                 net_assets.name = 'Net Current Assets'
-            '''combine''' 
-            self.bs = pd.DataFrame([retained_earnings, equity, net_tangibles,
-                         debt, liabilities, netrec, total_assets, int_assets,
-                         cash, net_assets]).fillna(0).astype(int, errors='ignore')
-            self.bs.columns.name = self.symbol.upper()
-            if len(self.bs.T.index)>0:                
-                diff = np.subtract(self.bs.T.iloc[0], self.bs.T.iloc[1])
-                self.changes = np.divide(diff, self.bs.T.iloc[1])
-                self.changes.name = self.symbol.upper()
-            else:
-                pass
-        else:
-            self.bs = DataFrame([np.nan])
+                '''combine''' 
+            except:
+                net_assets = np.nan
+            finally:
+                self.bs = pd.DataFrame([retained_earnings, equity, net_tangibles,
+                                 debt, liabilities, netrec, total_assets, int_assets,
+                                 cash, net_assets]).fillna(0).astype(int, errors='ignore')
+                self.bs.columns.name = self.symbol.upper()
+                '''combine''' 
+                if len(self.bs.T.index)>0:                
+                    diff = np.subtract(self.bs.T.iloc[0], self.bs.T.iloc[1])
+                    self.changes = np.divide(diff, self.bs.T.iloc[1])
+                    self.changes.name = self.symbol.upper()

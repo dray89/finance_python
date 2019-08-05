@@ -48,7 +48,6 @@ class scrape:
         page = requests.get(url)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')        
-        table = html.fromstring(page.content)
         return table
         
     def __quote__(self):         
@@ -62,7 +61,6 @@ class scrape:
         page = requests.get(url)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
-        table = self.__general__(url)            
         return table
     
     def flow(self):
@@ -77,7 +75,6 @@ class scrape:
         page = requests.get(url)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
-        table = self.__general__(url).findAll('span')
         return table
     
     def balance_sheet(self):
@@ -85,7 +82,6 @@ class scrape:
         page = requests.get(url)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
-        table = self.__general__(url).findAll('span')
         return table
     
     def history(self, start, end):
@@ -103,5 +99,4 @@ class scrape:
         page = requests.get(url)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
-        table = self.__general__(url).findAll('span')
         return table

@@ -30,9 +30,7 @@ class financials:
     def __financials__(self):
         symbol = self.symbol
         tab = scrape(symbol).__financials__()
-        if len(tab) == 0:
-            return DataFrame([np.nan])
-        else:
+        if len(tab) == 1:
             df = pd.read_html(lxml.etree.tostring(tab[0], method='xml'))[0]
             df = df.drop(24)
             df.iloc[0][0] = 'Dates'
@@ -44,14 +42,14 @@ class financials:
             df = df.replace('-', np.nan)
             df = df.set_axis(rows, axis='rows', inplace=False)
             self.financials = df.iloc[1:]
+        else:
+            return DataFrame([np.nan])
     
     def __stats__(self):
         symbol = self.symbol
         stats = scrape(symbol).__statistics__()
-        df = list(map(lambda x: pd.read_html(lxml.etree.tostring(stats[x], method='xml'))[0], range(0,len(stats))))
-        if len(df) == 0:
-            self.stats = DataFrame([np.nan])
-        else:
+        if len(stats) > 0:
+            df = list(map(lambda x: pd.read_html(lxml.etree.tostring(stats[x], method='xml'))[0], range(0,len(stats))))
             df = pd.concat(df)
             cols = ['Item', symbol.upper()]
             df = df.set_axis(cols, axis='columns', inplace=False)
@@ -60,6 +58,9 @@ class financials:
             self.stats = df.set_axis(rows, axis='rows', inplace=False)           
             index_beta = rows.index('Beta (3Y Monthly)')
             self.beta = self.stats.iloc[index_beta].astype(float)
+        else:
+            self.stats = DataFrame([np.nan])
+
         
     def __cashflow__(self):
         symbol = self.symbol
