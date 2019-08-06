@@ -60,7 +60,6 @@ class financials:
             self.beta = self.stats.iloc[index_beta].astype(float)
         else:
             self.stats = DataFrame([np.nan])
-
         
     def __cashflow__(self):
         symbol = self.symbol
@@ -80,7 +79,7 @@ class financials:
         cash = scrape(symbol).analysis()
         df = list(map(lambda x: pd.read_html(lxml.etree.tostring(cash[x], method='xml'))[0], range(0,len(cash))))
         if len(df) == 0:
-            return DataFrame([np.nan])
+            self.analysis = DataFrame([np.nan])
         else:    
             self.earnings = df[0].set_index('Earnings Estimate')            
             self.revenue = df[1].set_index('Revenue Estimate')
@@ -93,8 +92,8 @@ class financials:
         symbol = self.symbol
         bs = scrape(symbol).balance_sheet()
         df = list(map(lambda x: pd.read_html(lxml.etree.tostring(bs[x], method='xml'))[0], range(0,len(bs))))
-        if len(df) == 0:
-            return DataFrame([np.nan]) 
+        if len(df[0].columns) == 1:
+            self.bs = DataFrame([np.nan]) 
         else:
             df[0].iloc[0][0] = 'Dates'
             df = pd.concat(df)

@@ -40,7 +40,6 @@ class scrape:
     def __profile__(self):
         url="https://finance.yahoo.com/quote/" + self.symbol + "/profile?p=" + self.symbol
         soup_page = self.__general__(url)
-        soup_page = self.__general__("https://finance.yahoo.com/")
         return soup_page 
         
     def __statistics__(self):
@@ -53,7 +52,6 @@ class scrape:
     def __quote__(self):         
         url="https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol
         soup_page = self.__general__(url)
-        soup_page = self.__general__("https://finance.yahoo.com/")
         return soup_page 
     
     def __financials__(self):

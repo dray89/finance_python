@@ -19,8 +19,6 @@ import time
 
 start = time.time()
 
-data = list(map(lambda x: get_data(x, source, start, end), communications))
-
 end = time.time()
 
 print(end - start)
