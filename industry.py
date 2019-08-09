@@ -27,7 +27,7 @@ class industry:
             d['Average'] = d.iloc[1:].mean(axis=1)
             self.averages = d['Average']
             self.d = d
-            '''Style DataFrame '''
+            
         def __style__(self):
             transposed_df = self.d.T.style.format({'perc_change': lambda x: "{:.2f}%".format(x*100), 
                                     'price': lambda x: "${:.2f}".format(x), 
