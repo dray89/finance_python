@@ -24,7 +24,7 @@ class financials:
                            'current_assets', 'current_liabilities',
                            'stockholders_equity', 'analysis','growth_estimates', 
                            'eps_revisions','eps_trend','earnings_history', 'revenue', 
-                           'earnings]
+                           'earnings']
     
     def __combine__(self):
         self.__financials__()

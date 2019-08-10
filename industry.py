@@ -16,7 +16,10 @@ class industry:
         def __init__(self, df_list):
             self.df_list = df_list
             self.concat_df()
-            self.__industry_averages__()
+            self.changes()
+            self.print_sentences()
+            self.attributes = ['ind', 'maximum', 'minimum', 'max_list', 
+                               'min_list', 'max_sentence', 'min_sentence']
         
         def concat_df(self):
             ind = pandas.concat(self.df_list, axis=1).dropna(how='all')
