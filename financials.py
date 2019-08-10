@@ -19,6 +19,12 @@ class financials:
     def __init__(self, symbol):
         self.symbol = symbol
         self.__combine__()
+        self.attributes = ['financials', 'stats', 
+                           'beta', 'cashflow', 
+                           'current_assets', 'current_liabilities',
+                           'stockholders_equity', 'analysis','growth_estimates', 
+                           'eps_revisions','eps_trend','earnings_history', 'revenue', 
+                           'earnings]
     
     def __combine__(self):
         self.__financials__()
@@ -43,7 +49,7 @@ class financials:
             df = df.set_axis(rows, axis='rows', inplace=False)
             self.financials = df.iloc[1:]
         else:
-            return DataFrame([np.nan])
+            self.financials = DataFrame([np.nan])
     
     def __stats__(self):
         symbol = self.symbol
@@ -85,7 +91,7 @@ class financials:
             self.revenue = df[1].set_index('Revenue Estimate')
             self.earnings_history = df[2].set_index('Earnings History')
             self.eps_trend = df[3].set_index('EPS Trend')
-            self.eps_trend = df[4].set_index('EPS Revisions')
+            self.eps_revisions = df[4].set_index('EPS Revisions')
             self.growth_estimates = df[5].set_index('Growth Estimates')        
         
     def __balancesheet__(self):

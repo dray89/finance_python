@@ -20,7 +20,11 @@ class get_data:
         self.start = start
         self.end = end
         self.__basic__()
-
+        self.attributes = ['dividends', 'industry', 
+                           'description', 'history', 
+                           'perc_change', 'price',
+                           'div_r', 't_r','returns_adj']
+        
     def __basic__(self):
         '''Grab Basic Current Info '''
         self.__readers__()
