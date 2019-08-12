@@ -14,7 +14,8 @@ class balance_sheet(financials):
         super().__init__(symbol)
         self.__split__()
         self.__items__()
-    
+        self.attributes.append('yearly_dates', 'all_years', 'changes')
+
     def __split__(self):
         if hasattr(self, 'stockholders_equity'):
             self.yearly_dates = list(self.stockholders_equity.columns)
