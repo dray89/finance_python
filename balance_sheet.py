@@ -18,7 +18,9 @@ class balance_sheet(financials):
     def __split__(self):
         if hasattr(self, 'stockholders_equity'):
             self.yearly_dates = list(self.stockholders_equity.columns)
-            self.all_years = pd.concat([self.stockholders_equity, self.current_liabilities, self.current_assets]).fillna(np.nan).astype(float, errors='ignore')
+            self.all_years = pd.concat([self.stockholders_equity,
+                                        self.current_liabilities,
+                                        self.current_assets]).fillna(np.nan).astype(float, errors='ignore')
              
     def __items__(self):
         if hasattr(self, 'stockholders_equity'):

@@ -23,7 +23,7 @@ class get_data:
         self.attributes = ['dividends', 'industry', 
                            'description', 'history', 
                            'perc_change', 'price',
-                           'div_r', 't_r','returns_adj']
+                           'div_r', 't_r','returns_adj', 'bsd']
         
     def __basic__(self):
         '''Grab Basic Current Info '''
@@ -74,8 +74,8 @@ class get_data:
             df = df.drop(len(df) - 1)
             self.history = df.set_index('Date')
             close = self.history['Close*']
-            change = np.subtract(float(close[len(close)-1]), float(close[0]))
-            self.perc_change = float(change)/float(close[0])
+            change = np.subtract(float(close[0]), float(close[len(close)-1]))
+            self.perc_change = float(change)/float(close[len(close)-1])
         except:
             print(self.symbol, ': error occurred in perc_change method')
 
@@ -87,7 +87,7 @@ class get_data:
             print(self.symbol , ': This stock probably has no price information.')
         finally: 
             try:
-                self.div_r = np.divide(self.dividends[0], self.price)
+                self.div_r = np.divide(sum(self.dividends), self.price)
             except:
                 self.div_r = 0
             

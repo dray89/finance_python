@@ -24,7 +24,7 @@ class financials:
                            'current_assets', 'current_liabilities',
                            'stockholders_equity', 'analysis','growth_estimates', 
                            'eps_revisions','eps_trend','earnings_history', 'revenue', 
-                           'earnings']
+                           'earnings', 'changes', 'symbol', 'bs', 'yearly_dates', 'all_years']
     
     def __combine__(self):
         self.__financials__()
@@ -43,7 +43,8 @@ class financials:
             df = df.set_index(0)
             cols = df.iloc[0]
             df = df.set_axis(cols, axis='columns', inplace=False)
-            df = df.drop(['Operating Expenses', 'Income from Continuing Operations', 'Non-recurring Events'], axis = 0)
+            df = df.drop(['Operating Expenses', 'Income from Continuing Operations',
+                          'Non-recurring Events'], axis = 0)
             rows = list(df.index)
             df = df.replace('-', np.nan)
             df = df.set_axis(rows, axis='rows', inplace=False)

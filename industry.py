@@ -16,8 +16,6 @@ class industry:
         def __init__(self, df_list):
             self.df_list = df_list
             self.concat_df()
-            self.changes()
-            self.print_sentences()
             self.attributes = ['ind', 'maximum', 'minimum', 'max_list', 
                                'min_list', 'max_sentence', 'min_sentence']
         
