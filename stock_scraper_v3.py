@@ -92,20 +92,14 @@ class get_data:
                 self.div_r = 0
             
     def __Total_Return__(self):
-        if hasattr(self, 'stockholders_equity'):
             if self.div_r==0:
                 self.t_r = float(self.perc_change)
             else:
                 self.t_r = float(self.div_r + self.perc_change)
-        else:
-            self.t_r = np.nan
-            
+
     def __riskadj__(self):
-        if hasattr(self, 'stockholders_equity'):
             if np.isnan(self.bsd.beta[0]):
                 self.returns_adj = self.div_r
             else:
-                self.returns_adj = abs(self.div_r/self.bsd.beta)   
-        else:
-            self.returns_adj = self.div_r
-      
+                self.returns_adj = abs(self.div_r/self.bsd.beta)
+
