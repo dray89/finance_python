@@ -6,7 +6,10 @@ Created on Wed Jul 31 11:15:38 2019
 """
 
 import sys
-from scrape import scrape
+try:
+	from scrape import scrape
+except:
+	from finance_python.scrape import scrape
 import pandas as pd
 from pandas import DataFrame
 from bs4 import BeautifulSoup as soup

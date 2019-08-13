@@ -7,11 +7,16 @@ Created on Thu Jul  4 19:34:10 2019
 import pandas
 from pandas import DataFrame
 import numpy as np
-from scrape import scrape
+
 import sys
 import lxml
 from lxml import html
-from balance_sheet import balance_sheet
+try:
+	from scrape import scrape
+	from balance_sheet import balance_sheet
+except:
+	from finance_python.scrape import scrape
+	from finance_python.balance_sheet import balance_sheet
 
 class get_data:
     def __init__(self, symbol, start, end, sort=True):

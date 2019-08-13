@@ -4,17 +4,22 @@ Created on Wed Jul 17 15:41:04 2019
 
 @author: rayde
 """
+
+try:
+	from financials import financials
+except:
+	from finance_python.financials import financials
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
-from financials import financials
+
 
 class balance_sheet(financials):
     def __init__(self, symbol):
         super().__init__(symbol)
         self.__split__()
         self.__items__()
-        self.attributes.append('yearly_dates', 'all_years', 'changes')
+        self.attributes.append(['yearly_dates', 'all_years', 'changes'])
 
     def __split__(self):
         if hasattr(self, 'stockholders_equity'):

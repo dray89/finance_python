@@ -19,8 +19,10 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 import os
-from scrape import scrape
-
+try:
+	from scrape import scrape
+except:
+	from finance_python.scrape import scrape
 
 class calendar:  
     def __init__(self, days):
