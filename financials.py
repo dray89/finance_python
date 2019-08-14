@@ -23,8 +23,8 @@ class financials:
         self.symbol = symbol
         self.__combine__()
         self.attributes = ['financials', 'stats', 
-                           'beta', 'cashflow', 
-                           'current_assets', 'current_liabilities',
+                           'stat_list', 'financial_list', 'cashflow',
+                           'cashflow_list','current_assets', 'current_liabilities',
                            'stockholders_equity', 'analysis','growth_estimates', 
                            'eps_revisions','eps_trend','earnings_history', 'revenue', 
                            'earnings', 'symbol', 'bs']
@@ -41,15 +41,14 @@ class financials:
         tab = scrape(symbol).__financials__()
         if len(tab) == 1:
             df = pd.read_html(lxml.etree.tostring(tab[0], method='xml'))[0]
-            df = df.drop(24)
+            df = df.replace('-', np.nan)
             df.iloc[0][0] = 'Dates'
             df = df.set_index(0)
+            df = df.dropna(how = 'all')
+            rows = list(df.index)
             cols = df.iloc[0]
             df = df.set_axis(cols, axis='columns', inplace=False)
-            df = df.drop(['Operating Expenses', 'Income from Continuing Operations',
-                          'Non-recurring Events'], axis = 0)
-            rows = list(df.index)
-            df = df.replace('-', np.nan)
+            self.financial_list = list(df.index)
             df = df.set_axis(rows, axis='rows', inplace=False)
             self.financials = df.iloc[1:]
         else:
@@ -64,10 +63,8 @@ class financials:
             cols = ['Item', symbol.upper()]
             df = df.set_axis(cols, axis='columns', inplace=False)
             df = df.set_index('Item')
-            rows = list(df.index)
-            self.stats = df.set_axis(rows, axis='rows', inplace=False)           
-            index_beta = rows.index('Beta (3Y Monthly)')
-            self.beta = self.stats.iloc[index_beta].astype(float)
+            self.stat_list = list(df.index)
+            self.stats = df.set_axis(self.stat_list, axis='rows', inplace=False)
         else:
             self.stats = DataFrame([np.nan])
         
@@ -83,7 +80,8 @@ class financials:
             df = df.drop(['Operating Activities, Cash Flows Provided By or Used In', 'Financing Activities, Cash Flows Provided By or Used In', 'Investing Activities, Cash Flows Provided By or Used In'], axis=0)
             df = df.set_axis(df.iloc[0], axis='columns', inplace=False)
             self.cashflow = df.set_axis(df.index, axis='rows', inplace=False)  
-            
+            self.cashflow_list = list(df.index)
+
     def __analysis__(self):
         symbol = self.symbol
         cash = scrape(symbol).analysis()

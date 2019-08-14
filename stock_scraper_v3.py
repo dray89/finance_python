@@ -26,29 +26,18 @@ class get_data:
         self.end = end
         self.__basic__()
         self.attributes = ['dividends', 'industry', 
-                           'description', 'history', 
-                           'perc_change', 'price',
-                           'div_r', 't_r','returns_adj', 'bsd']
-        
+                           'description', 'history', 'bsd']
+
     def __basic__(self):
         '''Grab Basic Current Info '''
-        self.__readers__()
         self.__description__()
         self.__div_history__()
-        self.__perc_change__()
-        self.__divr__()
-        self.__Total_Return__()
-        self.__riskadj__()
-        
-    def __readers__(self): 
-        '''Generate Dividend'''
-        self.yar = scrape(self.symbol).dividends()
-        self.profile = scrape(self.symbol).__profile__()
-        self.daily = scrape(self.symbol).history(self.start, self.end)
+        self.__price_history__()
         self.bsd = balance_sheet(self.symbol)
-        
+
+
     def __div_history__(self):
-        dividends = self.yar
+        dividends = scrape(self.symbol).dividends()
         try:
             df = list(map(lambda x: pandas.read_html(lxml.etree.tostring(dividends[x], method='xml'))[0], range(0,len(dividends))))
             df = pandas.concat(df)
@@ -58,9 +47,10 @@ class get_data:
             self.dividends = df.str.replace(r'\Dividend', '').astype(float)
         except:
             self.dividends = 0
+            print("Either something went wrong or", self.symbol, "does not issue dividends.")
         
     def __description__(self):
-        s = self.profile
+        s = scrape(self.symbol).__profile__()
         try:
             industry = s.find('span', string='Industry').find_next().text
             description = s.find('span', string='Description').find_next().text
@@ -71,40 +61,12 @@ class get_data:
             self.industry= industry
             self.description = description
         
-    def __perc_change__(self):
-        daily = self.daily
+    def __price_history__(self):
+        daily = scrape(self.symbol).history(self.start, self.end)
         try:
             df = list(map(lambda x: pandas.read_html(lxml.etree.tostring(daily[x], method='xml'))[0], range(0,len(daily))))
             df = pandas.concat(df).astype(float, errors='ignore')
             df = df.drop(len(df) - 1)
             self.history = df.set_index('Date')
-            close = self.history['Close*']
-            change = np.subtract(float(close[0]), float(close[len(close)-1]))
-            self.perc_change = float(change)/float(close[len(close)-1])
         except:
             print(self.symbol, ': error occurred in perc_change method')
-
-    def __divr__(self):
-        try:
-            self.price = float(self.history['Close*'][0])       
-        except:
-            self.price = 0
-            print(self.symbol , ': This stock probably has no price information.')
-        finally: 
-            try:
-                self.div_r = np.divide(sum(self.dividends), self.price)
-            except:
-                self.div_r = 0
-            
-    def __Total_Return__(self):
-            if self.div_r==0:
-                self.t_r = float(self.perc_change)
-            else:
-                self.t_r = float(self.div_r + self.perc_change)
-
-    def __riskadj__(self):
-            if np.isnan(self.bsd.beta[0]):
-                self.returns_adj = self.div_r
-            else:
-                self.returns_adj = abs(self.div_r/self.bsd.beta)
-

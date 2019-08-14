@@ -53,11 +53,13 @@ class industry:
             self.maximum = frame.idxmax(axis = 1)
             self.minimum = frame.idxmin(axis=1)
             self.max_list = []
+
             for c, d in enumerate(frame.idxmax(axis=1)):
                 i = frame.idxmax(axis=1).index[c]
                 symbol = frame.idxmax(axis=1)[i]
                 self.max_list.append({symbol: [i, frame[d].T[i]]})
             self.min_list = []
+
             for e, f in enumerate(frame.idxmin(axis=1)):
                 i = frame.idxmin(axis=1).index[e]
                 symbol = frame.idxmin(axis=1)[i]
@@ -69,6 +71,7 @@ class industry:
         def print_sentences(self):
             for each in enumerate(self.max_list):
                 print(self.max_sentence.format(list(self.max_list[each[0]].keys())[0], list(self.max_list[each[0]].values())[0][0], list(self.max_list[each[0]].values())[0][1]))
+
             for each in enumerate(self.min_list):
                 print(self.min_sentence.format(list(self.minimum[each[0]].keys())[0], list(self.minimum[each[0]].values())[0][0], list(self.minimum[each[0]].values())[0][1]))
         
@@ -82,5 +85,6 @@ class industry:
                                 'to avg_pb': div(7),
                                 'to avg_mc': div(9),
                                 'to avg_so': div(11)}
+
             self.industry_df = pandas.DataFrame.from_dict(self.industry_dict).T
         

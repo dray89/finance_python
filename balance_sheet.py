@@ -66,3 +66,28 @@ class balance_sheet(financials):
                 self.changes.name = self.symbol.upper()
             except:
                 print(self.symbol, "error calculating changes")
+
+    def __divr__(self):
+        try:
+            self.price = float(self.history['Close*'][0])       
+        except:
+            self.price = 0
+            print(self.symbol , ': This stock probably has no price information.')
+        finally: 
+            try:
+                self.div_r = np.divide(sum(self.dividends), self.price)
+            except:
+                self.div_r = 0
+            
+    def __Total_Return__(self):
+            if self.div_r==0:
+                self.t_r = float(self.perc_change)
+            else:
+                self.t_r = float(self.div_r.add(self.perc_change))
+
+    def __riskadj__(self):
+            if np.isnan(self.bsd.stats.T['Beta (3Y Monthly)']):
+                self.returns_adj = self.div_r
+            else:
+                self.returns_adj = abs(self.div_r/self.bsd.beta)
+
