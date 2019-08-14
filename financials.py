@@ -45,11 +45,10 @@ class financials:
             df.iloc[0][0] = 'Dates'
             df = df.set_index(0)
             df = df.dropna(how = 'all')
-            rows = list(df.index)
             cols = df.iloc[0]
             df = df.set_axis(cols, axis='columns', inplace=False)
             self.financial_list = list(df.index)
-            df = df.set_axis(rows, axis='rows', inplace=False)
+            df = df.set_axis(self.financial_list, axis='rows', inplace=False)
             self.financials = df.iloc[1:]
         else:
             self.financials = DataFrame([np.nan])
@@ -76,11 +75,14 @@ class financials:
             self.cashflow = DataFrame([np.nan])
         else:
             df = pd.concat(df)
+            df = df.replace('-', np.nan)
             df = df.set_index(0)
-            df = df.drop(['Operating Activities, Cash Flows Provided By or Used In', 'Financing Activities, Cash Flows Provided By or Used In', 'Investing Activities, Cash Flows Provided By or Used In'], axis=0)
-            df = df.set_axis(df.iloc[0], axis='columns', inplace=False)
-            self.cashflow = df.set_axis(df.index, axis='rows', inplace=False)  
+            df = df.dropna(how = 'all')
+            cols = df.iloc[0]
+            df = df.set_axis(cols, axis='columns', inplace=False)
+            df.drop('Period Ending')
             self.cashflow_list = list(df.index)
+            self.cashflow = df.set_axis(self.cashflow_list, axis='rows', inplace=False)
 
     def __analysis__(self):
         symbol = self.symbol
