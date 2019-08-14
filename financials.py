@@ -108,7 +108,7 @@ class financials:
             cols = df.iloc[0]
             df = df.set_axis(cols, axis='columns', inplace=False)
             df = df.set_index('Dates')
-            rows = list(df.index)
             df = df.dropna(how='all')
             df = df.replace('-', np.nan)
+            rows = list(df.index)
             self.balance_sheet = df.set_axis(rows, axis='rows', inplace=False)

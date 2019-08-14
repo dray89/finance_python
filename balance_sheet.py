@@ -18,7 +18,8 @@ class balance_sheet(financials):
     def __init__(self, symbol):
         super().__init__(symbol)
         self.__split__()
-        self.__items__()
+        self.__changes__()
+        self.__returns__()
         self.attributes.append(['yearly_dates', 'all_years', 'changes'])
 
     def __split__(self):
@@ -38,7 +39,7 @@ class balance_sheet(financials):
             except:
                 print(self.symbol, "error calculating changes")
 
-    def __divr__(self):
+    def __returns__(self):
         try:
             self.price = float(self.history.iloc[0]['Close*'])
         except:
