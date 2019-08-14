@@ -22,12 +22,10 @@ class financials:
     def __init__(self, symbol):
         self.symbol = symbol
         self.__combine__()
-        self.attributes = ['financials', 'stats', 
-                           'stat_list', 'financial_list', 'cashflow',
-                           'cashflow_list','current_assets', 'current_liabilities',
-                           'stockholders_equity', 'analysis','growth_estimates', 
-                           'eps_revisions','eps_trend','earnings_history', 'revenue', 
-                           'earnings', 'symbol', 'bs']
+        self.attributes = ['financials', 'stats', 'balance_sheet', 'cashflow',
+                           'analysis','growth_estimates','eps_revisions',
+                           'eps_trend','earnings_history', 'earnings',
+                           'revenue', 'symbol', 'bs']
     
     def __combine__(self):
         self.__financials__()
@@ -41,14 +39,14 @@ class financials:
         tab = scrape(symbol).__financials__()
         if len(tab) == 1:
             df = pd.read_html(lxml.etree.tostring(tab[0], method='xml'))[0]
+            df = df.dropna(how = 'all')
             df = df.replace('-', np.nan)
             df.iloc[0][0] = 'Dates'
             df = df.set_index(0)
-            df = df.dropna(how = 'all')
             cols = df.iloc[0]
             df = df.set_axis(cols, axis='columns', inplace=False)
-            self.financial_list = list(df.index)
-            df = df.set_axis(self.financial_list, axis='rows', inplace=False)
+            rows = list(df.index)
+            df = df.set_axis(rows, axis='rows', inplace=False)
             self.financials = df.iloc[1:]
         else:
             self.financials = DataFrame([np.nan])
@@ -62,8 +60,8 @@ class financials:
             cols = ['Item', symbol.upper()]
             df = df.set_axis(cols, axis='columns', inplace=False)
             df = df.set_index('Item')
-            self.stat_list = list(df.index)
-            self.stats = df.set_axis(self.stat_list, axis='rows', inplace=False)
+            rows = list(df.index)
+            self.stats = df.set_axis(rows, axis='rows', inplace=False)
         else:
             self.stats = DataFrame([np.nan])
         
@@ -75,14 +73,14 @@ class financials:
             self.cashflow = DataFrame([np.nan])
         else:
             df = pd.concat(df)
+            df = df.dropna(how = 'all')
             df = df.replace('-', np.nan)
             df = df.set_index(0)
-            df = df.dropna(how = 'all')
             cols = df.iloc[0]
             df = df.set_axis(cols, axis='columns', inplace=False)
             df.drop('Period Ending')
-            self.cashflow_list = list(df.index)
-            self.cashflow = df.set_axis(self.cashflow_list, axis='rows', inplace=False)
+            rows = list(df.index)
+            self.cashflow = df.set_axis(rows, axis='rows', inplace=False)
 
     def __analysis__(self):
         symbol = self.symbol
@@ -111,8 +109,6 @@ class financials:
             df = df.set_axis(cols, axis='columns', inplace=False)
             df = df.set_index('Dates')
             rows = list(df.index)
+            df = df.dropna(how='all')
             df = df.replace('-', np.nan)
-            df = df.set_axis(rows, axis='rows', inplace=False)
-            self.current_assets = df[2:15].astype(int, copy=True, errors='ignore')
-            self.current_liabilities = df.iloc[17:25, :].astype(int, copy=True, errors='ignore')
-            self.stockholders_equity = df[28:].astype(int, copy=True, errors='ignore')
+            self.balance_sheet = df.set_axis(rows, axis='rows', inplace=False)
