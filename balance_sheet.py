@@ -30,7 +30,7 @@ class balance_sheet(financials):
                 current = self.balance_sheet[dates[0]]
                 last =  self.balance_sheet[dates[1]]
                 diff = np.subtract(current, last)
-                self.changes = diff.divide(last)
+                self.changes = diff.divide(last).dropna(how='all')
                 self.changes.name = self.symbol.upper()
 
     def __returns__(self):
