@@ -26,14 +26,13 @@ class scrape:
             Client=urlopen(url2)
             xml_page=Client.read()
             Client.close()
-            soup_page=soup(xml_page,"xml")
-        finally:
+            soup_page = soup(xml_page,"xml")
             return soup_page
-        
+
     def __profile__(self):
         url="https://finance.yahoo.com/quote/" + self.symbol + "/profile?p=" + self.symbol
-        soup_page = self.__general__(url)
-        return soup_page 
+        soupy = self.__general__(url)
+        return soupy
         
     def __statistics__(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/key-statistics?p=" + self.symbol
