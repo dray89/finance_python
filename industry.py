@@ -5,44 +5,38 @@ Created on Sun Aug  4 11:02:44 2019
 @author: rayde
 """
 import pandas
-from pandas import DataFrame
-import numpy as np
+
+try:
+    from clean_dfs import clean_dfs
+except:
+    from finance_python.clean_dfs import clean_dfs
 
 balance_sheets = lambda x, y: {y: x[range(x)][y].bsd}
-billions = lambda x: float(x)*100
-thousands = lambda x: float(x)/100
-            
+
 class industry:
         def __init__(self, df_list):
             self.df_list = df_list
-            self.concat_df()
+            self.__concat_df__()
             self.attributes = ['ind', 'maximum', 'minimum', 'max_list', 
                                'min_list', 'max_sentence', 'min_sentence']
         
-        def concat_df(self):
+        def __concat_df__(self):
             ind = pandas.concat(self.df_list, axis=1).dropna(how='all')
             ind = ind.astype(float, errors='ignore')
-            for each in list(ind.columns):
-                ind[each] = ind[each].str.strip('M %')
-            for i in range(0, len(ind)-1):
-                for e in range(0, len(list(ind.iloc[i].values))):
-                    if 'B' in str(list(ind.iloc[i].values)[e]):
-                        a = list(ind.iloc[i].values)[e]
-                        a = a.strip('B')
-                        ind.iloc[i][e] = billions(a)
-                
-                    if 'k' in str(list(ind.iloc[i].values)[e]):
-                        a = list(ind.iloc[i].values)[e]
-                        a = a.strip('k')
-                        ind.iloc[i][e] = thousands(a)
-            for each in list(ind.columns):
-                ind[each] = pandas.to_numeric(ind[each],errors='coerce').dropna(how='all')
-        
-            averages = ind.mean(axis=1).dropna(how='all')
-            ind['Averages'] = averages
-            self.ind = ind
+            try:
+                averages = ind.mean(axis=1).dropna(how='all')
+                ind['Averages'] = averages
+            except:
+                print('Error in Industry - Concat_df, Try Reformatting')
+                self.df_list = list(map(lambda each: clean_dfs.clean_stats(each), self.df_list))
+                ind = pandas.concat(self.df_list, axis=1).dropna(how='all')
+                ind = ind.astype(float, errors='ignore')
+                averages = ind.mean(axis=1).dropna(how='all')
+                ind['Averages'] = averages
+            finally:
+                self.ind = ind
             
-        def changes(self):
+        def analyze_chgs(self):
             for a, b in enumerate(self.ind):
                 if hasattr(b, 'changes'):
                     pass
@@ -75,7 +69,7 @@ class industry:
             for each in enumerate(self.min_list):
                 print(self.min_sentence.format(list(self.minimum[each[0]].keys())[0], list(self.minimum[each[0]].values())[0][0], list(self.minimum[each[0]].values())[0][1]))
         
-        def __industry_ratios__(self):
+        def industry_ratios(self):
             d = self.d
             sub = lambda x: d.iloc[x].subtract(self.averages[x])
             div = lambda x: d.iloc[x].divide(self.averages[x])
@@ -86,5 +80,5 @@ class industry:
                                 'to avg_mc': div(9),
                                 'to avg_so': div(11)}
 
-            self.industry_df = pandas.DataFrame.from_dict(self.industry_dict).T
+            self.industry = pandas.DataFrame.from_dict(self.industry_dict).T
         

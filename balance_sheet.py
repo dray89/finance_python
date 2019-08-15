@@ -20,19 +20,18 @@ class balance_sheet(financials):
         self.__split__()
         self.__changes__()
         self.__returns__()
-        self.attributes.append(['yearly_dates', 'all_years', 'changes'])
+        self.attributes.append(['dates', 'balance_sheet', 'changes'])
 
     def __split__(self):
-        if hasattr(self, 'stockholders_equity'):
-            self.yearly_dates = list(self.balance_sheet.columns)
-            self.all_years = self.balance_sheet.fillna(np.nan).astype(float, errors='ignore')
+        if hasattr(self, 'balance_sheet'):
+            self.dates = list(self.balance_sheet.columns)
+            self.balance_sheet = self.balance_sheet.fillna(np.nan).astype(float, errors='ignore')
              
     def __changes__(self):
         if hasattr(self, 'balance_sheet'):
-            items = self.balance_sheet
             try:
-                current = items[self.yearly_dates[0]].astype(float)
-                last =  items[self.yearly_dates[1]].astype(float)
+                current = self.balance_sheet[self.dates[0]].astype(float)
+                last =  self.balance_sheet[self.dates[1]].astype(float)
                 diff = np.subtract(current, last)
                 self.changes = diff.divide(last)
                 self.changes.name = self.symbol.upper()
@@ -47,17 +46,19 @@ class balance_sheet(financials):
             print(self.symbol , ': This stock probably has no price information.')
 
         try:
-            self.div_r = float(self.bsd.stats["Forward Annual Dividend Yield 4"])
+            self.div_r = float(self.stats["Forward Annual Dividend Yield 4"])
         except:
             self.div_r = 0
 
         if self.div_r==0:
-            self.t_r = float(self.bsd.stats.T['52-Week Change 3'][0].rstrip('%'))
+            t_r = self.stats.T['52-Week Change 3'][0].rstrip('%')
+            self.stats.T['Total 1yr Return'][0] = float(t_r)
         else:
-            self.t_r = self.div_r.add(float(self.bsd.stats.T['52-Week Change 3'][0].rstrip('%')))
+            t_r = self.stats.T['52-Week Change 3'][0].rstrip('%')
+            t_r = float(t_r)
+            self.stats.T['Total 1yr Return'][0] = self.div_r.add(t_r)
 
-        if np.isnan(self.bsd.stats.T['Beta (3Y Monthly)']):
+        try:
+            self.returns_adj = abs(self.div_r/self.stats.T['Beta (3Y Monthly)'])
+        except:
             self.returns_adj = self.div_r
-        else:
-            self.returns_adj = abs(self.div_r/self.bsd.beta)
-

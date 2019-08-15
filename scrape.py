@@ -8,14 +8,7 @@ import sys, time, datetime, os, re, lxml, requests
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from datetime import datetime, date, timedelta
-from newspaper import Article
-import numpy as np 
 from lxml import html
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from bs4 import BeautifulSoup
-
-import pandas as pd
 
 class scrape:
     def __init__(self, symbol):

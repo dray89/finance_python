@@ -5,19 +5,18 @@ Created on Wed Jul 31 11:15:38 2019
 @author: rayde
 """
 
-import sys
 try:
-	from scrape import scrape
+    from scrape import scrape
+    from clean_dfs import clean_dfs
 except:
-	from finance_python.scrape import scrape
+    from finance_python.scrape import scrape
+    from finance_python.clean_dfs import clean_dfs
 import pandas as pd
 from pandas import DataFrame
-from bs4 import BeautifulSoup as soup
-from urllib.request import urlopen
 import numpy as np
 import lxml
-from lxml import html
-    
+
+
 class financials:
     def __init__(self, symbol):
         self.symbol = symbol
@@ -61,7 +60,8 @@ class financials:
             df = df.set_axis(cols, axis='columns', inplace=False)
             df = df.set_index('Item')
             rows = list(df.index)
-            self.stats = df.set_axis(rows, axis='rows', inplace=False)
+            stats = df.set_axis(rows, axis='rows', inplace=False)
+            self.stats = clean_dfs.clean_stats(stats)
         else:
             self.stats = DataFrame([np.nan])
         

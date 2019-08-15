@@ -5,12 +5,8 @@ Created on Thu Jul  4 19:34:10 2019
 @author: rayde
 """
 import pandas
-from pandas import DataFrame
-import numpy as np
-
-import sys
 import lxml
-from lxml import html
+
 try:
 	from scrape import scrape
 	from balance_sheet import balance_sheet
