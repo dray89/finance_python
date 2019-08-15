@@ -30,5 +30,5 @@ class clean_dfs:
                     stats.iloc[i][e] = thousands(a)
         
             for each in list(stats.columns):
-                stats[each] = pandas.to_numeric(stats[each],errors='coerce').dropna(how='all')
+                stats[each] = pandas.to_numeric(stats[each],errors='coerce')
         return stats

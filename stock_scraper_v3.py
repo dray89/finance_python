@@ -6,6 +6,7 @@ Created on Thu Jul  4 19:34:10 2019
 """
 import pandas
 import lxml
+import numpy as np
 
 try:
 	from scrape import scrape
@@ -42,21 +43,13 @@ class get_data:
             df  = df['Dividends']
             self.dividends = df.str.replace(r'\Dividend', '').astype(float)
         except:
-            self.dividends = 0
-            print("Either something went wrong or", self.symbol, "does not issue dividends.")
-        
+            self.dividends = pandas.Series([np.nan])
+
     def __description__(self):
         s = scrape(self.symbol).__profile__()
-        try:
-            industry = s.find('span', string='Industry').find_next().text
-            description = s.find('span', string='Description').find_next().text
-        except:
-            industry = "no industry found"
-            description = "no description found"
-        finally:
-            self.industry= industry
-            self.description = description
-        
+        self.industry = s.find('span', string='Industry').find_next().text
+        self.description = s.find('span', string='Description').find_next().text
+
     def __price_history__(self):
         daily = scrape(self.symbol).history(self.start, self.end)
         try:

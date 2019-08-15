@@ -73,7 +73,6 @@ class financials:
             self.cashflow = DataFrame([np.nan])
         else:
             df = pd.concat(df)
-            df = df.dropna(how = 'all')
             df = df.replace('-', np.nan)
             df = df.set_index(0)
             cols = df.iloc[0]
@@ -111,4 +110,5 @@ class financials:
             df = df.dropna(how='all')
             df = df.replace('-', np.nan)
             rows = list(df.index)
-            self.balance_sheet = df.set_axis(rows, axis='rows', inplace=False)
+            df = df.set_axis(rows, axis='rows', inplace=False)
+            self.balance_sheet = df.drop('Dates')

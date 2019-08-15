@@ -31,9 +31,12 @@ class scrape:
 
     def __profile__(self):
         url="https://finance.yahoo.com/quote/" + self.symbol + "/profile?p=" + self.symbol
-        soupy = self.__general__(url)
-        return soupy
-        
+        Client=urlopen(url)
+        xml_page=Client.read()
+        Client.close()
+        soup_page=soup(xml_page,"xml")
+        return soup_page
+
     def __statistics__(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/key-statistics?p=" + self.symbol
         page = requests.get(url)
