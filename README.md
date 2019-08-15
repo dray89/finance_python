@@ -26,36 +26,44 @@ Instructions
 ---------------------------------------------------------------------------------------------
 stock_scraper_v3.py: Contains the primary command in the program, get_data()
     running the class, get_data(), will set attributes for price history, dividends history, industry description,
-                           company description, and a balance sheet object
+                           company description, and a balance sheet object.
+                           
 financials.py: All Self-Contained Private Functions. This file feeds into balance_sheet.py
     This file scrapes the data from yahoo and cleans it into dataframes.
+
 
 balance_sheet.py: As of 8/14/2019, this file is temporarily out of service.
     Critical updates are being made to avoid setting too many attributes outside of dataframes.
     Thus, it may be buggy from time to time as it is optimized and cleaned.
 
+
 industry.py: As of 8/14/2019, this file is temporarily out of service
     Critical updates are being made to streamline concatination and prepare the
     resulting data frames for calculations.
 
+
 scrape.py: Scrapers used throughout each of these files live in scrape.py
     This file contains scrapers for every tab at the url finance.yahoo.com/quotes/symbol
+
 
 calendar.py: This is a minor accompanying file which will scrape the earnings calendar.
     I have spent less time testing and optimzing this for use, but if anyone is interested in
     expanding upon it, please feel free to reach out to me with questions, concerns, and comments.
 
+
 clean_dfs.py: This is a new capability. Before, it lived in the industry file happily.
               However, I think it may be better if we dropna'd/reformatted numstrings
               in the dataframe after the industry merge to prevent later errors.
 
-I’ve tried to keep it simple and easy to learn how to use. It is still in testing stages.
-It still needs some debugging, and I’ve been expanding on it whenever I use it.
-It is constantly changing. So, feel free to use and contribute to the project.
+
+I’ve tried to keep it simple and easy to learn how to use. 
+Remember: It is still in testing stages. So, feel free to use and contribute to the project.
 If you have any questions, feel free to reach out.
 
 -----------------------------------------------------------------------------------------------
+
 Planned Upgrades:
 I want to set it up to SQLlite or Postgres to store the stock information.
+
 -----------------------------------------------------------------------------------------------
 
