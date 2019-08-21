@@ -47,8 +47,11 @@ class get_data:
 
     def __description__(self):
         s = scrape(self.symbol).__profile__()
-        self.industry = s.find('span', string='Industry').find_next().text
-        self.description = s.find('span', string='Description').find_next().text
+        if type(s) == None:
+            pass
+        else:
+            self.industry = s.find('span', string='Industry').find_next().text
+            self.description = s.find('span', string='Description').find_next().text
 
     def __price_history__(self):
         daily = scrape(self.symbol).history(self.start, self.end)
