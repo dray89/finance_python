@@ -5,23 +5,52 @@ Created on Wed Jul 17 15:41:04 2019
 @author: rayde
 """
 
-try:
-	from financials import financials
-except:
-	from finance_python.financials import financials
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
+import lxml
 
+try:
+    from scrapers import scraper
+except:
+    from finance_python_v2.scrapers import scraper
 
-class balance_sheet(financials):
+class balance_sheet:
+    bs_list = []
+
     def __init__(self, symbol):
-        super().__init__(symbol)
-        self.__changes__()
-        self.__returns__()
-        self.attributes.append(['dates', 'changes'])
+        self.symbol = symbol
+        self.balance_sheet = self.clean()
+        self.bs_list.append(self.balance_sheet)
+        self.changes = self.changes()
+        self.industry = self.industry(self.bs_list)
+        self.attributes = ['balance_sheet', 'changes', 'industry', "bs_list"]
 
-    def __changes__(self):
+    def scrape(self):
+        url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
+        bs = scraper(self.symbol).__table__(url)
+        df = list(map(lambda x: pd.read_html(lxml.etree.tostring(bs[x], method='xml'))[0], range(0,len(bs))))
+        df = pd.concat(df)
+        return df
+
+    def clean(self):
+        df = self.scrape()
+        if len(df) > 0:
+            cols = df.iloc[0]
+            df = df.set_axis(cols, axis='columns', inplace=False)
+            df = df.set_index('Dates')
+            df = df.dropna(how='all')
+            df = df.replace('-', np.nan)
+            rows = list(df.index)
+            df = df.set_axis(rows, axis='rows', inplace=False)
+            balance_sheet = df.drop('Dates')
+
+        else:
+            balance_sheet = DataFrame([np.nan])
+
+        return balance_sheet
+
+    def changes(self):
         if hasattr(self, 'balance_sheet'):
             dates = list(self.balance_sheet.columns)
             self.balance_sheet = self.balance_sheet.fillna(np.nan).astype(float, errors='ignore')
@@ -33,25 +62,5 @@ class balance_sheet(financials):
                 self.changes = diff.divide(last).dropna(how='all')
                 self.changes.name = self.symbol.upper()
 
-    def __returns__(self):
-        div_r = self.stats.T["Forward Annual Dividend Yield 4"]
-        if hasattr(div_r, 'str'):
-            div_r = np.nan
-        elif hasattr(div_r, "float"):
-            t_r = self.stats.T['52-Week Change 3'][0]
-            p = ['Total 1yr Return' , float(t_r)]
-            p = pd.Series(p)
-            p = pd.DataFrame(p)
-            self.stats.append(p)
-        else:
-            t_r = self.stats.T['52-Week Change 3'][0]
-            t_r = float(t_r)
-            p = ['Total Return', div_r.add(t_r)]
-            self.stats.append(p)
-
-        try:
-            returns_adj = abs(div_r/self.stats.T['Beta (3Y Monthly)'])
-        except:
-            returns_adj = div_r
-            p = ['Adj Returns', returns_adj]
-            self.stats.append(p)
+    def industry(self):
+        pass
