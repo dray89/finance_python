@@ -15,15 +15,20 @@ try:
     from cashflow import cashflow
     from analysis import analysis
 except:
-    from finance_python_v2.scrapers import scraper
-    from finance_python_v2.statistics import statistics
-    from finance_python_v2.balance_sheet import balance_sheet
-    from finance_python_v2.financials import financials
-    from finance_python_v2.cashflow import cashflow
-    from finance_python_v2.analysis import analysis
+    from finance_python.scrapers import scraper
+    from finance_python.statistics import statistics
+    from finance_python.balance_sheet import balance_sheet
+    from finance_python.financials import financials
+    from finance_python.cashflow import cashflow
+    from finance_python.analysis import analysis
 
 class stock:
     stocks_list = set()
+    stats_list = list()
+    bs_list = list()
+    cash_list = list()
+    fin_list = list()
+    a_list = list()
 
     def __init__(self, symbol, start, end, sort=True):
         '''parameters'''
@@ -61,7 +66,7 @@ class stock:
     def history(self):
         start = int(time.mktime(datetime.strptime(self.start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         end = int(time.mktime(datetime.strptime(self.end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        url = "https://finance.yahoo.com/quote/" + self.symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
+        url = 'https://finance.yahoo.com/quote/' + self.symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
         history = scraper(self.symbol).__table__(url)
         try:
             history = list(map(lambda x: pandas.read_html(lxml.etree.tostring(history[x], method='xml'))[0], range(0,len(history))))
@@ -76,47 +81,41 @@ class stock:
     def dividends(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/history?interval=div%7Csplit&filter=div&frequency=1d"
         dividends = scraper(self.symbol).__table__(url)
-        try:
-            dividends = list(map(lambda x: pandas.read_html(lxml.etree.tostring(dividends[x], method='xml'))[0], range(0,len(dividends))))
-            dividends = pandas.concat(dividends)
+        dividends = list(map(lambda x: pandas.read_html(lxml.etree.tostring(dividends[x], method='xml'))[0], range(0,len(dividends))))
+        dividends = pandas.concat(dividends)
+        if len(dividends)>1:
             dividends = dividends.drop(4)
             dividends = dividends.set_index('Date')
             dividends  = dividends['Dividends']
             dividends = dividends.str.replace(r'\Dividend', '').astype(float)
-        except:
-            print(self.symbol, ': error occurred in dividend method')
-        finally:
-            return dividends
+        return dividends
 
     def stats(self):
         stats = statistics(self.symbol)
-        self.statistics = stats.statistics
-        self.stats_list = stats.stats_list
-        self.statistics.industry = stats.industry
         self.attributes.append(stats.attributes)
+        self.stats_list.append(stats.statistics)
+        self.statistics = stats.industry(self.stats_list)
 
     def balance(self):
         bs = balance_sheet(self.symbol)
         self.balance_sheet = bs.balance_sheet
-        self.bs_list = bs.bs_list
-        self.balance_sheet.changes = bs.changes
-        self.balance_sheet.industry = bs.industry
+        self.bs_list.append(self.balance_sheet)
         self.attributes.append(bs.attributes)
 
     def cash(self):
         cash = cashflow(self.symbol)
         self.cashflow = cash.cashflow
-        self.cash_list = cash.cash_list
-        self.cashflow.changes = cash.changes
-        self.cashflow.industry = cash.industry
+        self.cash_list.append(self.cashflow)
         self.attributes.append(cash.attributes)
 
     def financial(self):
         fin = financials(self.symbol)
         self.financials = fin.financials
+        self.fin_list.append(self.financials)
         self.attributes.append(fin.attributes)
 
     def analyze(self):
         a = analysis(self.symbol)
         self.analysis = a.analysis
+        self.a_list.append(self.analysis)
         self.attributes.append(analysis.attributes)

@@ -13,18 +13,14 @@ import lxml
 try:
     from scrapers import scraper
 except:
-    from finance_python_v2.scrapers import scraper
+    from finance_python.scrapers import scraper
 
 class balance_sheet:
-    bs_list = []
-
     def __init__(self, symbol):
         self.symbol = symbol
         self.balance_sheet = self.clean()
-        self.bs_list.append(self.balance_sheet)
-        self.changes = self.changes()
-        self.industry = self.industry(self.bs_list)
-        self.attributes = ['balance_sheet', 'changes', 'industry', "bs_list"]
+        self.balance_sheet['Changes'] = self.changes()
+        self.attributes = ['balance_sheet', 'changes', 'balance_sheet(self.symbol).industry(self.bs_list)', "bs_list"]
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
@@ -36,31 +32,24 @@ class balance_sheet:
     def clean(self):
         df = self.scrape()
         if len(df) > 0:
-            cols = df.iloc[0]
-            df = df.set_axis(cols, axis='columns', inplace=False)
-            df = df.set_index('Dates')
-            df = df.dropna(how='all')
+            df = df.set_axis(df.iloc[0], axis='columns', inplace=False)
+            df = df.set_index('Period Ending')
+            df = df.set_axis(list(df.index), axis='rows', inplace=False)
             df = df.replace('-', np.nan)
-            rows = list(df.index)
-            df = df.set_axis(rows, axis='rows', inplace=False)
-            balance_sheet = df.drop('Dates')
-
+            df.columns.name = 'Period Ending'
+            df.index.name = self.symbol
+            balance_sheet = df.drop('Period Ending')
+            balance_sheet = balance_sheet.fillna(np.nan).astype(float, errors='ignore')
         else:
             balance_sheet = DataFrame([np.nan])
-
         return balance_sheet
 
     def changes(self):
-        if hasattr(self, 'balance_sheet'):
-            dates = list(self.balance_sheet.columns)
-            self.balance_sheet = self.balance_sheet.fillna(np.nan).astype(float, errors='ignore')
+        dates = list(self.balance_sheet.columns)
+        changes = np.subtract(self.balance_sheet[dates[0]], self.balance_sheet[dates[-1]])
+        changes = changes.divide(self.balance_sheet[dates[-1]]).dropna(how='all')
+        changes.name = self.symbol.upper()
+        return changes
 
-        if hasattr(self, 'balance_sheet'):
-                current = self.balance_sheet[dates[0]]
-                last =  self.balance_sheet[dates[1]]
-                diff = np.subtract(current, last)
-                self.changes = diff.divide(last).dropna(how='all')
-                self.changes.name = self.symbol.upper()
-
-    def industry(self):
+    def industry(self, bs_list):
         pass

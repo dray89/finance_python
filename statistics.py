@@ -5,27 +5,23 @@ Created on Thu Aug 15 21:28:49 2019
 @author: rayde
 """
 import pandas as pd
-from pandas import DataFrame
 import numpy as np
 import lxml
 
 try:
     from scrapers import scraper
 except:
-    from finance_python_v2.scrapers import scraper
+    from finance_python.scrapers import scraper
 
 billions = lambda x: float(x)*100
 thousands = lambda x: float(x)/100
 
 class statistics:
-    stats_list = []
 
     def __init__(self, symbol):
         self.symbol = symbol
         self.statistics = self.clean()
-        self.stats_list.append(self.statistics)
-        self.industry = self.industry(self.stats_list)
-        self.attributes = ['statistics', 'stats_list', 'industry']
+        self.attributes = ['statistics', 'stats_list', 'industry(stats_list)']
 
     def scrape(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/key-statistics?p=" + self.symbol

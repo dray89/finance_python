@@ -12,17 +12,15 @@ import lxml
 try:
     from scrapers import scraper
 except:
-    from finance_python_v2.scrapers import scraper
+    from finance_python.scrapers import scraper
 
 class analysis:
     a_list = []
 
     def __init__(self, symbol):
         self.symbol = symbol
-        self.balance_sheet = self.clean()
-        self.bs_list.append(self.balance_sheet)
-        self.changes = self.changes()
-        self.industry = self.industry(self.bs_list)
+        self.analysis = self.clean()
+        self.analysis.append(self.analysis)
         self.attributes = ['earnings_est', 'revenue', 'earnings_history', 'eps_trend',
                            'eps_revisions', 'growth_estimates', "a_list"]
 

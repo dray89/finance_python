@@ -12,7 +12,7 @@ from pandas import DataFrame
 try:
     from scrapers import scraper
 except:
-    from finance_python_v2.scrapers import scraper
+    from finance_python.scrapers import scraper
 
 class cashflow:
     cash_list = []
@@ -20,10 +20,9 @@ class cashflow:
     def __init__(self, symbol):
         self.symbol = symbol
         self.cashflow = self.clean()
-        self.cash_list.append(self.cashflow)
         self.changes = self.changes()
         self.industry = self.industry(self.cash_list)
-        self.attributes = ['cashflow', 'cash_list', 'changes', "industry"]
+        self.attributes = ['cashflow', 'cash_list', 'changes', "industry(cash_list)"]
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol

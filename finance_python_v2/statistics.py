@@ -17,13 +17,9 @@ billions = lambda x: float(x)*100
 thousands = lambda x: float(x)/100
 
 class statistics:
-    stats_list = []
-
     def __init__(self, symbol):
         self.symbol = symbol
         self.statistics = self.clean()
-        self.stats_list.append(self.statistics)
-        self.industry = self.industry(self.stats_list)
         self.attributes = ['statistics', 'stats_list', 'industry']
 
     def scrape(self):
@@ -82,8 +78,7 @@ class statistics:
         stats[self.symbol.upper()]['Adjusted Returns'] = p
         return stats
 
-    def industry(self, stats_list):
-        clean_industry = lambda each: self.clean(each)
+    def industry(cls, stats_list):
         industry = pd.concat(stats_list, axis=1).dropna(how='all')
         industry = industry.astype(float, errors='ignore')
         try:
@@ -91,6 +86,7 @@ class statistics:
             industry['Averages'] = averages
         except:
             print('Error in Industry - Concat_df, Try Reformatting')
+            clean_industry = lambda each: self.clean(each)
             self.df_list = list(map(clean_industry, self.stats_list))
             industry = pd.concat(self.df_list, axis=1).dropna(how='all')
             industry = industry.astype(float, errors='ignore')

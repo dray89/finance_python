@@ -4,21 +4,10 @@ Created on Wed Jul 31 15:07:11 2019
 
 @author: rayde
 """
-import sys
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
-from datetime import datetime, date, timedelta
-from newspaper import Article
-import numpy as np 
-import lxml
-from lxml import html
-import requests
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from bs4 import BeautifulSoup
-import re
-import pandas as pd
-import os
+from datetime import date, timedelta
+
 try:
 	from scrape import scrape
 except:

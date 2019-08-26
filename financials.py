@@ -12,7 +12,7 @@ import lxml
 try:
     from scrapers import scraper
 except:
-    from finance_python_v2.scrapers import scraper
+    from finance_python.scrapers import scraper
 
 class financials:
     fin_list = []
@@ -20,7 +20,7 @@ class financials:
     def __init__(self, symbol):
         self.symbol = symbol
         self.financials = self.clean()
-        self.attributes = ['financials', 'changes', 'industry', 'fin_list']
+        self.attributes = ['financials', 'changes', 'industry(fin_list)', 'fin_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
