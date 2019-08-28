@@ -4,9 +4,10 @@ Created on Thu Aug 15 21:22:48 2019
 
 @author: rayde
 """
-import pandas
+import pandas as pd
 import lxml, time
 from datetime import datetime
+
 try:
     from scrapers import scraper
     from statistics import statistics

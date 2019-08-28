@@ -5,6 +5,7 @@ Created on Thu Aug 15 21:28:49 2019
 @author: rayde
 """
 import pandas as pd
+import numpy as np
 
 try:
     from scrapers import scraper
