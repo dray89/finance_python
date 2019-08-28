@@ -69,6 +69,7 @@ class stock:
         end = int(time.mktime(datetime.strptime(self.end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         url = 'https://finance.yahoo.com/quote/' + self.symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
         history = scraper(self.symbol).__table__(url)
+        history = pd.concat(history, sort=True).astype(float, errors='ignore')
         try:
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
@@ -114,6 +115,12 @@ class stock:
 
     def analyze(self):
         a = analysis(self.symbol)
-        self.analysis = a.analysis
-        self.a_list.append(self.analysis)
-        self.attributes.append(analysis.attributes)
+        clean = analysis(self.symbol).clean(a.df)
+        self.earnings_est = clean(0)
+        self.revenue = clean(1)
+        self.earnings_history = clean(2)
+        self.eps_trend = clean(3)
+        self.eps_revisions = clean(4)
+        self.growth_estimates = clean(5)
+        self.a_list.append(self.symbol)
+        self.attributes.append(a.attributes)

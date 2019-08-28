@@ -25,5 +25,4 @@ class scraper:
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
         table = list(map(lambda x: pandas.read_html(lxml.etree.tostring(table[x], method='xml'))[0], range(0,len(table))))
-        table = pandas.concat(table).astype(float, errors='ignore')
         return table

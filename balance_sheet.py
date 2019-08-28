@@ -4,7 +4,7 @@ Created on Wed Jul 17 15:41:04 2019
 
 @author: rayde
 """
-
+import pandas as pd
 from pandas import DataFrame
 import numpy as np
 
@@ -22,8 +22,9 @@ class balance_sheet:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
-        bs = scraper(self.symbol).__table__(url)
-        return bs
+        table = scraper(self.symbol).__table__(url)
+        table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        return table
 
     def clean(self):
         df = self.scrape()

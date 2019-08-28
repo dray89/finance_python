@@ -6,6 +6,7 @@ Created on Wed Jul 31 11:15:38 2019
 """
 from pandas import DataFrame
 import numpy as np
+import pandas as pd
 
 try:
     from scrapers import scraper
@@ -20,8 +21,9 @@ class financials:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        financials = scraper(self.symbol).__table__(url)
-        return financials
+        table = scraper(self.symbol).__table__(url)
+        table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        return table
 
     def clean(self):
         financials = self.scrape()

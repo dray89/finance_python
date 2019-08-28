@@ -23,8 +23,9 @@ class statistics:
 
     def scrape(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/key-statistics?p=" + self.symbol
-        stats = scraper(self.symbol).__table__(url)
-        return stats
+        table = scraper(self.symbol).__table__(url)
+        table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        return table
 
     def clean(self):
         df = self.scrape()
