@@ -4,10 +4,8 @@ Created on Wed Jul 31 11:15:38 2019
 
 @author: rayde
 """
-import pandas as pd
 from pandas import DataFrame
 import numpy as np
-import lxml
 
 try:
     from scrapers import scraper
@@ -15,19 +13,19 @@ except:
     from finance_python.scrapers import scraper
 
 class financials:
-    fin_list = []
-
     def __init__(self, symbol):
         self.symbol = symbol
         self.financials = self.clean()
-        self.attributes = ['financials', 'changes', 'industry(fin_list)', 'fin_list']
+        self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
         financials = scraper(self.symbol).__table__(url)
+        return financials
 
-        if len(financials) == 1:
-            financials = pd.read_html(lxml.etree.tostring(financials[0], method='xml'))[0]
+    def clean(self):
+        financials = self.scrape()
+        if len(financials) > 0:
             financials = financials.dropna(how = 'all')
             financials = financials.replace('-', np.nan)
             financials.iloc[0][0] = 'Dates'
@@ -39,15 +37,7 @@ class financials:
             financials = financials.iloc[1:]
         else:
             financials = DataFrame([np.nan])
-
         return financials
 
-    def clean(self):
-        df = self.scrape()
-        return df
-
     def changes(self):
-        pass
-
-    def industry(self):
         pass

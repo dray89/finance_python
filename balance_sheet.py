@@ -5,10 +5,8 @@ Created on Wed Jul 17 15:41:04 2019
 @author: rayde
 """
 
-import pandas as pd
 from pandas import DataFrame
 import numpy as np
-import lxml
 
 try:
     from scrapers import scraper
@@ -20,14 +18,12 @@ class balance_sheet:
         self.symbol = symbol
         self.balance_sheet = self.clean()
         self.balance_sheet['Changes'] = self.changes()
-        self.attributes = ['balance_sheet', 'changes', 'balance_sheet(self.symbol).industry(self.bs_list)', "bs_list"]
+        self.attributes = ['balance_sheet', "bs_list"]
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
         bs = scraper(self.symbol).__table__(url)
-        df = list(map(lambda x: pd.read_html(lxml.etree.tostring(bs[x], method='xml'))[0], range(0,len(bs))))
-        df = pd.concat(df)
-        return df
+        return bs
 
     def clean(self):
         df = self.scrape()
@@ -50,6 +46,3 @@ class balance_sheet:
         changes = changes.divide(self.balance_sheet[dates[-1]]).dropna(how='all')
         changes.name = self.symbol.upper()
         return changes
-
-    def industry(self, bs_list):
-        pass

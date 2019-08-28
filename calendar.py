@@ -9,9 +9,9 @@ from urllib.request import urlopen
 from datetime import date, timedelta
 
 try:
-	from scrape import scrape
+	from scraper import scraper
 except:
-	from finance_python.scrape import scrape
+	from finance_python.scraper import scraper
 
 class calendar:  
     def __init__(self, days):
@@ -20,17 +20,10 @@ class calendar:
         self.day = date.__str__(date.today() + timedelta(days))
         self.end = date.__str__(date.today() + timedelta(days + 4))
         self.url = "https://ca.finance.yahoo.com/calendar/earnings?from=" + self.start + "&to=" + self.end + "&day=" + self.day
-        self.pages = self.weekly()
+        self.pages = scraper.__general__(url)
         self.table = self.table()
         self.text = self.text()
-        
-    def weekly(self):
-        Client=urlopen(self.url)
-        xml_page=Client.read()
-        Client.close()
-        soup_page=soup(xml_page,"xml")
-        return soup_page
-    
+
     def table(self):
         table = self.pages.find(id="cal-res-table").findAll('td')
         return table 
@@ -46,9 +39,3 @@ class calendar:
             results.append(b)
             y +=6
         return results
-
-def desc(symbol): 
-   s = scrape(symbol).__profile__()
-   description = s.find('span', string='Description').find_next().text
-   return description
-        

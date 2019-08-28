@@ -4,10 +4,8 @@ Created on Thu Aug 15 22:30:46 2019
 
 @author: rayde
 """
-import pandas as pd
 from pandas import DataFrame
 import numpy as np
-import lxml
 
 try:
     from scrapers import scraper
@@ -15,8 +13,6 @@ except:
     from finance_python.scrapers import scraper
 
 class analysis:
-    a_list = []
-
     def __init__(self, symbol):
         self.symbol = symbol
         self.analysis = self.clean()
@@ -27,9 +23,7 @@ class analysis:
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/analysis?p=' + self.symbol
         cash = scraper(self.symbol).__table__(url)
-        df = list(map(lambda x: pd.read_html(lxml.etree.tostring(cash[x], method='xml'))[0], range(0,len(cash))))
-        df = df.concat(df)
-        return df
+        return cash
 
     def clean(self):
         df = self.scrape()

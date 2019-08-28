@@ -4,8 +4,7 @@ Created on Thu Aug 15 22:29:56 2019
 
 @author: rayde
 """
-import pandas as pd
-import lxml
+
 import numpy as np
 from pandas import DataFrame
 
@@ -15,37 +14,35 @@ except:
     from finance_python.scrapers import scraper
 
 class cashflow:
-    cash_list = []
-
     def __init__(self, symbol):
         self.symbol = symbol
         self.cashflow = self.clean()
-        self.changes = self.changes()
-        self.industry = self.industry(self.cash_list)
-        self.attributes = ['cashflow', 'cash_list', 'changes', "industry(cash_list)"]
+        self.cashflow['Changes'] = self.changes()
+        self.attributes = ['cashflow', 'cash_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
         cash = scraper(self.symbol).__table__(url)
-        df = list(map(lambda x: pd.read_html(lxml.etree.tostring(cash[x], method='xml'))[0], range(0,len(cash))))
-        df = pd.concat(df)
-        return df
+        return cash
 
     def clean(self):
         df = self.scrape()
         if len(df)>0:
+            df = df.set_axis(df.iloc[0], axis='columns', inplace=False)
+            df = df.set_index('Period Ending')
+            df = df.set_axis(list(df.index), axis='rows', inplace=False)
             df = df.replace('-', np.nan)
-            df = df.set_index(0)
-            cols = df.iloc[0]
-            df = df.set_axis(cols, axis='columns', inplace=False)
-            df.drop('Period Ending')
-            rows = list(df.index)
-            self.cashflow = df.set_axis(rows, axis='rows', inplace=False)
+            df.columns.name = 'Period Ending'
+            df.index.name = self.symbol
+            df = df.drop('Period Ending')
+            cashflow = df.fillna(np.nan).astype(float, errors='ignore')
         else:
-            self.cashflow = DataFrame([np.nan])
+            cashflow = DataFrame([np.nan])
+        return cashflow
 
     def changes(self):
-        pass
-
-    def industry(self):
-        pass
+        dates = list(self.cashflow.columns)
+        changes = np.subtract(self.cashflow[dates[0]], self.cashflow[dates[-1]])
+        changes = changes.divide(self.cashflow[dates[-1]]).dropna(how='all')
+        changes.name = self.symbol.upper()
+        return changes

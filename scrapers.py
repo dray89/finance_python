@@ -4,7 +4,7 @@ Created on Thu Jul 25 18:06:26 2019
 
 @author: rayde
 """
-import requests
+import requests, pandas, lxml
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from lxml import html
@@ -24,9 +24,6 @@ class scraper:
         page = requests.get(url)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
+        table = list(map(lambda x: pandas.read_html(lxml.etree.tostring(table[x], method='xml'))[0], range(0,len(table))))
+        table = pandas.concat(table).astype(float, errors='ignore')
         return table
-
-    def __quote__(self):         
-        url="https://finance.yahoo.com/quote/" + self.symbol + "?p=" + self.symbol
-        soup_page = self.__general__(url)
-        return soup_page

@@ -69,8 +69,6 @@ class stock:
         url = 'https://finance.yahoo.com/quote/' + self.symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
         history = scraper(self.symbol).__table__(url)
         try:
-            history = list(map(lambda x: pandas.read_html(lxml.etree.tostring(history[x], method='xml'))[0], range(0,len(history))))
-            history = pandas.concat(history).astype(float, errors='ignore')
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
         except:
@@ -81,20 +79,19 @@ class stock:
     def dividends(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/history?interval=div%7Csplit&filter=div&frequency=1d"
         dividends = scraper(self.symbol).__table__(url)
-        dividends = list(map(lambda x: pandas.read_html(lxml.etree.tostring(dividends[x], method='xml'))[0], range(0,len(dividends))))
-        dividends = pandas.concat(dividends)
         if len(dividends)>1:
             dividends = dividends.drop(4)
             dividends = dividends.set_index('Date')
             dividends  = dividends['Dividends']
             dividends = dividends.str.replace(r'\Dividend', '').astype(float)
+            dividends.name = self.symbol
         return dividends
 
     def stats(self):
         stats = statistics(self.symbol)
-        self.attributes.append(stats.attributes)
+        self.statistics = stats.statistics
         self.stats_list.append(stats.statistics)
-        self.statistics = stats.industry(self.stats_list)
+        self.attributes.append(stats.attributes)
 
     def balance(self):
         bs = balance_sheet(self.symbol)

@@ -5,8 +5,6 @@ Created on Thu Aug 15 21:28:49 2019
 @author: rayde
 """
 import pandas as pd
-import numpy as np
-import lxml
 
 try:
     from scrapers import scraper
@@ -17,18 +15,15 @@ billions = lambda x: float(x)*100
 thousands = lambda x: float(x)/100
 
 class statistics:
-
     def __init__(self, symbol):
         self.symbol = symbol
         self.statistics = self.clean()
-        self.attributes = ['statistics', 'stats_list', 'industry(stats_list)']
+        self.attributes = ['statistics', 'stats_list']
 
     def scrape(self):
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/key-statistics?p=" + self.symbol
         stats = scraper(self.symbol).__table__(url)
-        df = list(map(lambda x: pd.read_html(lxml.etree.tostring(stats[x], method='xml'))[0], range(0,len(stats))))
-        df = pd.concat(df)
-        return df
+        return stats
 
     def clean(self):
         df = self.scrape()
@@ -41,7 +36,8 @@ class statistics:
 
             for each in list(stats.columns):
                 stats[each] = stats[each].str.strip('M %')
-            
+
+#change to iterrows/columns
             for i in range(0, len(stats)-1):
                 for e in range(0, len(list(stats.iloc[i].values))):
                     if 'B' in str(list(stats.iloc[i].values)[e]):
@@ -53,43 +49,21 @@ class statistics:
                         a = list(stats.iloc[i].values)[e]
                         a = a.strip('k')
                         stats.iloc[i][e] = thousands(a)
-            
+
                 for each in list(stats.columns):
-                    stats[each] = pd.to_numeric(stats[each],errors='coerce')
+                    stats.fillna(np.nan).astype(float, errors='ignore')
+                    stats[each] = pd.to_numeric(stats[each], errors='coerce')
 
         div_r = stats.T["Forward Annual Dividend Yield 4"]
-
-        if hasattr(div_r, 'str'):
-            div_r = np.nan
-
         t_r = stats.T['52-Week Change 3'][0]
-        t_r = float(t_r) + div_r
-        stats[self.symbol.upper()]['Total Returns'] = t_r
-
+        t_r = float(t_r) + float(div_r)
+        row = pd.Series({self.symbol:t_r}, name='Total Returns', dtype=float)
+        stats.append(row)
         beta = stats.T['Beta (3Y Monthly)'][0]
-        if hasattr(beta, 'float'):
-            returns_adj = abs(div_r/beta)
-            p = returns_adj
+        returns_adj = abs(div_r/float(beta))
 
-        else:
-            returns_adj = div_r
-            p = returns_adj
-
-        stats[self.symbol.upper()]['Adjusted Returns'] = p
+        p = returns_adj
+        row = pd.Series({self.symbol:p}, name='Adjusted Returns', dtype=float)
+        stats.append(row)
         return stats
 
-    def industry(self, stats_list):
-        industry = pd.concat(stats_list, axis=1).dropna(how='all')
-        industry = industry.astype(float, errors='ignore')
-        try:
-            averages = industry.mean(axis=1).dropna(how='all')
-            industry['Averages'] = averages
-        except:
-            print('Error in Industry - Concat_df, Try Reformatting')
-            self.df_list = list(map(lambda each: self.clean(each), self.stats_list))
-            industry = pd.concat(self.df_list, axis=1).dropna(how='all')
-            industry = industry.astype(float, errors='ignore')
-            averages = industry.mean(axis=1).dropna(how='all')
-            industry['Averages'] = averages
-        finally:
-            return industry
