@@ -17,6 +17,7 @@ class financials:
     def __init__(self, symbol):
         self.symbol = symbol
         self.financials = self.clean()
+        self.financials['Changes'] = self.changes()
         self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
@@ -28,18 +29,21 @@ class financials:
     def clean(self):
         financials = self.scrape()
         if len(financials) > 0:
-            financials = financials.dropna(how = 'all')
+            financials = financials.set_axis(financials.iloc[0], axis='columns', inplace=False)
+            financials = financials.set_index('Revenue')
+            financials = financials.set_axis(list(financials.index), axis='rows', inplace=False)
             financials = financials.replace('-', np.nan)
-            financials.iloc[0][0] = 'Dates'
-            financials = financials.set_index(0)
-            cols = financials.iloc[0]
-            financials = financials.set_axis(cols, axis='columns', inplace=False)
-            rows = list(financials.index)
-            financials = financials.set_axis(rows, axis='rows', inplace=False)
-            financials = financials.iloc[1:]
+            financials.index.name = self.symbol
+            financials.columns.name = 'Period Ending'
+            financials = financials.drop('Revenue')
+            financials = financials.fillna(np.nan).astype(float, errors='ignore')
         else:
             financials = DataFrame([np.nan])
         return financials
 
     def changes(self):
-        pass
+        dates = list(self.financials.columns)
+        changes = np.subtract(self.financials[dates[0]], self.financials[dates[-1]])
+        changes = changes.divide(self.financials[dates[-1]]).dropna(how='all')
+        changes.name = self.symbol.upper()
+        return changes

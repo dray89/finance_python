@@ -4,8 +4,6 @@ Created on Wed Jul 31 15:07:11 2019
 
 @author: rayde
 """
-from bs4 import BeautifulSoup as soup
-from urllib.request import urlopen
 from datetime import date, timedelta
 
 try:
