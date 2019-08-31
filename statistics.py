@@ -39,7 +39,6 @@ class statistics:
             for each in list(stats.columns):
                 stats[each] = stats[each].str.strip('M %')
 
-#change to iterrows/columns
             for i in range(0, len(stats)-1):
                 for e in range(0, len(list(stats.iloc[i].values))):
                     if 'B' in str(list(stats.iloc[i].values)[e]):
