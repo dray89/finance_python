@@ -5,6 +5,7 @@ Created on Thu Aug 15 21:22:48 2019
 @author: rayde
 """
 import pandas as pd
+import numpy as np
 import lxml, time
 from datetime import datetime
 
@@ -116,11 +117,20 @@ class stock:
     def analyze(self):
         a = analysis(self.symbol)
         clean = analysis(self.symbol).clean(a.df)
-        self.earnings_est = clean(0)
-        self.revenue = clean(1)
-        self.earnings_history = clean(2)
-        self.eps_trend = clean(3)
-        self.eps_revisions = clean(4)
-        self.growth_estimates = clean(5)
+        if len(a.df)>0:
+            self.earnings_est = clean(0)
+            self.revenue = clean(1)
+            self.earnings_history = clean(2)
+            self.eps_trend = clean(3)
+            self.eps_revisions = clean(4)
+            self.growth_estimates = clean(5)
+        else:
+            self.earnings_est = np.nan
+            self.revenue = np.nan
+            self.earnings_history = np.nan
+            self.eps_trend = np.nan
+            self.eps_revisions = np.nan
+            self.growth_estimates = np.nan
+
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)

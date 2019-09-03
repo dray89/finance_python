@@ -43,7 +43,10 @@ class balance_sheet:
 
     def changes(self):
         dates = list(self.balance_sheet.columns)
-        changes = np.subtract(self.balance_sheet[dates[0]], self.balance_sheet[dates[-1]])
-        changes = changes.divide(self.balance_sheet[dates[-1]]).dropna(how='all')
-        changes.name = self.symbol.upper()
+        if len(dates)>1:
+            changes = np.subtract(self.balance_sheet[dates[0]], self.balance_sheet[dates[-1]])
+            changes = changes.divide(self.balance_sheet[dates[-1]]).dropna(how='all')
+            changes.name = self.symbol.upper()
+        else:
+            changes = DataFrame([np.nan])
         return changes

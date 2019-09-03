@@ -44,7 +44,10 @@ class cashflow:
 
     def changes(self):
         dates = list(self.cashflow.columns)
-        changes = np.subtract(self.cashflow[dates[0]], self.cashflow[dates[-1]])
-        changes = changes.divide(self.cashflow[dates[-1]]).dropna(how='all')
-        changes.name = self.symbol.upper()
+        if len(dates):
+            changes = np.subtract(self.cashflow[dates[0]], self.cashflow[dates[-1]])
+            changes = changes.divide(self.cashflow[dates[-1]]).dropna(how='all')
+            changes.name = self.symbol.upper()
+        else:
+            changes = DataFrame([np.nan])
         return changes

@@ -7,6 +7,7 @@ Created on Wed Jul 31 11:15:38 2019
 from pandas import DataFrame
 import numpy as np
 import pandas as pd
+import numpy as np
 
 try:
     from scrapers import scraper
@@ -43,7 +44,10 @@ class financials:
 
     def changes(self):
         dates = list(self.financials.columns)
-        changes = np.subtract(self.financials[dates[0]], self.financials[dates[-1]])
-        changes = changes.divide(self.financials[dates[-1]]).dropna(how='all')
-        changes.name = self.symbol.upper()
+        if len(dates)>1:
+            changes = np.subtract(self.financials[dates[0]], self.financials[dates[-1]])
+            changes = changes.divide(self.financials[dates[-1]]).dropna(how='all')
+            changes.name = self.symbol.upper()
+        else:
+            changes = DataFrame([np.nan])
         return changes
