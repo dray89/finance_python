@@ -52,7 +52,7 @@ class industry:
     def financials(self, fin_list):
         indus = changes(fin_list)
         cols = columns(fin_list)
-        self.financials = pd.concat(indus, axis=1, keys=cols, sort=True).dropna(how='all')
+        self.financials = pd.concat(indus, axis=1, keys=cols)
         self.attributes.append('financials')
 
     def analysis(self, a_list):

@@ -7,7 +7,6 @@ Created on Wed Jul 31 11:15:38 2019
 from pandas import DataFrame
 import numpy as np
 import pandas as pd
-import numpy as np
 
 try:
     from scrapers import scraper
