@@ -47,12 +47,16 @@ class industry:
         indus = changes(bs_list)
         cols = columns(bs_list)
         self.balance_sheet = pd.concat(indus, axis=1, keys=cols, sort=True).dropna(how='all')
+        averages = self.balance_sheet.mean(axis=1).dropna(how='all')
+        self.balance_sheet['Averages'] = averages
         self.attributes.append('balance_sheet')
 
     def financials(self, fin_list):
         indus = changes(fin_list)
         cols = columns(fin_list)
         self.financials = pd.concat(indus, axis=1, keys=cols)
+        averages = self.financials.mean(axis=1).dropna(how='all')
+        self.financials['Averages'] = averages
         self.attributes.append('financials')
 
     def analysis(self, a_list):

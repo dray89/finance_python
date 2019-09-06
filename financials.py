@@ -30,6 +30,7 @@ class financials:
         financials = self.scrape()
         if len(financials) > 0:
             financials = financials.set_axis(financials.iloc[0], axis='columns', inplace=False)
+            financials = financials.drop_duplicates(subset='Revenue', keep='last')
             financials = financials.set_index('Revenue')
             financials = financials.set_axis(list(financials.index), axis='rows', inplace=False)
             financials = financials.replace('-', np.nan)

@@ -70,12 +70,15 @@ class stock:
         end = int(time.mktime(datetime.strptime(self.end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         url = 'https://finance.yahoo.com/quote/' + self.symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
         history = scraper(self.symbol).__table__(url)
-        history = pd.concat(history, sort=True).astype(float, errors='ignore')
+        if len(history)>0:
+            history = pd.concat(history, sort=True).astype(float, errors='ignore')
+        else:
+            history = self.symbol, 'Error occurred in history method. Double check you entered the symbol correctly.'
         try:
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
         except:
-            print(self.symbol, ': error occurred in history method')
+            print('Error cleaning history dataframe.')
         finally:
             return history
 
