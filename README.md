@@ -19,7 +19,11 @@ balance_sheet.py: scrapes balance_sheet information.
 
         Example:
 ---------------------------------------------------------------------------------------------
+
         from datetime import date
+        from stock import stock
+        from industry import industry
+
         symbol = "aapl"
         start = date(2018, 8, 14)
         end = date(2019, 8, 14)
@@ -36,6 +40,13 @@ balance_sheet.py: scrapes balance_sheet information.
         apple.attributes
 
         apple.statistics
+
+        portfolio = portfolio()
+        portfolio.financials(apple.fin_list)
+        portfolio.cashflow(apple.cash_list)
+        portfolio.statistics(apple.stats_list)
+        portfolio.balance_sheet(apple.stats_list)
+
 --------------------------------------------------------------------------------------------
 
 scraper.py: Scrapers used throughout each of these files live in scraper.py
