@@ -41,7 +41,7 @@ class stock:
         self.scrape()
         self.history = self.history()
         self.dividends = self.dividends()
-        self.price = self.history['Close*'][0]
+        self.price = self.price()
         self.attributes = [['dividends', 'sector','description',
                            'history', 'price'], ['stats()',
                            'balance()', 'financial()', 'cash()', 'analyze()']]
@@ -65,6 +65,13 @@ class stock:
         except:
             self.description = "could not find description information"
 
+    def price(self):
+        try:
+            price = self.history['Close*'][0]
+        except:
+            price = np.nan
+        return price
+
     def history(self):
         start = int(time.mktime(datetime.strptime(self.start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         end = int(time.mktime(datetime.strptime(self.end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
@@ -78,7 +85,7 @@ class stock:
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
         except:
-            print('Error cleaning history dataframe.')
+            print(self.symbol, ': Error cleaning history dataframe. Is it the right symbol?')
         finally:
             return history
 
