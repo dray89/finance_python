@@ -18,7 +18,6 @@ financials.py: scrapes financial information from yahoo.
 balance_sheet.py: scrapes balance_sheet information.
 
         Example:
----------------------------------------------------------------------------------------------
 
         from datetime import date
         from stock import stock
