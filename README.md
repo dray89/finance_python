@@ -12,13 +12,16 @@ stock.py: Contains the primary command in the program, stock()
                            and company description.
 
 statistics.py: scrapes statistics information from yahoo. Feeds into method in stock.py.
+
 cashflow.py: scrapes cashflow information from yahoo.
+
 analysis.py: scrapes analysis information from yahoo.
+
 financials.py: scrapes financial information from yahoo.
+
 balance_sheet.py: scrapes balance_sheet information.
 
         Example:
----------------------------------------------------------------------------------------------
 
         from datetime import date
         from stock import stock
