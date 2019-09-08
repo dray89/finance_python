@@ -35,10 +35,16 @@ class statistics:
             df = df.set_index('Item')
             rows = list(df.index)
             stats = df.set_axis(rows, axis='rows', inplace=False)
+            stats = self.remove_strings(stats)
+            stats = self.add_rows(stats)
+        else:
+            stats = DataFrame([np.nan])
+        return stats
 
+    def remove_strings(self, stats):
+        if len(stats)>1:
             for each in list(stats.columns):
                 stats[each] = stats[each].str.strip('M %')
-
             for i in range(0, len(stats)-1):
                 for e in range(0, len(list(stats.iloc[i].values))):
                     if 'B' in str(list(stats.iloc[i].values)[e]):
@@ -50,21 +56,26 @@ class statistics:
                         a = list(stats.iloc[i].values)[e]
                         a = a.strip('k')
                         stats.iloc[i][e] = thousands(a)
+            for each in list(stats.columns):
+                stats.fillna(np.nan).astype(float, errors='ignore')
+                stats[each] = pd.to_numeric(stats[each], errors='coerce')
+            return stats
 
-                for each in list(stats.columns):
-                    stats.fillna(np.nan).astype(float, errors='ignore')
-                    stats[each] = pd.to_numeric(stats[each], errors='coerce')
-
-        div_r = stats.T["Forward Annual Dividend Yield 4"]
+    def add_rows(self, stats):
+        div_r = stats.T["Forward Annual Dividend Yield 4"][0]
         t_r = stats.T['52-Week Change 3'][0]
-        t_r = float(t_r) + float(div_r)
-        row = pd.Series({self.symbol:t_r}, name='Total Returns', dtype=float)
-        stats.append(row)
-        beta = stats.T['Beta (3Y Monthly)'][0]
-        returns_adj = abs(div_r/float(beta))
+        if np.isnan(div_r):
+            t_r = float(t_r)
+            p = np.nan
+        else:
+            t_r = float(t_r) + float(div_r)
+            beta = stats.T['Beta (3Y Monthly)'][0]
+            returns_adj = abs(div_r/float(beta))
+            p = returns_adj
 
-        p = returns_adj
         row = pd.Series({self.symbol:p}, name='Adjusted Returns', dtype=float)
-        stats.append(row)
+        stats = stats.append(row)
+        row = pd.Series({self.symbol:t_r}, name='Total Returns', dtype=float)
+        stats = stats.append(row)
         return stats
 
