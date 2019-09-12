@@ -48,7 +48,7 @@ balance_sheet.py: scrapes balance_sheet information.
         portfolio.financials(apple.fin_list)
         portfolio.cashflow(apple.cash_list)
         portfolio.statistics(apple.stats_list)
-        portfolio.balance_sheet(apple.stats_list)
+        portfolio.balance_sheet(apple.bs_list)
 
 --------------------------------------------------------------------------------------------
 
