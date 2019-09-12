@@ -66,8 +66,3 @@ Remember: It is still in testing stages. So, feel free to use and contribute to 
 If you have any questions, feel free to reach out.
 
 -----------------------------------------------------------------------------------------------
-
-Planned Upgrades:
-I want to set it up to SQLlite or Postgres to store the stock information.
-
------------------------------------------------------------------------------------------------
