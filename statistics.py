@@ -6,6 +6,7 @@ Created on Thu Aug 15 21:28:49 2019
 """
 import pandas as pd
 import numpy as np
+from pandas import DataFrame
 
 try:
     from scrapers import scraper
@@ -35,8 +36,11 @@ class statistics:
             df = df.set_index('Item')
             rows = list(df.index)
             stats = df.set_axis(rows, axis='rows', inplace=False)
-            stats = self.remove_strings(stats)
-            stats = self.add_rows(stats)
+            try:
+                stats = self.remove_strings(stats)
+                stats = self.add_rows(stats)
+            except:
+                print(self.symbol, ": Is the symbol correct?")
         else:
             stats = DataFrame([np.nan])
         return stats
