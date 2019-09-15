@@ -1,0 +1,119 @@
+
+Symbol
+Industry
+FTS
+Utilities - Regulated
+H
+Utilities - Regulated
+EMA
+Utilities - Regulated
+AQN
+Utilities - Independent Power Producers
+BEP.UN
+Utilities - Independent Power Producers
+CU
+Utilities - Regulated
+ACO.X
+Utilities - Regulated
+NPI
+Utilities - Independent Power Producers
+PEGI
+Utilities - Independent Power Producers
+RNW
+Utilities - Independent Power Producers
+CPX
+Utilities - Regulated
+CU.X
+Utilities - Regulated
+TA
+Utilities - Independent Power Producers
+SPB
+Utilities - Regulated
+INE
+Utilities - Independent Power Producers
+BLX
+Utilities - Independent Power Producers
+VNR
+Utilities - Regulated
+ACI
+Utilities - Regulated
+ACO.Y
+Utilities - Regulated
+CUP.U
+Utilities - Regulated
+FTS.PR.M
+Utilities - Regulated
+GWR
+Utilities - Regulated
+ATP
+Utilities - Independent Power Producers
+JE
+Utilities - Regulated
+EMA.PR.H
+Utilities - Regulated
+CU.PR.I
+Utilities - Regulated
+BEP.PR.K
+Utilities - Independent Power Producers
+BEP.PR.M
+Utilities - Independent Power Producers
+CU.PR.C
+Utilities - Regulated
+CPX.PR.G
+Utilities - Regulated
+PIF
+Utilities - Independent Power Producers
+BEP.PR.I
+Utilities - Independent Power Producers
+CU.PR.G
+Utilities - Regulated
+EMA.PR.C
+Utilities - Regulated
+FTS.PR.J
+Utilities - Regulated
+BEP.PR.O
+Utilities - Independent Power Producers
+BEP.PR.G
+Utilities - Independent Power Producers
+FTS.PR.K
+Utilities - Regulated
+BRF.PR.C
+Utilities - Independent Power Producers
+FTS.PR.G
+Utilities - Regulated
+CPX.PR.I
+Utilities - Regulated
+CU.PR.F
+Utilities - Regulated
+CPX.PR.K
+Utilities - Regulated
+CPX.PR.E
+Utilities - Regulated
+TA.PR.F
+Utilities - Independent Power Producers
+TA.PR.H
+Utilities - Independent Power Producers
+BRF.PR.F
+Utilities - Independent Power Producers
+BRF.PR.E
+Utilities - Independent Power Producers
+CU.PR.E
+Utilities - Regulated
+CU.PR.D
+Utilities - Regulated
+EMA.PR.F
+Utilities - Regulated
+CU.PR.H
+Utilities - Regulated
+FTS.PR.F
+Utilities - Regulated
+CPX.PR.C
+Utilities - Regulated
+TA.PR.D
+Utilities - Independent Power Producers
+TA.PR.J
+Utilities - Independent Power Producers
+EMA.PR.E
+Utilities - Regulated
+VNR.PR.A
+Utilities - Regulated

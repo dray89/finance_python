@@ -1,0 +1,107 @@
+
+Symbol
+Industry
+CNR
+Transportation & Logistics
+CP
+Transportation & Logistics
+WCN
+Waste Management
+AC
+Airlines
+CAE
+Aerospace & Defense
+WSP
+Engineering & Construction
+RBA
+Business Services
+TIH
+Industrial Distribution
+BBD.B
+Aerospace & Defense
+FTT
+Industrial Distribution
+SNC
+Engineering & Construction
+WJA
+Airlines
+TFII
+Transportation & Logistics
+STN
+Engineering & Construction
+MSI
+Employment Services
+ATA
+Industrial Products
+BLDP
+Industrial Products
+BAD
+Engineering & Construction
+RUS
+Industrial Distribution
+CJT
+Transportation & Logistics
+EIF
+Airlines
+CHR
+Airlines
+ARE
+Engineering & Construction
+MAL
+Aerospace & Defense
+AFN
+Farm & Construction Machinery
+TEV
+Waste Management
+SIS
+Industrial Products
+HRX
+Aerospace & Defense
+BBD.A
+Aerospace & Defense
+ALC
+Transportation & Logistics
+DRT
+Engineering & Construction
+KBL
+Business Services
+AIM
+Business Services
+WJX
+Industrial Distribution
+GDI
+Business Services
+AXU
+Waste Management
+ISV
+Business Services
+LGT.A
+Transportation & Logistics
+CGY
+Business Services
+HDI
+Industrial Distribution
+BDT
+Engineering & Construction
+CLQ
+Waste Management
+WJA.A
+Airlines
+LGT.B
+Transportation & Logistics
+HNL
+Business Services
+BBD.PR.C
+Aerospace & Defense
+IBG
+Engineering & Construction
+CERV
+Farm & Construction Machinery
+RME
+Industrial Distribution
+CRP
+Business Services
+AIM.PR.C
+Business Services
+BDI
+Consulting & Outsourcing

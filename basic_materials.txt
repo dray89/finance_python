@@ -1,0 +1,289 @@
+
+Symbol
+Industry
+NGT
+Metals & Mining
+ABX
+Metals & Mining
+NTR
+Agriculture
+FNV
+Metals & Mining
+AEM
+Metals & Mining
+WPM
+Metals & Mining
+TECK.B
+Metals & Mining
+KL
+Metals & Mining
+K
+Metals & Mining
+FM
+Metals & Mining
+CCO
+Metals & Mining
+LUN
+Metals & Mining
+IVN
+Metals & Mining
+PAAS
+Metals & Mining
+BTO
+Metals & Mining
+YRI
+Metals & Mining
+MX
+Chemicals
+DGC
+Metals & Mining
+WFT
+Forest Products
+AGI
+Metals & Mining
+UFS
+Forest Products
+CG
+Metals & Mining
+SJ
+Forest Products
+NG
+Metals & Mining
+PVG
+Metals & Mining
+OSB
+Forest Products
+FR
+Metals & Mining
+SSRM
+Metals & Mining
+OR
+Metals & Mining
+IMG
+Metals & Mining
+OGC
+Metals & Mining
+CFP
+Forest Products
+ERO
+Metals & Mining
+LUG
+Metals & Mining
+ELD
+Metals & Mining
+LIF
+Steel
+ASR
+Metals & Mining
+TXG
+Metals & Mining
+SMF
+Metals & Mining
+WTE
+Coal
+HBM
+Metals & Mining
+SSL
+Metals & Mining
+TRQ
+Metals & Mining
+MAG
+Metals & Mining
+CAS
+Forest Products
+SEA
+Metals & Mining
+STLC
+Steel
+NGD
+Metals & Mining
+CHE.UN
+Chemicals
+KAT
+Metals & Mining
+PDL
+Metals & Mining
+IFP
+Forest Products
+SVM
+Metals & Mining
+LGO
+Metals & Mining
+OSK
+Metals & Mining
+DPM
+Metals & Mining
+WDO
+Metals & Mining
+MUX
+Metals & Mining
+CNL
+Metals & Mining
+LMC
+Metals & Mining
+FVI
+Metals & Mining
+SIL
+Metals & Mining
+MMX
+Metals & Mining
+RFP
+Forest Products
+CFX
+Forest Products
+NXE
+Metals & Mining
+U
+Metals & Mining
+TGZ
+Metals & Mining
+SBB
+Metals & Mining
+TMR
+Metals & Mining
+CGG
+Metals & Mining
+MNT
+Metals & Mining
+WEF
+Forest Products
+MDI
+Metals & Mining
+ALS
+Metals & Mining
+ROXG
+Metals & Mining
+LUC
+Metals & Mining
+POM
+Metals & Mining
+GSC
+Metals & Mining
+EDR
+Metals & Mining
+LAC
+Metals & Mining
+AR
+Metals & Mining
+NEO
+Metals & Mining
+PG
+Metals & Mining
+DML
+Metals & Mining
+CWX
+Building Materials
+PL
+Forest Products
+GSV
+Metals & Mining
+USA
+Metals & Mining
+NDM
+Metals & Mining
+GPR
+Metals & Mining
+TMQ
+Metals & Mining
+OLA
+Metals & Mining
+III
+Metals & Mining
+AKG
+Metals & Mining
+ADN
+Forest Products
+NMX
+Metals & Mining
+EFR
+Metals & Mining
+KOR
+Metals & Mining
+SMT
+Metals & Mining
+MPVD
+Metals & Mining
+MIN
+Metals & Mining
+GCM
+Metals & Mining
+CS
+Metals & Mining
+BSX
+Metals & Mining
+NCU
+Metals & Mining
+RNX
+Metals & Mining
+MOZ
+Metals & Mining
+TECK.A
+Metals & Mining
+VNP
+Metals & Mining
+FCU
+Metals & Mining
+TV
+Metals & Mining
+MAX
+Metals & Mining
+ECO
+Chemicals
+WM
+Metals & Mining
+GUY
+Metals & Mining
+JOSE
+Metals & Mining
+HRT
+Metals & Mining
+AUG
+Metals & Mining
+GOLD
+Metals & Mining
+TKO
+Metals & Mining
+FF
+Metals & Mining
+JAG
+Metals & Mining
+LGD
+Metals & Mining
+TNX
+Metals & Mining
+CMMC
+Metals & Mining
+SPPP
+Metals & Mining
+COP
+Metals & Mining
+MYA
+Metals & Mining
+NB
+Metals & Mining
+AII
+Metals & Mining
+ITH
+Metals & Mining
+S
+Metals & Mining
+URE
+Metals & Mining
+ASO
+Metals & Mining
+GGD
+Metals & Mining
+PTM
+Metals & Mining
+ARG
+Metals & Mining
+NHK
+Metals & Mining
+MND
+Metals & Mining
+VGZ
+Metals & Mining
+EXN
+Metals & Mining
+AMM
+Metals & Mining

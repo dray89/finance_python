@@ -1,0 +1,125 @@
+
+Symbol
+Industry
+QSR
+Restaurants
+MG
+Autos
+QSP.UN
+Restaurants
+GIL
+Manufacturing - Apparel & Furniture
+CCL.B
+Packaging & Containers
+CTC.A
+Retail - Apparel & Specialty
+TSGI
+Travel & Leisure
+BYD.UN
+Personal Services
+GOOS
+Manufacturing - Apparel & Furniture
+WPK
+Packaging & Containers
+LNR
+Autos
+GC
+Travel & Leisure
+DOO
+Autos
+NFI
+Autos
+HBC
+Retail - Apparel & Specialty
+CGX
+Entertainment
+MTY
+Restaurants
+RCH
+Manufacturing - Apparel & Furniture
+ATZ
+Retail - Apparel & Specialty
+TOY
+Travel & Leisure
+LNF
+Manufacturing - Apparel & Furniture
+TCL.A
+Publishing
+CJR.B
+Entertainment
+ITP
+Packaging & Containers
+MRE
+Autos
+ZZZ
+Retail - Apparel & Specialty
+PLC
+Personal Services
+CTC
+Retail - Apparel & Specialty
+RECP
+Restaurants
+CCL.A
+Packaging & Containers
+TRZ
+Travel & Leisure
+PBL
+Travel & Leisure
+AW.UN
+Restaurants
+WPRT
+Autos
+UNS
+Autos
+BCI
+Retail - Apparel & Specialty
+IPLP
+Packaging & Containers
+RPI.UN
+Packaging & Containers
+RAY.A
+Entertainment
+BPF.UN
+Restaurants
+GBT
+Retail - Apparel & Specialty
+TWC
+Travel & Leisure
+XTC
+Autos
+DII.B
+Manufacturing - Apparel & Furniture
+PZA
+Restaurants
+Y
+Publishing
+DHX
+Entertainment
+ACQ
+Autos
+ITX
+Travel & Leisure
+TCL.B
+Publishing
+CLIQ
+Retail - Apparel & Specialty
+GH
+Travel & Leisure
+PNC.B
+Publishing
+KEG.UN
+Restaurants
+BOS
+Autos
+IDG
+Retail - Apparel & Specialty
+RET.A
+Retail - Apparel & Specialty
+HLC
+Travel & Leisure
+SRV.UN
+Restaurants
+TBL
+Retail - Apparel & Specialty
+ROOT
+Retail - Apparel & Specialty

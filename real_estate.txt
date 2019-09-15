@@ -1,0 +1,133 @@
+
+Symbol
+Industry
+BPY.UN
+Real Estate Services
+CAR.UN
+REITs
+REI.UN
+REITs
+HR.UN
+REITs
+AP.UN
+REITs
+FSV
+Real Estate Services
+FCR
+Real Estate Services
+SRU.UN
+REITs
+CHP.UN
+REITs
+CIGI
+Real Estate Services
+CSH.UN
+REITs
+GRT.UN
+REITs
+DRG.UN
+REITs
+CUF.UN
+REITs
+MRC
+Real Estate Services
+BEI.UN
+REITs
+TCN
+Real Estate Services
+IIP.UN
+REITs
+KMP.UN
+REITs
+AX.UN
+REITs
+NVU.UN
+REITs
+D.UN
+REITs
+NWH.UN
+REITs
+AIF
+Real Estate Services
+DIR.UN
+REITs
+SMU.UN
+REITs
+CRR.UN
+REITs
+CRT.UN
+REITs
+DRM
+Real Estate Services
+WFC
+Real Estate Services
+RUF.UN
+REITs
+WIR.U
+REITs
+MRG.UN
+REITs
+MRT.UN
+REITs
+MEQ
+Real Estate Services
+RUF.U
+REITs
+MI.UN
+REITs
+F.UN
+REITs
+HOT.UN
+REITs
+DRA.UN
+REITs
+SRT.UN
+REITs
+TNT.UN
+REITs
+PLZ.UN
+REITs
+MRD
+Real Estate Services
+SOT.UN
+REITs
+IVQ.U
+Real Estate Services
+BTB.UN
+REITs
+PRV.UN
+REITs
+BPO.PR.E
+Real Estate Services
+INO.UN
+REITs
+APR.UN
+REITs
+BPO.PR.G
+Real Estate Services
+BPO.PR.C
+Real Estate Services
+BPO.PR.A
+Real Estate Services
+BPO.PR.I
+Real Estate Services
+BPO.PR.P
+Real Estate Services
+BPO.PR.T
+Real Estate Services
+HOM.U
+REITs
+BPO.PR.N
+Real Estate Services
+MPC.C
+Real Estate Services
+BPO.PR.R
+Real Estate Services
+BRE
+Real Estate Services
+TPH
+REITs
+AX.PR.I
+REITs
+MR.UN
+REITs

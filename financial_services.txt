@@ -1,0 +1,494 @@
+RY
+Banks
+TD
+Banks
+BNS
+Banks
+BAM.A
+Asset Management
+BMO
+Banks
+CM
+Banks
+MFC
+Insurance - Life
+TRI
+Brokers & Exchanges
+SLF
+Insurance
+GWO
+Insurance - Life
+NA
+Banks
+PWF
+Insurance - Life
+IFC
+Insurance - Property & Casualty
+FFH
+Insurance - Property & Casualty
+POW
+Insurance - Life
+IGM
+Asset Management
+ONEX
+Asset Management
+X
+Brokers & Exchanges
+IAG
+Insurance
+EFN
+Credit Services
+CIX
+Asset Management
+MIC
+Insurance - Specialty
+CEF
+Asset Management
+PHYS
+Asset Management
+ELF
+Insurance - Property & Casualty
+CEF.U
+Asset Management
+CWB
+Banks
+PHYS.U
+Asset Management
+FN
+Banks
+LB
+Banks
+EQB
+Banks
+HCG
+Banks
+POW.PR.E
+Insurance - Life
+FIH.U
+Asset Management
+EIT.UN
+Asset Management
+UNC
+Asset Management
+ECN
+Credit Services
+TD.PF.H
+Banks
+SII
+Asset Management
+CYB
+Asset Management
+FSZ
+Asset Management
+GSY
+Credit Services
+TF
+Asset Management
+RY.PR.R
+Banks
+CVG
+Asset Management
+RY.PR.Q
+Banks
+TD.PF.G
+Banks
+AD
+Credit Services
+MTG
+Asset Management
+TMC
+Asset Management
+CM.PR.R
+Banks
+BMO.PR.B
+Banks
+GCG.A
+Asset Management
+CF
+Brokers & Exchanges
+AI
+Banks
+BNS.PR.G
+Banks
+DFN.PR.A
+Asset Management
+BNS.PR.H
+Banks
+CGI
+Asset Management
+AGF.B
+Asset Management
+RY.PR.J
+Banks
+MFC.PR.R
+Insurance - Life
+BMO.PR.C
+Banks
+DFN
+Asset Management
+TD.PF.M
+Banks
+MFC.PR.O
+Insurance - Life
+FTN.PR.A
+Asset Management
+SEC
+Asset Management
+NA.PR.X
+Banks
+NA.PR.A
+Banks
+FC
+Banks
+MKP
+Banks
+DGS.PR.A
+Asset Management
+BNS.PR.E
+Banks
+BMO.PR.S
+Banks
+BC.V
+Asset Management
+RY.PR.Z
+Banks
+RY.PR.H
+Banks
+SLF.PR.A
+Insurance
+TD.PF.B
+Banks
+TD.PF.A
+Banks
+CM.PR.S
+Banks
+TD.PF.C
+Banks
+BMO.PR.D
+Banks
+BMO.PR.F
+Banks
+TD.PF.L
+Banks
+NA.PR.C
+Banks
+BMO.PR.E
+Banks
+TD.PF.K
+Banks
+CM.PR.T
+Banks
+DIV
+Banks
+FTN
+Asset Management
+RY.PR.A
+Banks
+MFC.PR.B
+Insurance - Life
+RY.PR.W
+Banks
+TD.PF.I
+Banks
+BAM.PF.I
+Asset Management
+SLF.PR.B
+Insurance
+TD.PF.J
+Banks
+RY.PR.S
+Banks
+BAM.PF.J
+Asset Management
+GWO.PR.G
+Insurance - Life
+LBS.PR.A
+Asset Management
+BMO.PR.T
+Banks
+TD.PF.D
+Banks
+GWO.PR.H
+Insurance - Life
+CM.PR.O
+Banks
+BNS.PR.Z
+Banks
+PWF.PR.S
+Insurance - Life
+RY.PR.E
+Banks
+RY.PR.G
+Banks
+GWO.PR.I
+Insurance - Life
+MFC.PR.C
+Insurance - Life
+PWF.PR.R
+Insurance - Life
+BNS.PR.I
+Banks
+SLF.PR.D
+Insurance
+BAM.PF.H
+Asset Management
+CM.PR.Y
+Banks
+NA.PR.S
+Banks
+GWO.PR.P
+Insurance - Life
+NA.PR.G
+Banks
+PWF.PR.Z
+Insurance - Life
+NA.PR.E
+Banks
+MFC.PR.M
+Insurance - Life
+POW.PR.D
+Insurance - Life
+RY.PR.M
+Banks
+BMO.PR.Q
+Banks
+CM.PR.Q
+Banks
+SLF.PR.I
+Insurance
+BAM.PF.A
+Asset Management
+FAH.U
+Asset Management
+PWF.PR.K
+Insurance - Life
+LBS
+Asset Management
+SLF.PR.E
+Insurance
+SLF.PR.C
+Insurance
+MFC.PR.H
+Insurance - Life
+BAM.PF.G
+Asset Management
+BAM.PF.F
+Asset Management
+PWF.PR.I
+Insurance - Life
+PVS.PR.D
+Asset Management
+RY.PR.C
+Banks
+RY.PR.F
+Banks
+POW.PR.G
+Insurance - Life
+BMO.PR.W
+Banks
+GWO.PR.F
+Insurance - Life
+PIC.PR.A
+Asset Management
+DGS
+Asset Management
+CM.PR.P
+Banks
+NA.PR.W
+Banks
+GMP
+Brokers & Exchanges
+GWO.PR.S
+Insurance - Life
+IAF.PR.G
+Insurance
+MFC.PR.I
+Insurance - Life
+POW.PR.B
+Insurance - Life
+IFC.PR.G
+Insurance - Property & Casualty
+PWF.PR.F
+Insurance - Life
+FFN.PR.A
+Asset Management
+TSU
+Insurance - Specialty
+MFC.PR.Q
+Insurance - Life
+GWO.PR.T
+Insurance - Life
+FFH.PR.M
+Insurance - Property & Casualty
+GWO.PR.Q
+Insurance - Life
+PWF.PR.L
+Insurance - Life
+BAM.PR.Z
+Asset Management
+GWO.PR.R
+Insurance - Life
+FFH.PR.K
+Insurance - Property & Casualty
+XAU
+Brokers & Exchanges
+FAP
+Asset Management
+BAM.PF.B
+Asset Management
+GWO.PR.L
+Insurance - Life
+DF.PR.A
+Asset Management
+BAM.PF.D
+Asset Management
+BAM.PF.C
+Asset Management
+FFH.PR.I
+Insurance - Property & Casualty
+BAM.PR.M
+Asset Management
+BAM.PR.N
+Asset Management
+MFC.PR.N
+Insurance - Life
+TD.PF.E
+Banks
+CKI
+Asset Management
+POW.PR.C
+Insurance - Life
+PWF.PR.O
+Insurance - Life
+EML.PR.A
+Insurance - Life
+PWF.PR.G
+Insurance - Life
+RY.PR.P
+Banks
+MFC.PR.J
+Insurance - Life
+GWO.PR.M
+Insurance - Life
+PWF.PR.H
+Insurance - Life
+PVS.PR.G
+Asset Management
+PVS.PR.F
+Asset Management
+BMO.PR.Y
+Banks
+BNS.PR.Y
+Banks
+POW.PR.A
+Insurance - Life
+MFC.PR.G
+Insurance - Life
+BMO.PR.Z
+Banks
+IFC.PR.C
+Insurance - Property & Casualty
+PWF.PR.E
+Insurance - Life
+CHW
+Credit Services
+IFC.PR.A
+Insurance - Property & Casualty
+BAM.PR.T
+Asset Management
+EFN.PR.G
+Credit Services
+RY.PR.O
+Banks
+RY.PR.N
+Banks
+TD.PF.F
+Banks
+LFE.PR.B
+Asset Management
+IFC.PR.F
+Insurance - Property & Casualty
+IFC.PR.E
+Insurance - Property & Casualty
+CWB.PR.C
+Banks
+EIT.PR.A
+Asset Management
+VB
+Banks
+OBF.UN
+Asset Management
+MFC.PR.K
+Insurance - Life
+PWF.PR.T
+Insurance - Life
+BAM.PR.R
+Asset Management
+PBY.UN
+Asset Management
+MFC.PR.L
+Insurance - Life
+BAM.PF.E
+Asset Management
+CWB.PR.D
+Banks
+LB.PR.J
+Banks
+CXI
+Brokers & Exchanges
+EFN.PR.I
+Credit Services
+BNS.PR.F
+Banks
+GWO.PR.N
+Insurance - Life
+MID.UN
+Asset Management
+BGI.UN
+Asset Management
+BAM.PR.X
+Asset Management
+ECF.UN
+Asset Management
+IAF.PR.I
+Insurance
+PWF.PR.P
+Insurance - Life
+RBN.UN
+Asset Management
+BK.PR.A
+Asset Management
+BK
+Asset Management
+BAM.PR.B
+Asset Management
+SBC
+Asset Management
+SLF.PR.H
+Insurance
+FFN
+Asset Management
+IAF.PR.B
+Insurance
+DC.A
+Asset Management
+BNS.PR.D
+Banks
+FFH.PR.G
+Insurance - Property & Casualty
+MOGO
+Credit Services
+FFH.PR.C
+Insurance - Property & Casualty
+BAM.PR.K
+Asset Management
+OLY
+Asset Management
+PVS.PR.E
+Asset Management
+EFN.PR.E
+Credit Services
+EFN.PR.C
+Credit Services
+BIK.PR.A
+Asset Management

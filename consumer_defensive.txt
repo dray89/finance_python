@@ -1,0 +1,68 @@
+ATD.B
+Retail - Defensive
+L
+Retail - Defensive
+WN
+Retail - Defensive
+SAP
+Consumer Packaged Goods
+DOL
+Retail - Defensive
+MRU
+Retail - Defensive
+ATD.A
+Retail - Defensive
+EMP.A
+Retail - Defensive
+MFI
+Consumer Packaged Goods
+PBH
+Consumer Packaged Goods
+BCB
+Beverages - Non-Alcoholic
+NWC
+Retail - Defensive
+TPX.B
+Beverages - Alcoholic
+JWEL
+Consumer Packaged Goods
+VFF
+Consumer Packaged Goods
+LAS.A
+Beverages - Non-Alcoholic
+RSI
+Consumer Packaged Goods
+ADW.A
+Beverages - Alcoholic
+CSW.A
+Beverages - Alcoholic
+HLF
+Consumer Packaged Goods
+CLR
+Consumer Packaged Goods
+SOY
+Consumer Packaged Goods
+WN.PR.A
+Retail - Defensive
+L.PR.B
+Retail - Defensive
+ZENA
+Consumer Packaged Goods
+TPX.A
+Beverages - Alcoholic
+WN.PR.C
+Retail - Defensive
+WN.PR.D
+Retail - Defensive
+FAF
+Retail - Defensive
+WN.PR.E
+Retail - Defensive
+FOOD
+Retail - Defensive
+MAV
+Consumer Packaged Goods
+ADW.B
+Beverages - Alcoholic
+WBR
+Beverages - Alcoholic

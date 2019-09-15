@@ -1,0 +1,255 @@
+
+Symbol
+Industry
+ENB
+Oil & Gas - Midstream
+SU
+Oil & Gas - Integrated
+TRP
+Oil & Gas - Midstream
+CNQ
+Oil & Gas - E&P
+IMO
+Oil & Gas - Integrated
+PPL
+Oil & Gas - Midstream
+CVE
+Oil & Gas - Integrated
+IPL
+Oil & Gas - Midstream
+HSE
+Oil & Gas - Integrated
+ECA
+Oil & Gas - E&P
+KEY
+Oil & Gas - Midstream
+PKI
+Oil & Gas - Refining & Marketing
+ALA
+Oil & Gas - Midstream
+PSK
+Oil & Gas - E&P
+TOU
+Oil & Gas - E&P
+GEI
+Oil & Gas - Midstream
+VET
+Oil & Gas - E&P
+CPG
+Oil & Gas - E&P
+PXT
+Oil & Gas - E&P
+VII
+Oil & Gas - E&P
+ARX
+Oil & Gas - E&P
+ERF
+Oil & Gas - E&P
+WCP
+Oil & Gas - E&P
+MEG
+Oil & Gas - E&P
+PSI
+Oil & Gas - Services
+FEC
+Oil & Gas - E&P
+EFX
+Oil & Gas - Services
+SCL
+Oil & Gas - Services
+BTE
+Oil & Gas - E&P
+TRP.PR.K
+Oil & Gas - Midstream
+SES
+Oil & Gas - Services
+MTL
+Oil & Gas - Services
+POU
+Oil & Gas - E&P
+FRU
+Oil & Gas - E&P
+PPY
+Oil & Gas - E&P
+IPCO
+Oil & Gas - E&P
+TOG
+Oil & Gas - E&P
+CNE
+Oil & Gas - E&P
+ENB.PF.I
+Oil & Gas - Midstream
+GTE
+Oil & Gas - E&P
+PEY
+Oil & Gas - E&P
+BIR
+Oil & Gas - E&P
+KEL
+Oil & Gas - E&P
+AOI
+Oil & Gas - E&P
+ESI
+Oil & Gas - Drilling
+CEU
+Oil & Gas - Services
+PD
+Oil & Gas - Drilling
+TRP.PR.J
+Oil & Gas - Midstream
+KML
+Oil & Gas - Midstream
+NVA
+Oil & Gas - E&P
+TVE
+Oil & Gas - E&P
+ENB.PF.K
+Oil & Gas - Midstream
+NOA
+Oil & Gas - Services
+TRP.PR.D
+Oil & Gas - Midstream
+AAV
+Oil & Gas - E&P
+SGY
+Oil & Gas - E&P
+ATH
+Oil & Gas - E&P
+PPL.PF.A
+Oil & Gas - Midstream
+TWM
+Oil & Gas - Midstream
+ENB.PR.Y
+Oil & Gas - Midstream
+TCW
+Oil & Gas - Services
+ENB.PR.F
+Oil & Gas - Midstream
+TOT
+Oil & Gas - Services
+ENB.PR.V
+Oil & Gas - Midstream
+W.PR.M
+Oil & Gas - Midstream
+ENB.PR.N
+Oil & Gas - Midstream
+ENB.PF.C
+Oil & Gas - Midstream
+CJ
+Oil & Gas - E&P
+VLE
+Oil & Gas - E&P
+TRP.PR.E
+Oil & Gas - Midstream
+ENB.PF.U
+Oil & Gas - Midstream
+KML.PR.A
+Oil & Gas - Midstream
+ENB.PR.D
+Oil & Gas - Midstream
+PPL.PR.M
+Oil & Gas - Midstream
+ENB.PR.B
+Oil & Gas - Midstream
+ENB.PR.P
+Oil & Gas - Midstream
+ENB.PR.T
+Oil & Gas - Midstream
+ALA.PR.K
+Oil & Gas - Midstream
+CFW
+Oil & Gas - Services
+KML.PR.C
+Oil & Gas - Midstream
+CLC
+Oil & Gas - Integrated
+TVK
+Oil & Gas - Services
+ENB.PF.E
+Oil & Gas - Midstream
+ENB.PR.H
+Oil & Gas - Midstream
+BNP
+Oil & Gas - E&P
+PGF
+Oil & Gas - E&P
+ALA.PR.I
+Oil & Gas - Midstream
+PPL.PR.E
+Oil & Gas - Midstream
+TRP.PR.G
+Oil & Gas - Midstream
+SRX
+Oil & Gas - E&P
+PPL.PR.K
+Oil & Gas - Midstream
+PPL.PR.I
+Oil & Gas - Midstream
+PPL.PR.S
+Oil & Gas - Midstream
+ENB.PF.G
+Oil & Gas - Midstream
+TRP.PR.F
+Oil & Gas - Midstream
+ENB.PF.A
+Oil & Gas - Midstream
+HSE.PR.C
+Oil & Gas - Integrated
+PPL.PR.A
+Oil & Gas - Midstream
+PHX
+Oil & Gas - Drilling
+PPL.PR.G
+Oil & Gas - Midstream
+BNE
+Oil & Gas - E&P
+ENB.PR.J
+Oil & Gas - Midstream
+ALA.PR.E
+Oil & Gas - Midstream
+TRP.PR.C
+Oil & Gas - Midstream
+YGR
+Oil & Gas - E&P
+HSE.PR.E
+Oil & Gas - Integrated
+ENB.PF.V
+Oil & Gas - Midstream
+ALA.PR.U
+Oil & Gas - Midstream
+ENB.PR.U
+Oil & Gas - Midstream
+PONY
+Oil & Gas - E&P
+TGL
+Oil & Gas - E&P
+HWO
+Oil & Gas - Services
+OXC
+Oil & Gas - E&P
+PPL.PR.O
+Oil & Gas - Midstream
+ALA.PR.G
+Oil & Gas - Midstream
+TRP.PR.A
+Oil & Gas - Midstream
+ENB.PR.A
+Oil & Gas - Midstream
+HSE.PR.A
+Oil & Gas - Integrated
+W.PR.K
+Oil & Gas - Midstream
+PSD
+Oil & Gas - Services
+CR
+Oil & Gas - E&P
+QEC
+Oil & Gas - E&P
+GXE
+Oil & Gas - E&P
+HSE.PR.G
+Oil & Gas - Integrated
+STEP
+Oil & Gas - Services
+PPL.PR.Q
+Oil & Gas - Midstream
