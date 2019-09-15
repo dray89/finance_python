@@ -4,9 +4,6 @@ Created on Sun Sep 15 13:03:31 2019
 
 @author: rayde
 """
-import os.path
-from os import path
-import re
 
 class sector:
     def __init__(self, sector): 
@@ -30,9 +27,13 @@ class sector:
         return print(self.contents)
 
     def lookup_industry(self, symbol):
-        for index, item in enumerate(self.contents):
+        industry_dict = {}
+        it = iter(self.contents)
+        for item in it:
             if symbol in item:
-                print(self.contents[index+1])
+                d = {item:next(it)}
+                industry_dict.update(d)
+        return industry_dict
 
     def symbol_lookup(self, industry):
         '''Basic_Materials = Agriculture, Building Materials, Chemicals, Coal, Forest Products, Metals & Mining, Steel     
