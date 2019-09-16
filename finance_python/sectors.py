@@ -4,6 +4,7 @@ Created on Sun Sep 15 13:03:31 2019
 
 @author: rayde
 """
+import os, sys
 
 class sector:
     def __init__(self, sector): 
@@ -12,13 +13,18 @@ class sector:
         "Financial_Services", "Healthcare", "Industrials", "Real_Estate", 
         "Technology", "Utilities"]'''
         self.sector = sector.lower()
-        file = "{0}.txt".format(self.sector)
-        self.file = open(file, 'r')
+        self.file = "finance_python\{0}.txt".format(self.sector)
         self.contents = self.__cleancontents__()
 
     def __cleancontents__(self):
-        contents = self.file.readlines()
         new_list = []
+        for each in sys.path:
+            file = os.path.join(each, self.file)
+            if os.path.exists(file) == True:
+                file = file
+                break
+        with open(file, 'r') as file:
+            contents = file.readlines()
         for each in contents:
             new_list.append(each.strip('\n'))
         return new_list
