@@ -13,8 +13,8 @@ try:
 except:
     from finance_python.scrapers import scraper
 
-billions = lambda x: float(x)*100
-thousands = lambda x: float(x)/100
+billions = lambda x: float(x)*1000
+thousands = lambda x: float(x)/1000
 
 class statistics:
     def __init__(self, symbol):

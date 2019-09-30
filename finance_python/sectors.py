@@ -15,6 +15,8 @@ class sector:
         self.sector = sector.lower()
         self.file = "finance_python\{0}.txt".format(self.sector)
         self.contents = self.__cleancontents__()
+        self.attributes = ['lookup_industry(self, symbol)', 'print_contents(self)',
+                           'symbol_lookup(self, industry)', 'get_industries(self)']
 
     def __cleancontents__(self):
         new_list = []

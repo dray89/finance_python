@@ -23,7 +23,10 @@ class balance_sheet:
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
         table = scraper(self.symbol).__table__(url)
-        table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        try:
+            table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        except:
+            table = scraper(self.symbol).__general__(url)
         return table
 
     def clean(self):
