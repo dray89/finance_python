@@ -1,6 +1,6 @@
 ﻿Hi There! Welcome to the best open-source software to scrape finance data from Yahoo.
 
-======================================================================================
+-------------------------------------------------------------------------------------------------
 
 To install: pip install scrape-yahoo==3.3
 
