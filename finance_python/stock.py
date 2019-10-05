@@ -3,6 +3,8 @@
 Created on Thu Aug 15 21:22:48 2019
 
 @author: rayde
+
+Please Note: Yahoo has since changed the scraping requirements on the "Financials" tab. Thus, the functions on this tab now require headers and special methods to work.
 """
 import pandas as pd
 import numpy as np
@@ -16,6 +18,7 @@ try:
     from financials import financials
     from cashflow import cashflow
     from analysis import analysis
+    from headers import headers
 except:
     from finance_python.scrapers import scraper
     from finance_python.statistics import statistics
@@ -23,6 +26,7 @@ except:
     from finance_python.financials import financials
     from finance_python.cashflow import cashflow
     from finance_python.analysis import analysis
+    from finance_python.headers import headers
 
 class stock:
     stocks_list = set()
@@ -42,14 +46,15 @@ class stock:
         self.history = self.history()
         self.dividends = self.dividends()
         self.price = self.price()
-        self.attributes = [['dividends', 'sector','description',
-                           'history', 'price'], ['stats()',
-                           'balance()', 'financial()', 'cash()', 'analyze()']]
+        self.attributes = ['dividends', 'sector','description',
+                           'history', 'price', 'analyze()', 'stats()']
 
     def scrape(self):
         '''set sector and description '''
-        url="https://finance.yahoo.com/quote/" + self.symbol + "/profile?p=" + self.symbol
-        s = scraper(self.symbol).__general__(url)
+        symbol = self.symbol
+        url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
+        hdrs = headers(symbol).profile()
+        s =  scraper(symbol).__profile__(url, hdrs)
         self.sector(s)
         self.description(s)
 
@@ -73,37 +78,42 @@ class stock:
         return price
 
     def history(self):
-        start = int(time.mktime(datetime.strptime(self.start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        end = int(time.mktime(datetime.strptime(self.end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        url = 'https://finance.yahoo.com/quote/' + self.symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
-        history = scraper(self.symbol).__table__(url)
+        symbol, start, end = [self.symbol, self.start, self.end]
+        start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
+        hdrs = headers(symbol).history(url, start, end)
+        history = scraper(symbol).__table__(url, hdrs)
         if len(history)>0:
             history = pd.concat(history, sort=True).astype(float, errors='ignore')
         else:
-            history = self.symbol, 'Error occurred in history method. Double check you entered the symbol correctly.'
+            history = symbol, 'Error occurred in history method. Double check you entered the symbol correctly.'
         try:
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
         except:
-            print(self.symbol, ': Error cleaning history dataframe. Is it the right symbol?')
+            print(symbol, ': Error cleaning history dataframe. Is it the right symbol?')
         finally:
             return history
 
     def dividends(self):
-        url = "https://finance.yahoo.com/quote/" + self.symbol + "/history?interval=div%7Csplit&filter=div&frequency=1d"
-        dividends = scraper(self.symbol).__table__(url)
+        symbol, end = [self.symbol, self.end]
+        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        hdrs = headers(symbol).dividends(end)
+        url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=345445200&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
+        dividends = scraper(symbol).__table__(url, hdrs)
         if len(dividends)>1:
             dividends = dividends.drop(4)
             dividends = dividends.set_index('Date')
             dividends  = dividends['Dividends']
             dividends = dividends.str.replace(r'\Dividend', '').astype(float)
-            dividends.name = self.symbol
+            dividends.name = symbol
         return dividends
 
     def stats(self):
         stats = statistics(self.symbol)
         self.statistics = stats.statistics
-        self.stats_list.append(stats.statistics)
+        self.stats_list.append(self.statistics)
         self.attributes.append(stats.attributes)
 
     def balance(self):

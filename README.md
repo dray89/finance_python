@@ -1,8 +1,8 @@
 ﻿Hi There! Welcome to the best open-source software to scrape finance data from Yahoo.
-
+Please Note: Yahoo has since changed the scraping requirements on the "Financials" tab. Thus, the functions on this tab now require headers and special methods to work.
 ======================================================================================
 
-To install: pip install scrape-yahoo==3.3
+To install: pip install scrape-yahoo
 
 stock.py: Contains the primary command in the program, stock()
 
@@ -20,29 +20,21 @@ balance_sheet.py: scrapes balance_sheet information.
 
         Example:
 
-        from datetime import date
+        from datetime import date, timedelta
 
-        from finance_python import stock, sector
-
-        from industry import industry
+        from finance_python import stock, sector, industry
 
         symbol = "aapl"
 
-        start = date(2018, 8, 14)
+        start = date.today() - timedelta(days=365)
 
-        end = date(2019, 8, 14)
+        end = date.today()
 
         apple = stock(symbol, start, end)
 
         apple.attributes #lists attributes and additional methods.
 
         apple.stats()
-
-        apple.balance()
-
-        apple.financial()
-
-        apple.cash()
 
         apple.analyze()
 
@@ -52,13 +44,7 @@ balance_sheet.py: scrapes balance_sheet information.
 
         portfolio = portfolio()
 
-        portfolio.financials(apple.fin_list)
-
-        portfolio.cashflow(apple.cash_list)
-
         portfolio.statistics(apple.stats_list)
-
-        portfolio.balance_sheet(apple.bs_list)
 
         energy = sector('energy')
 

@@ -23,7 +23,8 @@ class cashflow:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
-        table = scraper(self.symbol).__table__(url)
+        hdrs = headers(symbol).cashflow()
+        table = scraper(self.symbol).__table__(url, hdrs)
         table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 
