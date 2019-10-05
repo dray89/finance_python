@@ -21,8 +21,9 @@ class financials:
         self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
+        hdrs = headers(symbol).financials()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        table = scraper(self.symbol).__table__(url)
+        table = scraper(self.symbol).__table__(url, hdrs)
         table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 

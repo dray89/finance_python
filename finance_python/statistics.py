@@ -10,8 +10,11 @@ from pandas import DataFrame
 
 try:
     from scrapers import scraper
+    from finance_python import headers
+
 except:
     from finance_python.scrapers import scraper
+    from finance_python.headers import headers
 
 billions = lambda x: float(x)*1000
 thousands = lambda x: float(x)/1000
@@ -23,8 +26,10 @@ class statistics:
         self.attributes = ['statistics', 'stats_list']
 
     def scrape(self):
+        symbol = self.symbol
         url = "https://finance.yahoo.com/quote/" + self.symbol + "/key-statistics?p=" + self.symbol
-        table = scraper(self.symbol).__table__(url)
+        hdrs = headers(symbol).statistics()
+        table = scraper(self.symbol).__table__(url, hdrs)
         table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 
@@ -77,9 +82,9 @@ class statistics:
             returns_adj = abs(div_r/float(beta))
             p = returns_adj
 
-        row = pd.Series({self.symbol:p}, name='Adjusted Returns', dtype=float)
+        row = pd.Series({self.symbol.upper():p}, name='Adjusted Returns', dtype=float)
         stats = stats.append(row)
-        row = pd.Series({self.symbol:t_r}, name='Total Returns', dtype=float)
+        row = pd.Series({self.symbol.upper():t_r}, name='Total Returns', dtype=float)
         stats = stats.append(row)
         return stats
 
