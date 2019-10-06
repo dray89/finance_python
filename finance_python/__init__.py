@@ -8,5 +8,6 @@ from finance_python.stock import stock
 from finance_python.sectors import sector
 from finance_python.industry import industry
 from finance_python.headers import headers
+from finance_python.pandas_methods import pandas_methods
 
 name = "scrape_yahoo"

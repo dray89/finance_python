@@ -11,13 +11,11 @@ from pandas import DataFrame
 try:
     from scrapers import scraper
     from finance_python import headers
-
+    from finance_python import pandas_methods as pm
 except:
     from finance_python.scrapers import scraper
     from finance_python.headers import headers
-
-billions = lambda x: float(x)*1000
-thousands = lambda x: float(x)/1000
+    from pandas_methods import pandas_methods as pm
 
 class statistics:
     def __init__(self, symbol):
@@ -41,50 +39,28 @@ class statistics:
             df = df.set_index('Item')
             rows = list(df.index)
             stats = df.set_axis(rows, axis='rows', inplace=False)
-            try:
-                stats = self.remove_strings(stats)
-                stats = self.add_rows(stats)
-            except:
-                print(self.symbol, ": Is the symbol correct?")
+            stats = self.remove_strings(stats)
+            stats = self.add_rows(stats)
+            print(self.symbol, ": Is the symbol correct?")
         else:
             stats = DataFrame([np.nan])
         return stats
 
     def remove_strings(self, stats):
-        if len(stats)>1:
-            for each in list(stats.columns):
-                stats[each] = stats[each].str.strip('M %')
-            for i in range(0, len(stats)-1):
-                for e in range(0, len(list(stats.iloc[i].values))):
-                    if 'B' in str(list(stats.iloc[i].values)[e]):
-                        a = list(stats.iloc[i].values)[e]
-                        a = a.strip('B')
-                        stats.iloc[i][e] = billions(a)
-            
-                    if 'k' in str(list(stats.iloc[i].values)[e]):
-                        a = list(stats.iloc[i].values)[e]
-                        a = a.strip('k')
-                        stats.iloc[i][e] = thousands(a)
-            for each in list(stats.columns):
-                stats.fillna(np.nan).astype(float, errors='ignore')
-                stats[each] = pd.to_numeric(stats[each], errors='coerce')
-            return stats
+        stats = pm.column_strings(stats, 'M %')
+        stats = pm.column_strings(stats, 'B', function='billions')
+        stats = pm.column_strings(stats, 'k', function='thousands')
+        stats = pm.numeric(stats)
+        return stats
 
     def add_rows(self, stats):
-        div_r = stats.T["Forward Annual Dividend Yield 4"][0]
-        t_r = stats.T['52-Week Change 3'][0]
-        if np.isnan(div_r):
-            t_r = float(t_r)
-            p = np.nan
-        else:
-            t_r = float(t_r) + float(div_r)
-            beta = stats.T['Beta (3Y Monthly)'][0]
-            returns_adj = abs(div_r/float(beta))
-            p = returns_adj
-
-        row = pd.Series({self.symbol.upper():p}, name='Adjusted Returns', dtype=float)
-        stats = stats.append(row)
-        row = pd.Series({self.symbol.upper():t_r}, name='Total Returns', dtype=float)
-        stats = stats.append(row)
+        t_r = pm.add_rows(stats, row1="Forward Annual Dividend Yield 4", row2='52-Week Change 3')
+        try:
+            returns_adj = divide_rows(df, numerator='t_r', denominator='Beta (3Y Monthly)')
+        except:
+            returns_adj = np.nan
+        finally:
+            stats = pm.append_rows(df, values=returns_adj, row_name= "Adjusted Returns", d_type = float, column_name=self.symbol.upper())
+            stats = pm.append_rows(df, values=t_r, row_name= "Total Returns", d_type = float, column_name=self.symbol.upper())
         return stats
 

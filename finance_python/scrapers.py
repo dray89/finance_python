@@ -33,7 +33,7 @@ class scraper:
         page=soup(page.content, 'lxml')
         return page
 
-    def xpath(self, page= 'page.content'):
+    def __xpath__(self, page= 'page.content'):
         ''' deprecated'''
         table = html.fromstring(page)
         table = table.xpath('//table')
