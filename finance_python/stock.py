@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Aug 15 21:22:48 2019
-
 @author: rayde
-
-Please Note: Yahoo has since changed the scraping requirements on the "Financials" tab. Thus, the functions on this tab now require headers and special methods to work.
+Please Note: Yahoo has since changed the scraping requirements on the
+"Financials" tab. Thus, the functions on this tab now require headers 
+and special methods to work.
 """
 import pandas as pd
 import numpy as np
@@ -117,18 +117,21 @@ class stock:
         self.attributes.append(stats.attributes)
 
     def balance(self):
+        '''deprecated'''
         bs = balance_sheet(self.symbol)
         self.balance_sheet = bs.balance_sheet
         self.bs_list.append(self.balance_sheet)
         self.attributes.append(bs.attributes)
 
     def cash(self):
+        '''deprecated'''
         cash = cashflow(self.symbol)
         self.cashflow = cash.cashflow
         self.cash_list.append(self.cashflow)
         self.attributes.append(cash.attributes)
 
     def financial(self):
+        '''deprecated'''
         fin = financials(self.symbol)
         self.financials = fin.financials
         self.fin_list.append(self.financials)
