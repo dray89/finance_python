@@ -10,8 +10,8 @@ from urllib.request import Request, urlopen
 from lxml import html
 
 class scraper:
-    def __init__(self, symbol):
-        self.symbol = symbol
+    def __init__(self):
+        pass
 
     def __general__(self, url, hdrs):
         req = Request(url, headers=hdrs)
