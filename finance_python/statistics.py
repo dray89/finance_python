@@ -15,7 +15,7 @@ try:
 except:
     from finance_python.scrapers import scraper
     from finance_python.headers import headers
-    from pandas_methods import pandas_methods as pm
+    from finance_python.pandas_methods import pandas_methods as pm
 
 class statistics:
     def __init__(self, symbol):
