@@ -71,20 +71,19 @@ class headers:
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
-    def history(self, url, start, end):
+    def history(self, start, end):
         symbol = self.symbol
         hdrs =  {"authority": "finance.yahoo.com",
                  "method": "GET",
-                 "path": "/quote/" + symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d",
+                 "path": "/quote/" + symbol + "/history?period1=" + str(start) +"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d",
                  "scheme": "https",
                  "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                  "accept-encoding": "gzip, deflate, br",
                  "accept-language": "en-US,en;q=0.9",
                  "cache-control": "no-cache",
-                 "cookie": "APID=UP918cbef8-e469-11e9-bc01-024bf8e6c78a; PRF=t%3D" +symbol+"; APIDTS=1569961630; B=f66khvpep703n&b=3&s=tb",
+                 "cookie": "APID=UP48e4f3c5-edd2-11e9-9e88-0ecdf5eb3de2; PRF=t%3" + symbol.upper() +"; APIDTS=1570982941; B=99tjtjleq6ics&b=3&s=7m",
                  "dnt": 1,
                  "pragma": "no-cache",
-                 "referer":url,
                  "sec-fetch-mode": "navigate",
                  "sec-fetch-site": "same-origin",
                  "sec-fetch-user": "?1",

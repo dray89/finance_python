@@ -37,7 +37,6 @@ class stock:
     a_list = list()
 
     def __init__(self, symbol, start, end, sort=True):
-        '''parameters'''
         self.symbol = symbol
         self.stocks_list.add(symbol)
         self.start = start
@@ -81,20 +80,16 @@ class stock:
         symbol, start, end = [self.symbol, self.start, self.end]
         start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?" + "period1=" + str(start) + "&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
-        hdrs = headers(symbol).history(url, start, end)
+        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
+        hdrs = headers(symbol).history(start, end)
         history = scraper(symbol).__table__(url, hdrs)
         if len(history)>0:
             history = pd.concat(history, sort=True).astype(float, errors='ignore')
-        else:
-            history = symbol, 'Error occurred in history method. Double check you entered the symbol correctly.'
-        try:
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
-        except:
+        else:
             print(symbol, ': Error cleaning history dataframe. Is it the right symbol?')
-        finally:
-            return history
+        return history
 
     def dividends(self):
         symbol, end = [self.symbol, self.end]

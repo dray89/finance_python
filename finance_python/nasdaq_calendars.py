@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from lxml import html
 import re, json
+from finance_python import stock
 
 class dividend_calendar:
 
@@ -43,3 +44,9 @@ class dividend_calendar:
         calendar = calendar.set_index('companyName')
         self.calendars.append(calendar)
         return calendar
+
+    def addtl_columns(self, cal):
+        cal['shares'] = 100
+        cal['dividend_total'] = cal['shares']*cal['dividend_Rate']
+        return cal
+

@@ -12,7 +12,7 @@ with open("README.md", "r", encoding='utf-8-sig') as fh:
     long_description = fh.read()
 
 setup(name='scrape_yahoo',
-      version='4.6',
+      version='5.0',
       description='Yahoo Stock Scraper',
       author='Debra Ray',
       author_email='raydebra89@gmail.com',
