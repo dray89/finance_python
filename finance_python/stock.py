@@ -8,11 +8,12 @@ and special methods to work.
 """
 import pandas as pd
 import numpy as np
-import lxml, time, math
+import lxml, time, math, execfile
 from datetime import datetime
 from multiprocessing import Pool
 
 try:
+    from basic import basic
     from scrapers import scraper
     from statistics import statistics
     from balance_sheet import balance_sheet
@@ -21,6 +22,7 @@ try:
     from analysis import analysis
     from headers import headers
 except:
+    from finance_python.basic import basic
     from finance_python.scrapers import scraper
     from finance_python.statistics import statistics
     from finance_python.balance_sheet import balance_sheet
@@ -122,3 +124,10 @@ class stock:
 
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)
+
+    def pooling(self):
+        b = basic(self.symbol, self.start, self.end)
+        if b.pages == 1:
+            b.history(self.start, self.end)
+        else:
+            execfile('pool_basic.py')
