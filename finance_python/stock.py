@@ -8,8 +8,9 @@ and special methods to work.
 """
 import pandas as pd
 import numpy as np
-import lxml, time
+import lxml, time, math
 from datetime import datetime
+from multiprocessing import Pool
 
 try:
     from scrapers import scraper
@@ -42,8 +43,6 @@ class stock:
         self.start = start
         self.end = end
         self.scrape()
-        self.history = self.history()
-        self.dividends = self.dividends()
         self.price = self.price()
         self.attributes = ['dividends', 'sector','description',
                            'history', 'price', 'analyze()', 'stats()']
@@ -75,35 +74,6 @@ class stock:
         except:
             price = np.nan
         return price
-
-    def history(self):
-        symbol, start, end = [self.symbol, self.start, self.end]
-        start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
-        hdrs = headers(symbol).history(start, end)
-        history = scraper(symbol).__table__(url, hdrs)
-        if len(history)>0:
-            history = pd.concat(history, sort=True).astype(float, errors='ignore')
-            history = history.drop(len(history) - 1)
-            history = history.set_index('Date')
-        else:
-            print(symbol, ': Error cleaning history dataframe. Is it the right symbol?')
-        return history
-
-    def dividends(self):
-        symbol, end = [self.symbol, self.end]
-        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        hdrs = headers(symbol).dividends(end)
-        url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=345445200&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
-        dividends = scraper(symbol).__table__(url, hdrs)
-        if len(dividends)>1:
-            dividends = dividends.drop(4)
-            dividends = dividends.set_index('Date')
-            dividends  = dividends['Dividends']
-            dividends = dividends.str.replace(r'\Dividend', '').astype(float)
-            dividends.name = symbol
-        return dividends
 
     def stats(self):
         stats = statistics(self.symbol)

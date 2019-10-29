@@ -30,11 +30,11 @@ class headers:
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
-    def dividends(self, end):
+    def dividends(self, start, end):
         symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
-                "path": "/quote/" + symbol +"/history?period1=345445200&period2=" + str(end) + "&interval=div%7Csplit&filter=div&frequency=1d",
+                "path": "/quote/" + symbol +"/history?period1="+ str(start) + "&period2=" + str(end) + "&interval=div%7Csplit&filter=div&frequency=1d",
                 "scheme": "https",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                 "accept-encoding": "gzip, deflate, br",
