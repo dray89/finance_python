@@ -166,8 +166,10 @@ class stock:
         self.attributes.append(a.attributes)
 
     def pooling(self):
-        b = basic(self.symbol, self.start, self.end)
-        if b.pages == 1:
-            b.history(self.start, self.end)
-        else:
-            execfile('pool_basic.py')
+        s, e, symbol = self.get_data()
+        b = basic(s, e, symbol)
+        start_list = b.starts(b.pages, s, e)
+
+    def get_data(self):
+        s, e, symbol = self.start, self.end, self.symbol
+        return [s, e, symbol]

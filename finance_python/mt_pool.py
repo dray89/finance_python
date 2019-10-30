@@ -5,7 +5,6 @@ Created on Mon Oct 28 17:25:43 2019
 @author: rayde
 """
 from multiprocessing import Pool
-from multiprocessing import Process
 
 def pool_class(iterator, function):
     p = Pool()
@@ -16,6 +15,4 @@ def f(x):
     return x*x
 
 if __name__ == '__main__':
-    p = Process(target=pool_class, args=[1,2,3])
-    p.start()
-    p.join()
+    p = pool_class([1,2,4], f)
