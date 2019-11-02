@@ -8,12 +8,10 @@ and special methods to work.
 """
 import pandas as pd
 import numpy as np
-import lxml, time, math
+import time
 from datetime import datetime
-from multiprocessing import Pool
 
 try:
-    from basic import basic
     from scrapers import scraper
     from statistics import statistics
     from balance_sheet import balance_sheet
@@ -22,7 +20,6 @@ try:
     from analysis import analysis
     from headers import headers
 except:
-    from finance_python.basic import basic
     from finance_python.scrapers import scraper
     from finance_python.statistics import statistics
     from finance_python.balance_sheet import balance_sheet
@@ -45,8 +42,8 @@ class stock:
         self.start = start
         self.end = end
         self.scrape()
-        self.history = self.history(start, end)
-        self.dividends = self.dividends(start, end)
+        self.history = self.clean_history(start, end)
+        self.dividends = self.clean_dividends(start, end)
         self.price = self.price()
         self.attributes = ['dividends', 'sector','description',
                            'history', 'price', 'analyze()', 'stats()']
@@ -79,36 +76,44 @@ class stock:
             price = np.nan
         return price
 
-    def history(self, start, end):
+    def __url__(self, start, end, fil):
+        '''
+        Parameters
+        ----------
+        start : start date as datetime object
+        end : end date as datetime object
+        fil : either history or div as string
+
+        Returns
+        -------
+        html : returns table from html --- still needs to be cleaned
+
+        '''
         symbol = self.symbol
         start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
+        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&"+fil+"=history&frequency=1d"
+        return url
+
+    def clean_history(self, start, end):
+        symbol = self.symbol
         hdrs = headers(symbol).history(start, end)
-        history = scraper(symbol).__table__(url, hdrs)
-        history = self.clean_history(history)
-        return history
-    
-    def clean_history(self, history):
-        if len(history)>0:
-            history = pd.concat(history, sort=True).astype(float, errors='ignore')
+        url = self.__url__(start, end, fil = 'history')
+        price_history = scraper(symbol).__table__(url, hdrs)
+        if len(price_history)>0:
+            history = pd.concat(price_history, sort=True).astype(float, errors='ignore')
             history = history.drop(len(history) - 1)
             history = history.set_index('Date')
         else:
             print(self.symbol, ': Error cleaning history dataframe. Is it the right symbol?')
         return history
 
-    def dividends(self, s, e):
-        symbol = self.symbol
-        start = int(time.mktime(datetime.strptime(s.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        end = int(time.mktime(datetime.strptime(e.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        hdrs = headers(symbol).dividends(start, end)
-        url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=" + str(start) + "&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
-        dividends = scraper(symbol).__table__(url, hdrs)
-        dividends = self.clean_dividends(dividends)
-        return dividends
 
-    def clean_dividends(self, dividends):
+    def clean_dividends(self, start, end):
+        symbol = self.symbol
+        hdrs = headers(symbol).dividends(start, end)
+        url = self.__url__(start, end, fil = 'div')
+        dividends = scraper(symbol).__table__(url, hdrs)
         if len(dividends)>1:
             dividends = dividends.drop(4)
             dividends = dividends.set_index('Date')
@@ -164,12 +169,3 @@ class stock:
 
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)
-
-    def pooling(self):
-        s, e, symbol = self.get_data()
-        b = basic(s, e, symbol)
-        start_list = b.starts(b.pages, s, e)
-
-    def get_data(self):
-        s, e, symbol = self.start, self.end, self.symbol
-        return [s, e, symbol]
