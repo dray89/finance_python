@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import time
 from datetime import datetime
+import calendar
 
 try:
     from scrapers import scraper
@@ -169,3 +170,23 @@ class stock:
 
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)
+
+    def options(self, expiry):
+        url = 'https://ca.finance.yahoo.com/quote/' + self.symbol + '/options?p=' + self.symbol + '&straddle=true&date=' + expiry
+        hdrs = headers.options(expiry)
+        table = scraper(self.symbol).__table__(url, hdrs)
+        return table
+
+    def option_dates(self, year):
+        c = calendar.Calendar(firstweekday=calendar.SATURDAY)
+        year_cal = c.yeardatescalendar(year) #split in quarters len 4
+        months = [months for quarter in year_cal for months in quarter] #len12
+        return months
+
+    def third_fridays(self, months):
+        fridays = [Friday for week_three in months for Friday in week_three[2] if Friday.weekday()==calendar.FRIDAY]
+        return fridays
+
+    def fridays(self, months):
+        fridays = [Friday[6] for week_three in months for Friday in week_three if Friday[6].weekday()==calendar.FRIDAY]
+        return set(fridays)

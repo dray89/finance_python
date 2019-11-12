@@ -71,7 +71,7 @@ class basic(stock):
         """ Gets the arguments from the command line. """
 
         parser = argparse.ArgumentParser(description='Downloads stock information from given URL')
-        parser.add_argument('url', nargs=1, help="url")
+        parser.add_argument('urls', nargs=1, help="url")
         args = parser.parse_args()
         self.url = args.url[0]
 
