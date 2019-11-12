@@ -187,6 +187,6 @@ class stock:
         fridays = [Friday for week_three in months for Friday in week_three[2] if Friday.weekday()==calendar.FRIDAY]
         return fridays
 
-    def fridays(self, months):
+    def all_fridays(self, months):
         fridays = [Friday[6] for week_three in months for Friday in week_three if Friday[6].weekday()==calendar.FRIDAY]
         return set(fridays)
