@@ -172,10 +172,11 @@ class stock:
         self.attributes.append(a.attributes)
 
     def options(self, expiry):
-        url = 'https://ca.finance.yahoo.com/quote/' + self.symbol + '/options?p=' + self.symbol + '&straddle=true&date=' + expiry
-        hdrs = headers.options(expiry)
-        table = scraper(self.symbol).__table__(url, hdrs)
-        return table
+        self.expiry = str(int(time.mktime(datetime.strptime(expiry.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple())))
+        self.url = 'https://ca.finance.yahoo.com/quote/' + self.symbol + '/options?p=' + self.symbol + '&straddle=true&date=' + self.expiry
+        self.hdrs = headers(self.symbol).options(self.expiry)
+        self.table = scraper(self.symbol).__table__(self.url, self.hdrs)
+        return self.table
 
     def option_dates(self, year):
         c = calendar.Calendar(firstweekday=calendar.SATURDAY)
