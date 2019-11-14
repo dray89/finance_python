@@ -170,24 +170,3 @@ class stock:
 
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)
-
-    def options(self, expiry):
-        self.expiry = str(int(time.mktime(datetime.strptime(expiry.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple())))
-        self.url = 'https://ca.finance.yahoo.com/quote/' + self.symbol + '/options?p=' + self.symbol + '&straddle=true&date=' + self.expiry
-        self.hdrs = headers(self.symbol).options(self.expiry)
-        self.table = scraper(self.symbol).__table__(self.url, self.hdrs)
-        return self.table
-
-    def option_dates(self, year):
-        c = calendar.Calendar(firstweekday=calendar.SATURDAY)
-        year_cal = c.yeardatescalendar(year) #split in quarters len 4
-        months = [months for quarter in year_cal for months in quarter] #len12
-        return months
-
-    def third_fridays(self, months):
-        fridays = [Friday for week_three in months for Friday in week_three[2] if Friday.weekday()==calendar.FRIDAY]
-        return fridays
-
-    def all_fridays(self, months):
-        fridays = [Friday[6] for week_three in months for Friday in week_three if Friday[6].weekday()==calendar.FRIDAY]
-        return set(fridays)
