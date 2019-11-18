@@ -8,7 +8,9 @@ from stock import stock
 import time
 from datetime import datetime
 import calendar
-
+from datetime import date, timedelta
+import pandas, json, requests, numpy as np
+from multiprocessing import Pool
 from scrapers import scraper
 from headers import headers
 
@@ -33,3 +35,18 @@ class options(stock):
     def all_fridays(self, months):
         fridays = [Friday[6] for week_three in months for Friday in week_three if Friday[6].weekday()==calendar.FRIDAY]
         return set(fridays)
+
+if __name__ == '__main__':
+    start = date.today() - timedelta(days=365*15)
+    end = date.today()
+
+    acb = options('acb', start, end)
+
+    month = acb.option_dates(2019)
+    year_2019 = acb.third_fridays(month)
+    year_2020 = acb.option_dates(2020)
+    yr2020 = acb.third_fridays(year_2020)
+    yr2020.append(year_2019[-1])
+
+    p = Pool()
+    price = list(p.map(acb.options, yr2020))

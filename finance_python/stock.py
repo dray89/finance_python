@@ -12,7 +12,7 @@ import time
 from datetime import datetime
 
 from scrapers import scraper
-from statistics import statistics
+from finance_python.statistics import statistics
 from balance_sheet import balance_sheet
 from financials import financials
 from cashflow import cashflow
