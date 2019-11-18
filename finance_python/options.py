@@ -8,15 +8,14 @@ from stock import stock
 import time
 from datetime import datetime
 import calendar
-from datetime import date, timedelta
-import pandas, json, requests, numpy as np
+from datetime import date, timedelta, timezone
 from multiprocessing import Pool
 from scrapers import scraper
 from headers import headers
 
 class options(stock):
     def options(self, expiry):
-        self.expiry = str(int(time.mktime(datetime.strptime(expiry.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))*100)
+        self.expiry = str(int(time.mktime(datetime.strptime(expiry.strftime("%Y-%m-%d %z"), "%Y-%m-%d %z").timetuple()))*100)
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
         self.hdrs = headers(self.symbol).options(self.expiry)
         self.table = scraper(self.symbol).__table__(self.url, self.hdrs)
