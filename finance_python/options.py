@@ -8,14 +8,23 @@ from stock import stock
 import time
 from datetime import datetime
 import calendar
-from datetime import date, timedelta, timezone
-from multiprocessing import Pool
+from datetime import date, timedelta
+import multiprocessing
 from scrapers import scraper
 from headers import headers
+import pandas as pd 
 
 class options(stock):
-    def options(self, expiry):
-        self.expiry = str(int(time.mktime(datetime.strptime(expiry.strftime("%Y-%m-%d %z"), "%Y-%m-%d %z").timetuple()))*100)
+    def utc_dates(self, year_series):
+        strftime_date = year_series.apply(lambda x: datetime.strftime(x, '%b-%d-%Y %H:%M:%S'))
+        strptime_date = strftime_date.apply(lambda x: datetime.strptime(x, '%b-%d-%Y %H:%M:%S').timetuple())
+        mktime_time = strptime_date.apply(lambda x: time.mktime(x))
+        to_int = mktime_time.apply(lambda x: int(x))
+        to_string = to_int.apply(lambda x: str(x))
+        return to_string
+    
+    def options(self, utc_dates):
+        self.expiry = utc_dates
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
         self.hdrs = headers(self.symbol).options(self.expiry)
         self.table = scraper(self.symbol).__table__(self.url, self.hdrs)
@@ -46,6 +55,9 @@ if __name__ == '__main__':
     year_2020 = acb.option_dates(2020)
     yr2020 = acb.third_fridays(year_2020)
     yr2020.append(year_2019[-1])
-
-    p = Pool()
-    price = list(p.map(acb.options, yr2020))
+    yr2020 = pd.Series(yr2020)
+    utc_dates = acb.utc_dates(yr2020)
+    #p = multiprocessing.Process(target=acb.options, args=utc_dates)
+    #p.start()
+    #p.join(10)
+    #price = list(p.map(acb.options, utc_dates))
