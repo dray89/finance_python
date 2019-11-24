@@ -8,7 +8,7 @@ from stock import stock
 import time
 from datetime import datetime
 import calendar
-from datetime import date, timedelta
+from datetime import date, timedelta, timezone
 import multiprocessing
 from scrapers import scraper
 from headers import headers
@@ -16,11 +16,10 @@ import pandas as pd
 
 class options(stock):
     def utc_dates(self, year_series):
-        strftime_date = year_series.apply(lambda x: datetime.strftime(x, '%b-%d-%Y %H:%M:%S'))
-        strptime_date = strftime_date.apply(lambda x: datetime.strptime(x, '%b-%d-%Y %H:%M:%S').timetuple())
-        mktime_time = strptime_date.apply(lambda x: time.mktime(x))
-        to_int = mktime_time.apply(lambda x: int(x))
-        to_string = to_int.apply(lambda x: str(x))
+        dt = year_series.apply(lambda x: datetime.combine(x, datetime.min.time()))
+        utc_dates = dt.apply(lambda x: x.tz_localize('utc').timetuple())
+        strptime_date = utc_dates.apply(lambda x: calendar.timegm(x))
+        to_string = strptime_date.apply(lambda x: str(x))
         return to_string
     
     def options(self, utc_dates):
