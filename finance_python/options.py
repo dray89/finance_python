@@ -4,15 +4,20 @@ Created on Thu Nov 14 10:03:08 2019
 
 @author: rayde
 """
-from stock import stock
-import time
+try:
+    from stock import stock
+    from scrapers import scraper
+    from headers import headers
+except:
+    from finance_python.stock import stock
+    from finance_python.scrapers import scraper
+    from finance_python.headers import headers
+    
 from datetime import datetime
 import calendar
-from datetime import date, timedelta, timezone
-import multiprocessing
-from scrapers import scraper
-from headers import headers
+from datetime import date, timedelta
 import pandas as pd 
+from multiprocessing import Pool 
 
 class options(stock):
     def utc_dates(self, year_series):
@@ -42,7 +47,15 @@ class options(stock):
     def all_fridays(self, months):
         fridays = [Friday[6] for week_three in months for Friday in week_three if Friday[6].weekday()==calendar.FRIDAY]
         return set(fridays)
-
+    
+    def bad_dates(self, utc_dates):
+        y = len(utc_dates)
+        while y > 0:
+            for x in utc_dates:
+                if len(acb.options(x))>0:
+                    yield x
+                y-=1
+                
 if __name__ == '__main__':
     start = date.today() - timedelta(days=365*15)
     end = date.today()
@@ -55,8 +68,8 @@ if __name__ == '__main__':
     yr2020 = acb.third_fridays(year_2020)
     yr2020.append(year_2019[-1])
     yr2020 = pd.Series(yr2020)
-    utc_dates = acb.utc_dates(yr2020)
-    #p = multiprocessing.Process(target=acb.options, args=utc_dates)
-    #p.start()
-    #p.join(10)
-    #price = list(p.map(acb.options, utc_dates))
+    utc_dates = list(acb.utc_dates(yr2020))
+    a  = list(acb.bad_dates(utc_dates))
+    
+    #p = Pool()
+    #price = list(p.map(acb.options, a))
