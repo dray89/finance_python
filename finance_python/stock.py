@@ -11,13 +11,23 @@ import numpy as np
 import time
 from datetime import datetime
 
-from scrapers import scraper
-from finance_python.statistics import statistics
-from balance_sheet import balance_sheet
-from financials import financials
-from cashflow import cashflow
-from analysis import analysis
-from headers import headers
+try:
+    from scrapers import scraper
+    from statistics import statistics
+    from balance_sheet import balance_sheet
+    from financials import financials
+    from cashflow import cashflow
+    from analysis import analysis
+    from headers import headers
+except:
+    from finance_python.scrapers import scraper
+    from finance_python.statistics import statistics
+    from finance_python.balance_sheet import balance_sheet
+    from finance_python.financials import financials
+    from finance_python.cashflow import cashflow
+    from finance_python.analysis import analysis
+    from finance_python.headers import headers
+    
 
 class stock:
     stocks_list = set()
