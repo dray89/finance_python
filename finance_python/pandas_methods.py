@@ -8,13 +8,13 @@ thousands = lambda x: float(x)/1000
 keep_same = lambda x: x
 
 class pandas_methods:
-    '''column_strings, row_strings, numeric, add_rows, divide_rows, append_rows '''
+    '''column_strings, row_strings, numeric, add_rows, divide_rows, append_rows'''
 
     def column_strings(df, string):
         '''remove strings from columns'''
         if len(df)>1:
             for each in list(df.columns):
-                df[each] = df[each].str.strip(string)
+                df[each] = df[each].strip(string)
         return df
 
     def row_strings(df, string, function=keep_same):

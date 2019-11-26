@@ -8,15 +8,17 @@ try:
     from stock import stock
     from scrapers import scraper
     from headers import headers
+    from pandas_methods import pandas_methods as pm
 except:
     from finance_python.stock import stock
     from finance_python.scrapers import scraper
     from finance_python.headers import headers
-    
+    from finance_python.pandas_methods import pandas_methods as pm
+
+import datetime
 import calendar
 from datetime import date, timedelta
 import pandas as pd 
-from multiprocessing import Pool 
 
 class options(stock):
     def utc_dates(self, year_series):
@@ -30,8 +32,8 @@ class options(stock):
         self.expiry = utc_dates
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
         self.hdrs = headers(self.symbol).options(self.expiry)
-        self.table = scraper(self.symbol).__table__(self.url, self.hdrs)
-        return self.table
+        table = scraper(self.symbol).__table__(self.url, self.hdrs)
+        return table
 
     def option_dates(self, year):
         c = calendar.Calendar(firstweekday=calendar.SATURDAY)
@@ -55,36 +57,98 @@ class options(stock):
                     yield x
                 y-=1
   
-class sell_calls(options):
-    def break_even(self, table):
-        break_even = table['Strike'] - table['Last Price']
+class sell_calls:
+    def break_even(self, table, ask_price):
+        if ask_price == None: 
+            ask_price=table['Last Price.1']
+        break_even = table['Strike'] - ask_price
         return break_even
     
-    def discount(self, table):
-        disc_prem = table['Break Even'].apply(lambda x: x - float(self.price))
+    def discount(self, table, stock_price):
+        disc_prem = table['Break Even'].apply(lambda x: x - float(stock_price))
         return disc_prem
     
-    def create_df(self, table):
+    def create_df(self, table, stock_price):
         table['Break Even'] = self.break_even(table)
-        table['Discount/Premium'] = self.discount(table)
-        r = table[['Discount/Premium' , 'Break Even', 'Strike', 'Last Price']]
+        table['Discount/Premium'] = self.discount(table, stock_price)
+        r = table[['Discount/Premium' , 'Break Even', 'Strike', 'Last Price', 
+                   'Volume', 'Open Interest', 'Change', '% Change']]
         r = r.sort_values('Discount/Premium', ascending=True)
         r = r.set_index('Strike')
         return r 
     
-class sell_puts(options):
-    def break_even(self, table):
-        break_even = table['Strike'] - table['Last Price.1']
+    def OTM_return(self, table):
+        perc = table_T['Last Price.1']/table_T['Strike']
+        return perc*100        
+    
+    def ITM_return(self, table, stock_price):
+        perc = (stock_price - self.break_even(table))/self.break_even(table)
+        return perc
+
+    
+class sell_puts:  
+    def break_even(self, table, ask_price = None):
+        if ask_price == None: 
+            ask_price=table['Last Price.1']
+        break_even = table['Strike'] - ask_price
         return break_even
     
-    def discount(self, table):
-        disc_prem = table['Break Even'].apply(lambda x: x - float(self.price))
+    def discount(self, table, stock_price):
+        disc_prem = table['Break Even'].apply(lambda x: x - float(stock_price))
+        return disc_prem
+        
+    def create_df(self, table, stock_price):
+        table['Break Even'] = self.break_even(table)
+        table['Discount/Premium'] = self.discount(table, stock_price)
+        table['Percent Return'] = self.perc_return(table)
+        r = table[['Break Even', 'Discount/Premium', 'Percent Return','Strike', 'Last Price.1', 'Volume.1', 'Open Interest.1', 'Change.1', '% Change.1']]
+        r = r.sort_values('Discount/Premium', ascending=True)
+        r = r.set_index('Strike')
+        return r
+    
+    def OTM_return(self, table):
+        perc = table_T['Last Price.1']/table_T['Strike']
+        return perc*100        
+    
+    def ITM_return(self, table, stock_price):
+        perc = (stock_price - self.break_even(table))/self.break_even(table)
+        return perc
+
+class buy_calls:
+    def break_even(self, table, ask_price=None):
+        if ask_price == None: 
+            ask_price=table['Last Price.1']
+        break_even = table['Strike'] + ask_price
+        return break_even
+    
+    def discount(self, table, stock_price):
+        disc_prem = table['Break Even'].apply(lambda x: x - float(stock_price))
         return disc_prem
     
-    def create_df(self, table):
+    def create_df(self, table, stock_price):
         table['Break Even'] = self.break_even(table)
-        table['Discount/Premium'] = self.discount(table)
-        r = table[['Break Even', 'Discount/Premium', 'Strike', 'Last Price.1']]
+        table['Discount/Premium'] = self.discount(table, stock_price)
+        r = table[['Discount/Premium' , 'Break Even', 'Strike', 'Last Price', 'Volume', 'Open Interest', 'Change', '% Change']]
+        r = r.sort_values('Discount/Premium', ascending=True)
+        r = r.set_index('Strike')
+        return r 
+
+class buy_puts:
+    def break_even(self, table, ask_price = None):
+        if ask_price == None: 
+            ask_price=table['Last Price.1']
+        table = table.astype('float', errors='ignore')
+        break_even = table['Strike'] + ask_price
+        return break_even
+    
+    def discount(self, table, stock_price):
+        disc_prem = table['Break Even'].apply(lambda x: x - float(stock_price))
+        return disc_prem
+    
+    def create_df(self, table, stock_price):
+        table['Break Even'] = self.break_even(table)
+        table['Discount/Premium'] = self.discount(table, stock_price)
+        r = table[['Break Even', 'Discount/Premium', 'Strike', 'Last Price.1', 'Volume.1', 'Open Interest.1', 'Change.1', '% Change.1']]
         r = r.sort_values('Discount/Premium', ascending=True)
         r = r.set_index('Strike')
         return r
@@ -107,12 +171,12 @@ if __name__ == '__main__':
     dictionary = dict(zip(yr2020,utc_dates))
     december_option = dictionary.get(datetime.date(2019, 12, 20))
     
-    table_T = T.options(str(december_option))
-    
-    table_T = T.break_even(table_T)
-    
-    table_T = T.discount(table_T)
-
+    table_T = T.options(str(december_option))[0]
+    table_T = pm.numeric(table_T)
+    buy_put = buy_puts().create_df(table_T, T.price)
+    buy_call = buy_calls().create_df(table_T, T.price)
+    sell_put = sell_puts().create_df(table_T, T.price)
+    sell_call = sell_calls().create_df(table_T, T.price)
     
     #p = Pool()
     #price = list(p.map(T.options, a))

@@ -60,7 +60,7 @@ class statistics:
     def add_rows(self, s):
         t_r = pm.add_rows(s, row1="Forward Annual Dividend Yield 4", row2='52-Week Change 3')
         try:
-            returns_adj = divide_rows(s, numerator='t_r', denominator='Beta (3Y Monthly)')
+            returns_adj = pm.divide_rows(s, numerator='t_r', denominator='Beta (3Y Monthly)')
         except:
             returns_adj = np.nan
         finally:
