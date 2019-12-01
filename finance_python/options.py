@@ -53,7 +53,7 @@ class options(stock):
         y = len(utc_dates)
         while y > 0:
             for x in utc_dates:
-                if len(T.options(x))>0:
+                if len(self.options(x))>0:
                     yield x
                 y-=1
   
