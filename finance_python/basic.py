@@ -7,7 +7,6 @@ Created on Mon Oct 28 17:25:19 2019
 import numpy as np
 import math, argparse, re, os
 from stock import stock
-from urllib.parse import urlparse, urljoin
 
 class basic(stock):
     def __init__(self, symbol, start, end):
