@@ -6,26 +6,16 @@ Created on Mon Oct 28 17:25:19 2019
 """
 import pandas as pd
 import numpy as np
-import lxml, time, math
+import time, math
 from datetime import datetime
 from multiprocessing import Pool
 from stock import stock
 
 try:
     from scrapers import scraper
-    from statistics import statistics
-    from balance_sheet import balance_sheet
-    from financials import financials
-    from cashflow import cashflow
-    from analysis import analysis
     from headers import headers
 except:
     from finance_python.scrapers import scraper
-    from finance_python.statistics import statistics
-    from finance_python.balance_sheet import balance_sheet
-    from finance_python.financials import financials
-    from finance_python.cashflow import cashflow
-    from finance_python.analysis import analysis
     from finance_python.headers import headers
 
 class basic(stock):
@@ -63,12 +53,16 @@ class basic(stock):
         hdrs = headers(symbol).dividends(start, end)
         url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=" + str(start) + "&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
         dividends = scraper(symbol).__table__(url, hdrs)
-        if len(dividends)>1:
-            dividends = dividends.drop(4)
-            dividends = dividends.set_index('Date')
-            dividends  = dividends['Dividends']
-            dividends = dividends.str.replace(r'\Dividend', '').astype(float)
-            dividends.name = symbol
+        return dividends
+    
+    def clean_dividends(dividends):
+        index = len(dividends)
+        dividends = dividends.drop(index-1)
+        dividends = dividends.set_index('Date')
+        dividends = dividends['Dividends']
+        dividends = dividends.str.replace(r'\Dividend', '')
+        dividends = dividends.astype(float)
+        dividends.name = symbol
         return dividends
 
     def call_dividends(self):
