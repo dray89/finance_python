@@ -116,7 +116,8 @@ class stock:
         url = self.__url__(start, end, fil = 'div')
         dividends = scraper(symbol).__table__(url, hdrs)
         if len(dividends)>1:
-            dividends = dividends.drop(4)
+            index = len(dividends)
+            dividends = dividends.drop(index-1)
             dividends = dividends.set_index('Date')
             dividends  = dividends['Dividends']
             dividends = dividends.str.replace(r'\Dividend', '').astype(float)

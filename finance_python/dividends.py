@@ -55,14 +55,14 @@ class basic(stock):
         dividends = scraper(symbol).__table__(url, hdrs)
         return dividends
     
-    def clean_dividends(dividends):
+    def clean_dividends(self, dividends):
         index = len(dividends)
         dividends = dividends.drop(index-1)
         dividends = dividends.set_index('Date')
         dividends = dividends['Dividends']
         dividends = dividends.str.replace(r'\Dividend', '')
         dividends = dividends.astype(float)
-        dividends.name = symbol
+        dividends.name = self.symbol
         return dividends
 
     def call_dividends(self):
