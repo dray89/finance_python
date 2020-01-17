@@ -10,6 +10,7 @@ import time, math
 from datetime import datetime
 from multiprocessing import Pool
 from stock import stock
+from dates import format_date
 
 try:
     from scrapers import scraper
@@ -21,8 +22,8 @@ except:
 class basic(stock):
     def history(self, start):
         symbol, end = [self.symbol, self.end]
-        start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        start = format_date(start)
+        end = format_date(end)
         url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
         hdrs = headers(symbol).history(start, end)
         history = scraper(symbol).__table__(url, hdrs)
@@ -48,8 +49,8 @@ class basic(stock):
 
     def dividends(self, s):
         symbol, e = [self.symbol, self.end]
-        start = int(time.mktime(datetime.strptime(s.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        end = int(time.mktime(datetime.strptime(e.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
+        start = format_date(s)
+        end = format_date(e)
         hdrs = headers(symbol).dividends(start, end)
         url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=" + str(start) + "&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
         dividends = scraper(symbol).__table__(url, hdrs)
