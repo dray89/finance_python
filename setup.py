@@ -19,6 +19,6 @@ setup(name='scrape_yahoo',
       long_description = long_description,
       url='https://github.com/dray89/finance_python',
       packages=setuptools.find_packages(),
-      package_data={'finance_python':'*.txt'},
+      package_data={'finance_python':['*.txt']},
       long_description_content_type = "text/markdown",
       include_package_data=True  )
