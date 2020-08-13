@@ -2,9 +2,7 @@
 """
 Created on Thu Aug 15 21:22:48 2019
 @author: rayde
-Please Note: Yahoo has since changed the scraping requirements on the
-"Financials" tab. Thus, the functions on this tab now require headers 
-and special methods to work.
+
 """
 import pandas as pd
 import numpy as np
