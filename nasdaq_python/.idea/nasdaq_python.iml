@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="earnings_calendar" />
+    <orderEntry type="module" module-name="finance_python" />
+    <orderEntry type="module" module-name="codigo_curriculum" />
+    <orderEntry type="module" module-name="algo_trading_course" />
+  </component>
+</module>
