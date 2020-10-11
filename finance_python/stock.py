@@ -41,8 +41,8 @@ class stock:
         self.start = start
         self.end = end
         self.scrape()
-        self.history = self.clean_history(start, end)
-        self.dividends = self.clean_dividends(start, end)
+        self.history = self.history(start, end)
+        self.dividends = self.dividends(start, end)
         self.price = self.price()
         self.attributes = ['dividends', 'sector','description',
                            'history', 'price', 'analyze()', 'stats()']
@@ -94,7 +94,7 @@ class stock:
         url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&"+fil+"=history&frequency=1d"
         return url
 
-    def clean_history(self, start, end):
+    def history(self, start, end):
         symbol = self.symbol
         hdrs = headers(symbol).history(start, end)
         url = self.__url__(start, end, fil = 'history')
@@ -108,7 +108,7 @@ class stock:
         return history
 
 
-    def clean_dividends(self, start, end):
+    def dividends(self, start, end):
         symbol = self.symbol
         hdrs = headers(symbol).dividends(start, end)
         url = self.__url__(start, end, fil = 'div')

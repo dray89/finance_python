@@ -4,12 +4,12 @@ Created on Wed Jul 17 15:41:04 2019
 
 @author: rayde
 """
-import pandas as pd
 from pandas import DataFrame
 import numpy as np
 
 try:
     from scrapers import scraper
+    from headers import headers
 except:
     from finance_python.scrapers import scraper
 
@@ -22,7 +22,7 @@ class balance_sheet:
 
     def scrape(self):
         text_list = []
-        hdrs = headers(symbol).balancesheet()
+        hdrs = headers(self.symbol).balancesheet()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
         html = scraper(self.symbol).__general___(url, hdrs)
         s = html.findAll('span')

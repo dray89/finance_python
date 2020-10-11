@@ -11,6 +11,7 @@ import pandas as pd
 
 try:
     from scrapers import scraper
+    from headers import headers
 except:
     from finance_python.scrapers import scraper
 
@@ -23,7 +24,7 @@ class cashflow:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
-        hdrs = headers(symbol).cashflow()
+        hdrs = headers(self.symbol).cashflow()
         table = scraper(self.symbol).__table__(url, hdrs)
         table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table

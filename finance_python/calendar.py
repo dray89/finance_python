@@ -18,7 +18,7 @@ class calendar:
         self.day = date.__str__(date.today() + timedelta(days))
         self.end = date.__str__(date.today() + timedelta(days + 4))
         self.url = "https://ca.finance.yahoo.com/calendar/earnings?from=" + self.start + "&to=" + self.end + "&day=" + self.day
-        self.pages = scraper.__general__(url)
+        self.pages = scraper.__general__(self.url)
         self.table = self.table()
         self.text = self.text()
 

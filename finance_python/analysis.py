@@ -4,8 +4,7 @@ Created on Thu Aug 15 22:30:46 2019
 
 @author: rayde
 """
-from pandas import DataFrame
-import numpy as np
+
 
 try:
     from scrapers import scraper

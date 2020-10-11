@@ -21,12 +21,12 @@ class headers:
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
                 "cookie": "APID=UP17e86a3c-e498-11e9-8457-0a1b64492f7a; PRF=t%3D" +symbol+"; APIDTS=1569968870; B=0gu9p91ep7jk3&b=3&s=js",
-                "dnt": 1,
+                "dnt": "1",
                 "pragma": "no-cache",
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
-                "upgrade-insecure-requests": 1,
+                "upgrade-insecure-requests": "1",
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
@@ -41,12 +41,12 @@ class headers:
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
                 "cookie": "APID=UP918cbef8-e469-11e9-bc01-024bf8e6c78a; PRF=t%3D" +symbol+"; APIDTS=1569963305; B=f66khvpep703n&b=3&s=tb",
-                "dnt": 1,
+                "dnt": "1",
                 "pragma": "no-cache",
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
-                "upgrade-insecure-requests": 1,
+                "upgrade-insecure-requests": "1",
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
@@ -61,13 +61,13 @@ class headers:
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
                 "cookie": "APID=UP17e86a3c-e498-11e9-8457-0a1b64492f7a; PRF=t%3DA"+symbol+"; APIDTS=1569969441; B=0gu9p91ep7jk3&b=3&s=js",
-                "dnt": 1,
+                "dnt": "1",
                 "pragma": "no-cache",
                 "referer": "https://finance.yahoo.com/quote/"+ symbol +"/community?p=" +symbol,
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
-                "upgrade-insecure-requests": 1,
+                "upgrade-insecure-requests": "1",
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
@@ -82,12 +82,12 @@ class headers:
                  "accept-language": "en-US,en;q=0.9",
                  "cache-control": "no-cache",
                  "cookie": "APID=UP48e4f3c5-edd2-11e9-9e88-0ecdf5eb3de2; PRF=t%3" + symbol.upper() +"; APIDTS=1570982941; B=99tjtjleq6ics&b=3&s=7m",
-                 "dnt": 1,
+                 "dnt": "1",
                  "pragma": "no-cache",
                  "sec-fetch-mode": "navigate",
                  "sec-fetch-site": "same-origin",
                  "sec-fetch-user": "?1",
-                 "upgrade-insecure-requests": 1,
+                 "upgrade-insecure-requests": "1",
                  "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
@@ -102,12 +102,12 @@ class headers:
                    "accept-language": "en-US,en;q=0.9",
                    "cache-control": "no-cache",
                    "cookie": "APID=UP918cbef8-e469-11e9-bc01-024bf8e6c78a; PRF=t%3D" + symbol + "; APIDTS=1569959067; B=f66khvpep703n&b=3&s=tb",
-                   "dnt": 1,
+                   "dnt": "1",
                    "pragma": "no-cache",
                    "sec-fetch-mode": "navigate",
                    "sec-fetch-site": "none",
                    "sec-fetch-user": "?1",
-                   "upgrade-insecure-requests": 1,
+                   "upgrade-insecure-requests": "1",
                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
@@ -122,13 +122,13 @@ class headers:
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
                 "cookie": "APID=UP17e86a3c-e498-11e9-8457-0a1b64492f7a; PRF=t%3D"+symbol+"; APIDTS=1569970080; B=0gu9p91ep7jk3&b=3&s=js",
-                "dnt": 1,
+                "dnt": "1",
                 "pragma": "no-cache",
                 "referer": "https://finance.yahoo.com/quote/"+symbol+"/community?p=" + symbol,
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
-                "upgrade-insecure-requests": 1,
+                "upgrade-insecure-requests": "1",
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
         return hdrs
 
@@ -149,7 +149,7 @@ class headers:
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
-                "upgrade-insecure-requests": 1,
+                "upgrade-insecure-requests": "1",
                 "user-agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs
 
@@ -164,13 +164,13 @@ class headers:
                 'accept-language': 'en-US,en;q=0.9',
                 'cache-control': 'no-cache',
                 'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D'+ symbol +'; APIDTS=1570227456; B=3u60p6hepfgc1&b=3&s=dh',
-                'dnt': 1,
+                'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
                 'sec-fetch-mode': 'navigate',
                 'sec-fetch-site': 'same-origin',
                 'sec-fetch-user': '?1',
-                'upgrade-insecure-requests': 1,
+                'upgrade-insecure-requests': "1",
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs
 
@@ -185,13 +185,13 @@ class headers:
                 "accept-language": 'en-US,en;q=0.9',
                 "cache-control": 'no-cache',
                 'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D'+ symbol +'; APIDTS=1570227011; B=3u60p6hepfgc1&b=3&s=dh',
-                'dnt': 1,
+                'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
                 'sec-fetch-mode': 'navigate',
                 'sec-fetch-site': 'same-origin',
                 'sec-fetch-user': '?1',
-                'upgrade-insecure-requests': 1,
+                'upgrade-insecure-requests': "1",
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs
 
@@ -206,13 +206,13 @@ class headers:
                 'accept-language': 'en-US,en;q=0.9',
                 'cache-control': 'no-cache',
                 'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D' + symbol + '; APIDTS=1570227468; B=3u60p6hepfgc1&b=3&s=dh',
-                'dnt': 1,
+                'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
                 'sec-fetch-mode': 'navigate',
                 'sec-fetch-site': 'same-origin',
                 'sec-fetch-user': '?1',
-                'upgrade-insecure-requests': 1,
+                'upgrade-insecure-requests': "1",
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs
 
@@ -227,13 +227,13 @@ class headers:
                 'accept-language': 'en-US,en;q=0.9',
                 'cache-control': 'no-cache',
                 'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; APIDTS=1570228254; B=3u60p6hepfgc1&b=3&s=dh; PRF=t%3D'+ symbol + '%26qsp-fnncls-cue%3D1',
-                'dnt': 1,
+                'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
                 'sec-fetch-mode': 'navigate',
                 'sec-fetch-site': 'same-origin',
                 'sec-fetch-user': '?1',
-                'upgrade-insecure-requests': 1,
+                'upgrade-insecure-requests': "1",
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs
 
@@ -248,12 +248,12 @@ class headers:
                 'accept-language': "en-US,en;q=0.9",
                 'cache-control': 'no-cache',
                 'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D'+ symbol +'%26qsp-fnncls-cue%3D1; APIDTS=1570228651; B=3u60p6hepfgc1&b=3&s=dh',
-                'dnt': 1,
+                'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
                 'sec-fetch-mode': 'navigate',
                 'sec-fetch-site': 'same-origin',
                 'sec-fetch-user': '?1',
-                'upgrade-insecure-requests': 1,
+                'upgrade-insecure-requests': "1",
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs

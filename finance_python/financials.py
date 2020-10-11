@@ -10,6 +10,7 @@ import pandas as pd
 
 try:
     from scrapers import scraper
+    from headers import headers
 except:
     from finance_python.scrapers import scraper
 
@@ -21,7 +22,7 @@ class financials:
         self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
-        hdrs = headers(symbol).financials()
+        hdrs = headers(self.symbol).financials()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
         table = scraper(self.symbol).__table__(url, hdrs)
         table = pd.concat(table, sort=True).astype(float, errors='ignore')
