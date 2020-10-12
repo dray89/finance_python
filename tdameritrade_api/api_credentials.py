@@ -47,13 +47,13 @@ class header:
     ''' for more information on encoding/decoding in python visit: 
         https://www.urlencoder.io/python/ '''
 
-    def __init__(self):
-        self.hdrs = {"access_token": "IXrpDuPJBQhg5ZvEtW/I/CqO5aDHVLqA+EgGHpr9ue+2ss7E+bPbEQky17m/tXzecQgzArd92nyEVhj4+RBChqTw6oLhw+jaQCZFMNDxtVGPGGbTEOPF/iSktghlq4+G5eGtCueWxKKAN9eneK3bExSzjRYEUp7CcJd4oVAZH8hzXqS5pAYAFr9b0dfiNvPxU4wQHHZ4hhrCAfBTvMvPJbEnJ+Xgl5ADP6JlU5cu9BoxzMBd28FqYgoISMdd9Es6Y7IHu3SLOSq9OfeV4ch5a1TlMiCZOvTF1bc9WJaBi+outwFHLhNy6UJexh3UAxTIgpCRVN5UETz9mFd6W5dbhVsylE5h7XPZaGvxqG5JiJXrr3B/jNtQ4JjzQmaSjcP1ctuDgt4IDDRqAiOA1lRATP5bZBOAzvLVtFj2AIaN5SDm1gtDlMgla1Ea1OMJ2vXExYp0naRog0NLfBfdqXRmaRB5Mm7RKhBkBmpKeWcxojWTy7EkYKvLyPf6MslY/BNzquujZ100MQuG4LYrgoVi/JHHvlsNf77JLc3MtXROIPWvxlGFCfCDz8vsL9deWJeP+pxn4w4CAgcnvrENEiItp53/15t4T3J6svEM1x4M2R4WWfFKEW22qLJMXZdcAbImWCh8On8zO51jcvKY68hGq2sxpYPIbsRa1RigXS1BIACJbABfBCnCAaHo74RayvYeFra2eoTyvIh1xeZHeChovXRrmldXngFHJeUyvGdaua6hVLFJvRKUgh5+yUYVRWR5CcT2Rstb0gIyLQyVEl9RkFsrGAPbARBMYkART65Mj9nhulDc0V4q6vRl/5rqWHTzyFJipeGX7qUsae1r4byxch3Hj5WfCL6UPCsSz56LvTmaUgiyK129E3ZSqHQgM84tqLaIHPTGlHGulFGOU2wrx5isIfkJUumlmK4G5ADy11Vnqt6DZZvbKS6DMEoQcpAY8N4k/dqpZwVCKb2jQtJgyemJXMG5Wok+wAJ2ZBX5Z/t5MS/HzOeIjtBj4zPrNdH0i9vKyUCR9wyEHf9D0SBJrTQhb2qv8k4E212FD3x19z9sWBHDJACbC00B75E",
+    def __init__(self, access_token, decoded_code, client_id):
+        self.hdrs = {"access_token": access_token,
                      "expires_in": "1800",
                      "token_type": "Bearer {Access Token}",
                      'grant_type': 'authorization_code',
-                       'code': 'decoded code',
-                       'client_id': 'ABC98765@AMER.OAUTHAP',
+                       'code': decoded_code,
+                       'client_id': client_id,
                        'redirect_uri': 'http://127.0.0.1'
                      }
            
