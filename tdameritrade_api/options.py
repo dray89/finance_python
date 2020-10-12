@@ -45,4 +45,6 @@ class get_option_chain:
         
         self.url = 'https://api.tdameritrade.com/v1/marketdata/chains'
     
-    def get_options(self, symbol) 
+    def get_options(self, symbol):
+        pass
+    
