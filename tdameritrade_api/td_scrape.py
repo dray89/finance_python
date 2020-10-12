@@ -10,7 +10,10 @@ from urllib.request import urlopen
 from lxml import html
 import re, json
 from finance_python.scrapers import scraper
+'''
+scrapes stocks with special margin requirements : now saved in folder special_margin_requirements
 
+'''
 class margin_requirements:
     def __init__(self):
         pass
