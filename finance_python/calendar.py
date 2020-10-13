@@ -4,37 +4,15 @@ Created on Wed Jul 31 15:07:11 2019
 
 @author: rayde
 """
-from datetime import date, timedelta
-from headers import headers
+from datetime import date
 from scrapers import scraper
 
 class calendar:  
-    def __init__(self, days):
-        self.days = days
-        self.start = date.today()
-        self.day = date.today() + timedelta(days)
-        self.end = date.today() + timedelta(days + 4)
-        self.url = "https://ca.finance.yahoo.com/calendar/earnings?from=" + str(self.start) + "&to=" + str(self.end) + "&day=" + str(self.day)
+    def __init__(self, date= date.today()):
+        self.date = date
+        self.url = "https://ca.finance.yahoo.com/calendar/earnings?&day=" + str(self.date)
         self.hdrs = self.headers()
-        self.pages = scraper().__general__(self.url, self.hdrs)
-        self.table = self.table()
-        self.text = self.text()
-
-    def table(self):
-        table = self.pages.find(id="cal-res-table").findAll('td')
-        return table 
-    
-    def text(self):
-        results = []
-        y = 0
-        self.items = {'symbol': 0, 'company':1, 'call_time': 2,
-                      'eps_estimate': 3, 'reported_eps': 4, 
-                      'suprise' : 5}
-        while y<len(self.table):
-            b = list(map(lambda z: self.table[z + y].text, self.items.values()))
-            results.append(b)
-            y +=6
-        return results
+        self.calendar = scraper().__table__(self.url, self.hdrs)
 
     def headers(self):
         hdrs = {'authority': 'finance.yahoo.com',

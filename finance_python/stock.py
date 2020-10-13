@@ -11,9 +11,6 @@ from datetime import datetime
 
 from scrapers import scraper
 from statistics import statistics
-from balance_sheet import balance_sheet
-from financials import financials
-from cashflow import cashflow
 from analysis import analysis
 from headers import headers
 
@@ -119,27 +116,6 @@ class stock:
         self.stats_list.append(self.statistics)
         self.attributes.append(stats.attributes)
 
-    def balance(self):
-        '''deprecated'''
-        bs = balance_sheet(self.symbol)
-        self.balance_sheet = bs.balance_sheet
-        self.bs_list.append(self.balance_sheet)
-        self.attributes.append(bs.attributes)
-
-    def cash(self):
-        '''deprecated'''
-        cash = cashflow(self.symbol)
-        self.cashflow = cash.cashflow
-        self.cash_list.append(self.cashflow)
-        self.attributes.append(cash.attributes)
-
-    def financial(self):
-        '''deprecated'''
-        fin = financials(self.symbol)
-        self.financials = fin.financials
-        self.fin_list.append(self.financials)
-        self.attributes.append(fin.attributes)
-
     def analyze(self):
         a = analysis(self.symbol)
         clean = analysis(self.symbol).clean(a.df)
@@ -160,3 +136,30 @@ class stock:
 
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)
+
+    '''
+    DEPRECATED: 
+    YAHOO FINANCE CHANGED THEIR WEBSITE SINCE THIS WAS FIRST BUILT 
+    THESE FUNCTIONS NO LONGER WORK PROPERLY
+    
+    def balance(self):
+        
+        bs = balance_sheet(self.symbol)
+        self.balance_sheet = bs.balance_sheet
+        self.bs_list.append(self.balance_sheet)
+        self.attributes.append(bs.attributes)
+
+    def cash(self):
+        
+        cash = cashflow(self.symbol)
+        self.cashflow = cash.cashflow
+        self.cash_list.append(self.cashflow)
+        self.attributes.append(cash.attributes)
+
+    def financial(self):
+        
+        fin = financials(self.symbol)
+        self.financials = fin.financials
+        self.fin_list.append(self.financials)
+        self.attributes.append(fin.attributes)
+    '''
