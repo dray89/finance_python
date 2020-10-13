@@ -9,23 +9,14 @@ import numpy as np
 import time
 from datetime import datetime
 
-try:
-    from scrapers import scraper
-    from statistics import statistics
-    from balance_sheet import balance_sheet
-    from financials import financials
-    from cashflow import cashflow
-    from analysis import analysis
-    from headers import headers
-except:
-    from finance_python.scrapers import scraper
-    from finance_python.statistics import statistics
-    from finance_python.balance_sheet import balance_sheet
-    from finance_python.financials import financials
-    from finance_python.cashflow import cashflow
-    from finance_python.analysis import analysis
-    from finance_python.headers import headers
-    
+from scrapers import scraper
+from statistics import statistics
+from balance_sheet import balance_sheet
+from financials import financials
+from cashflow import cashflow
+from analysis import analysis
+from headers import headers
+
 
 class stock:
     stocks_list = set()
@@ -52,7 +43,7 @@ class stock:
         symbol = self.symbol
         url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
         hdrs = headers(symbol).profile()
-        s =  scraper(symbol).__profile__(url, hdrs)
+        s =  scraper().__profile__(url, hdrs)
         self.sector(s)
         self.description(s)
 
@@ -98,7 +89,7 @@ class stock:
         symbol = self.symbol
         hdrs = headers(symbol).history(start, end)
         url = self.__url__(start, end, fil = 'history')
-        price_history = scraper(symbol).__table__(url, hdrs)
+        price_history = scraper().__table__(url, hdrs)
         if len(price_history)>0:
             history = pd.concat(price_history, sort=True).astype(float, errors='ignore')
             history = history.drop(len(history) - 1)
@@ -112,7 +103,7 @@ class stock:
         symbol = self.symbol
         hdrs = headers(symbol).dividends(start, end)
         url = self.__url__(start, end, fil = 'div')
-        dividends = scraper(symbol).__table__(url, hdrs)
+        dividends = scraper().__table__(url, hdrs)
         if len(dividends)>1:
             index = len(dividends)
             dividends = dividends.drop(index-1)

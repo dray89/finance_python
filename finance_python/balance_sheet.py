@@ -7,24 +7,22 @@ Created on Wed Jul 17 15:41:04 2019
 from pandas import DataFrame
 import numpy as np
 
-try:
-    from scrapers import scraper
-    from headers import headers
-except:
-    from finance_python.scrapers import scraper
+
+from scrapers import scraper
+from headers import headers
 
 class balance_sheet:
     def __init__(self, symbol):
-        self.symbol = symbol
-        self.balance_sheet = self.clean()
-        self.balance_sheet['Changes'] = self.changes()
+        self.symbol = symbol.upper()
+        self.balance_sheet = self.scrape()
+        #self.balance_sheet['Changes'] = self.changes()
         self.attributes = ['balance_sheet', "bs_list"]
 
     def scrape(self):
         text_list = []
         hdrs = headers(self.symbol).balancesheet()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
-        html = scraper(self.symbol).__general___(url, hdrs)
+        html = scraper().__general__(url, hdrs)
         s = html.findAll('span')
         for each in s:
             text_list.append(each.text)
@@ -58,6 +56,7 @@ class balance_sheet:
             for item in df:
                 if each in item:
                     industry_dict = list(map({item:next(item)}))
+        return industry_dict
 
     def clean(self, df):
         if len(df) > 0:

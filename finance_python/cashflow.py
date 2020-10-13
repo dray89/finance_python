@@ -17,20 +17,23 @@ except:
 
 class cashflow:
     def __init__(self, symbol):
-        self.symbol = symbol
-        self.cashflow = self.clean()
-        self.cashflow['Changes'] = self.changes()
+        self.symbol = symbol.upper()
+        self.cashflow = self.scrape()
+        #self.cashflow['Changes'] = self.changes()
         self.attributes = ['cashflow', 'cash_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
         hdrs = headers(self.symbol).cashflow()
+        
+        '''
+        Important: Need to change the scraping method. 
+        '''
         table = scraper(self.symbol).__table__(url, hdrs)
-        table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        #table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 
-    def clean(self):
-        df = self.scrape()
+    def clean(self, df):
         if len(df)>0:
             df = df.set_axis(df.iloc[0], axis='columns', inplace=False)
             df = df.set_index('Period Ending')

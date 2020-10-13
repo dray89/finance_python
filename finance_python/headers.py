@@ -8,7 +8,7 @@ Created on Tue Oct  1 18:08:19 2019
 
 class headers:
     def __init__(self, symbol):
-        self.symbol = symbol
+        self.symbol = symbol.upper()
 
     def summary(self):
         symbol = self.symbol
@@ -257,3 +257,4 @@ class headers:
                 'upgrade-insecure-requests': "1",
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
         return hdrs
+    

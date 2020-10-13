@@ -4,25 +4,23 @@ Created on Wed Jul 31 15:07:11 2019
 
 @author: rayde
 """
-import sys
+
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from datetime import datetime, date, timedelta
-from newspaper import Article
+
 import numpy as np 
 import lxml
 from lxml import html
 import requests
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
 import os
-try:
-	from scrape import scrape
-except:
-	from finance_python.scrape import scrape
+
+from scrapers import scraper
+
 
 class calendar:  
     def __init__(self, days):
@@ -58,8 +56,8 @@ class calendar:
             y +=6
         return results
 
-def desc(symbol): 
-   s = scrape(symbol).__profile__()
-   description = s.find('span', string='Description').find_next().text
-   return description
-        
+    def desc(symbol): 
+       s = scrape(symbol).__profile__()
+       description = s.find('span', string='Description').find_next().text
+       return description
+            

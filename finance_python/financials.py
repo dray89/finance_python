@@ -8,24 +8,21 @@ from pandas import DataFrame
 import numpy as np
 import pandas as pd
 
-try:
-    from scrapers import scraper
-    from headers import headers
-except:
-    from finance_python.scrapers import scraper
+from scrapers import scraper
+from headers import headers
 
 class financials:
     def __init__(self, symbol):
         self.symbol = symbol
-        self.financials = self.clean()
-        self.financials['Changes'] = self.changes()
+        self.financials = self.scrape()
+        #self.financials['Changes'] = self.changes()
         self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
         hdrs = headers(self.symbol).financials()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        table = scraper(self.symbol).__table__(url, hdrs)
-        table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        table = scraper().__table__(url, hdrs)
+        #table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 
     def clean(self):

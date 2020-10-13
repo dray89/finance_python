@@ -25,7 +25,7 @@ class analysis:
         symbol = self.symbol
         hdrs = headers(symbol).analysis()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/analysis?p=' + self.symbol
-        a = scraper(self.symbol).__table__(url, hdrs)
+        a = scraper().__table__(url, hdrs)
         return a
 
     def clean(self, df):

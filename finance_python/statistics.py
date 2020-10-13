@@ -60,12 +60,11 @@ class statistics:
     '''
     #### DEPRECATED ###
     def __indexLabel__(self, df):
-        '''
         
         :param df: Takes a dataframe as input.
         :return: returns a dataframe with column labels and a set index.
         
-        '''
+
         df.columns = ['Measure', 'Value']
         df = df.set_index('Measure')
         return df
