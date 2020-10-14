@@ -7,12 +7,12 @@ Created on Thu Aug 15 21:22:48 2019
 import pandas as pd
 import numpy as np
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
-from scrapers import scraper
-from statistics import statistics
-from analysis import analysis
-from headers import headers
+from finance_python.scrapers import scraper
+from finance_python.statistics import statistics
+from finance_python.analysis import analysis
+from finance_python.headers import headers
 
 
 class stock:
@@ -23,7 +23,11 @@ class stock:
     fin_list = list()
     a_list = list()
 
-    def __init__(self, symbol, start, end, sort=True):
+    def __init__(self, symbol, start=datetime.today() - timedelta(days=365), end=datetime.today(), sort=True):
+        '''
+             start = datetime.today() - timedelta(days=365)
+             end = datetime.today()
+        '''
         self.symbol = symbol
         self.stocks_list.add(symbol)
         self.start = start
