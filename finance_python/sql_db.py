@@ -26,9 +26,9 @@ class Stock_Table(Base):
     __tablename__ = 'stocks'
 
     symbol = Column(Integer(), primary_key=True)
-    longName = Column(String(255), index=True)
+    longName = Column(String(30), index=True)
     stock_description = Column(String(500))
-    industry = Column(String(250))
+    industry = Column(String(30))
 
     perc_change = Column(Integer())
 

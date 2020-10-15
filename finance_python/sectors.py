@@ -13,7 +13,7 @@ class sector:
         "Financial_Services", "Healthcare", "Industrials", "Real_Estate", 
         "Technology", "Utilities"]'''
         self.sector = sector.lower()
-        self.file = "finance_python\{0}.txt".format(self.sector)
+        self.file = "finance_python\sector_text_files\{0}.txt".format(self.sector)
         self.contents = self.__cleancontents__()
         self.attributes = ['lookup_industry(self, symbol)', 'print_contents(self)',
                            'symbol_lookup(self, industry)', 'get_industries(self)']
@@ -43,7 +43,7 @@ class sector:
                 industry_dict.update(d)
         return industry_dict
 
-    def symbol_lookup(self, industry):
+    def lookup_symbol(self, industry):
         '''Basic_Materials = Agriculture, Building Materials, Chemicals, Coal, Forest Products, Metals & Mining, Steel     
             
             Communication_Services = Communication_Services

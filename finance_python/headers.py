@@ -11,16 +11,14 @@ class headers:
         self.symbol = symbol.upper()
 
     def summary(self):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
-                "path": "/quote/" + symbol + "?p=" + symbol,
+                "path": "/quote/" + self.symbol + "?p=" + self.symbol,
                 "scheme": "https",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                 "accept-encoding": "gzip, deflate, br",
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
-                "cookie": "APID=UP17e86a3c-e498-11e9-8457-0a1b64492f7a; PRF=t%3D" +symbol+"; APIDTS=1569968870; B=0gu9p91ep7jk3&b=3&s=js",
                 "dnt": "1",
                 "pragma": "no-cache",
                 "sec-fetch-mode": "navigate",
@@ -31,16 +29,14 @@ class headers:
         return hdrs
 
     def dividends(self, start, end):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
-                "path": "/quote/" + symbol +"/history?period1="+ str(start) + "&period2=" + str(end) + "&interval=div%7Csplit&filter=div&frequency=1d",
+                "path": "/quote/" + self.symbol +"/history?period1="+ str(start) + "&period2=" + str(end) + "&interval=div%7Csplit&filter=div&frequency=1d",
                 "scheme": "https",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                 "accept-encoding": "gzip, deflate, br",
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
-                "cookie": "APID=UP918cbef8-e469-11e9-bc01-024bf8e6c78a; PRF=t%3D" +symbol+"; APIDTS=1569963305; B=f66khvpep703n&b=3&s=tb",
                 "dnt": "1",
                 "pragma": "no-cache",
                 "sec-fetch-mode": "navigate",
@@ -51,19 +47,17 @@ class headers:
         return hdrs
 
     def statistics(self):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
-                "path": "/quote/" + symbol +"/key-statistics?p=" + symbol,
+                "path": "/quote/" + self.symbol +"/key-statistics?p=" + self.symbol,
                 "scheme": "https",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                 "accept-encoding": "gzip, deflate, br",
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
-                "cookie": "APID=UP17e86a3c-e498-11e9-8457-0a1b64492f7a; PRF=t%3DA"+symbol+"; APIDTS=1569969441; B=0gu9p91ep7jk3&b=3&s=js",
                 "dnt": "1",
                 "pragma": "no-cache",
-                "referer": "https://finance.yahoo.com/quote/"+ symbol +"/community?p=" +symbol,
+                "referer": "https://finance.yahoo.com/quote/"+ self.symbol +"/community?p=" +self.symbol,
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
@@ -72,16 +66,14 @@ class headers:
         return hdrs
 
     def history(self, start, end):
-        symbol = self.symbol
         hdrs =  {"authority": "finance.yahoo.com",
                  "method": "GET",
-                 "path": "/quote/" + symbol + "/history?period1=" + str(start) +"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d",
+                 "path": "/quote/" + self.symbol + "/history?period1=" + str(start) +"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d",
                  "scheme": "https",
                  "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                  "accept-encoding": "gzip, deflate, br",
                  "accept-language": "en-US,en;q=0.9",
                  "cache-control": "no-cache",
-                 "cookie": "APID=UP48e4f3c5-edd2-11e9-9e88-0ecdf5eb3de2; PRF=t%3" + symbol.upper() +"; APIDTS=1570982941; B=99tjtjleq6ics&b=3&s=7m",
                  "dnt": "1",
                  "pragma": "no-cache",
                  "sec-fetch-mode": "navigate",
@@ -92,16 +84,14 @@ class headers:
         return hdrs
 
     def profile(self):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                    "method": "GET",
-                   "path": "/quote/" + symbol + "/profile?p=" + symbol,
+                   "path": "/quote/" + self.symbol + "/profile?p=" + self.symbol,
                    "scheme": "https",
                    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                    "accept-encoding": "gzip, deflate, br",
                    "accept-language": "en-US,en;q=0.9",
                    "cache-control": "no-cache",
-                   "cookie": "APID=UP918cbef8-e469-11e9-bc01-024bf8e6c78a; PRF=t%3D" + symbol + "; APIDTS=1569959067; B=f66khvpep703n&b=3&s=tb",
                    "dnt": "1",
                    "pragma": "no-cache",
                    "sec-fetch-mode": "navigate",
@@ -112,7 +102,6 @@ class headers:
         return hdrs
 
     def analysis(self):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
                 "path": "/quote/AAPL/analysis?p=AAPL",
@@ -121,10 +110,9 @@ class headers:
                 "accept-encoding": "gzip, deflate, br",
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
-                "cookie": "APID=UP17e86a3c-e498-11e9-8457-0a1b64492f7a; PRF=t%3D"+symbol+"; APIDTS=1569970080; B=0gu9p91ep7jk3&b=3&s=js",
                 "dnt": "1",
                 "pragma": "no-cache",
-                "referer": "https://finance.yahoo.com/quote/"+symbol+"/community?p=" + symbol,
+                "referer": "https://finance.yahoo.com/quote/"+self.symbol+"/community?p=" + self.symbol,
                 "sec-fetch-mode": "navigate",
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
@@ -133,16 +121,14 @@ class headers:
         return hdrs
 
     def financials(self):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
-                "path": "/quote/"+ symbol +"/financials?p=" + symbol,
+                "path": "/quote/"+ self.symbol +"/financials?p=" + self.symbol,
                 "scheme": "https",
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
                 "accept-encoding": "gzip, deflate, br",
                 "accept-language": "en-US,en;q=0.9",
                 "cache-control": "no-cache",
-                "cookie": 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3'+ symbol + '; APIDTS=1570226643; B="3u60p6hepfgc1&b=3&s=dh"',
                 "dnt": "1",
                 "pragma": "no-cache",
                 "referer": "https://www.google.com/",
@@ -154,16 +140,14 @@ class headers:
         return hdrs
 
     def cashflow(self):
-        symbol = self.symbol
         hdrs = {'authority': 'finance.yahoo.com',
                 'method': 'GET',
-                'path': '/quote/'+ symbol +'/cash-flow?p='+ symbol,
+                'path': '/quote/'+ self.symbol +'/cash-flow?p='+ self.symbol,
                 'scheme': 'https',
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9',
                 'cache-control': 'no-cache',
-                'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D'+ symbol +'; APIDTS=1570227456; B=3u60p6hepfgc1&b=3&s=dh',
                 'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
@@ -175,16 +159,14 @@ class headers:
         return hdrs
 
     def balancesheet(self):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 "method": "GET",
-                "path": "/quote/" + symbol + "/balance-sheet?p="+ symbol,
+                "path": "/quote/" + self.symbol + "/balance-sheet?p="+ self.symbol,
                 "scheme": "https",
                 "accept": 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
                 "accept-encoding": 'gzip, deflate, br',
                 "accept-language": 'en-US,en;q=0.9',
                 "cache-control": 'no-cache',
-                'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D'+ symbol +'; APIDTS=1570227011; B=3u60p6hepfgc1&b=3&s=dh',
                 'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
@@ -196,16 +178,14 @@ class headers:
         return hdrs
 
     def options(self, expiry):
-        symbol = self.symbol
         hdrs = {"authority": "finance.yahoo.com",
                 'method': 'GET',
-                'path': '/quote/' + symbol + '/options?p=' + symbol + '&straddle=true&date=' + expiry,
+                'path': '/quote/' + self.symbol + '/options?p=' + self.symbol + '&straddle=true&date=' + expiry,
                 'scheme': 'https',
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9',
                 'cache-control': 'no-cache',
-                'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D' + symbol + '; APIDTS=1570227468; B=3u60p6hepfgc1&b=3&s=dh',
                 'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
@@ -217,16 +197,14 @@ class headers:
         return hdrs
 
     def holders(self):
-        symbol = self.symbol
         hdrs = {'authority': 'finance.yahoo.com',
                 'method': 'GET',
-                'path': '/quote/'+ symbol +' /holders?p='+ symbol,
+                'path': '/quote/'+ self.symbol +' /holders?p='+ self.symbol,
                 'scheme': 'https',
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9',
                 'cache-control': 'no-cache',
-                'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; APIDTS=1570228254; B=3u60p6hepfgc1&b=3&s=dh; PRF=t%3D'+ symbol + '%26qsp-fnncls-cue%3D1',
                 'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',
@@ -238,16 +216,14 @@ class headers:
         return hdrs
 
     def sustainability(self):
-        symbol = self.symbol
         hdrs = {'authority': 'finance.yahoo.com',
                 'method': 'GET',
-                'path': '/quote/'+ symbol +'/sustainability?p='+ symbol,
+                'path': '/quote/'+ self.symbol +'/sustainability?p='+ self.symbol,
                 'scheme': 'https',
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': "en-US,en;q=0.9",
                 'cache-control': 'no-cache',
-                'cookie': 'APID=1Aad76486a-e6f2-11e9-92c5-0ec034274d7c; PRF=t%3D'+ symbol +'%26qsp-fnncls-cue%3D1; APIDTS=1570228651; B=3u60p6hepfgc1&b=3&s=dh',
                 'dnt': "1",
                 'pragma': 'no-cache',
                 'referer': 'https://www.google.com/',

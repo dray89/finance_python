@@ -32,7 +32,7 @@ class options(stock):
         self.expiry = utc_dates
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
         self.hdrs = headers(self.symbol).options(self.expiry)
-        table = scraper(self.symbol).__table__(self.url, self.hdrs)
+        table = scraper().__table__(self.url, self.hdrs)
         return table
 
     def option_dates(self, year):
@@ -42,20 +42,12 @@ class options(stock):
         return months
 
     def third_fridays(self, months):
-        fridays = [Friday for week_three in months for Friday in week_three[2] if Friday.weekday()==calendar.FRIDAY]
-        return fridays
+        return [Friday for week_three in months for Friday in week_three[2] if Friday.weekday()==calendar.FRIDAY]
+
 
     def all_fridays(self, months):
         fridays = [Friday[6] for week_three in months for Friday in week_three if Friday[6].weekday()==calendar.FRIDAY]
         return set(fridays)
-    
-    def bad_dates(self, utc_dates):
-        y = len(utc_dates)
-        while y > 0:
-            for x in utc_dates:
-                if len(self.options(x))>0:
-                    yield x
-                y-=1
   
 class sell_calls:
     def break_even(self, table, ask_price=None):
@@ -179,25 +171,19 @@ if __name__ == '__main__':
 
     T = options('T', start, end)
 
-    month = T.option_dates(2019)
-    year_2019 = T.third_fridays(month)
     year_2020 = T.option_dates(2020)
     yr2020 = T.third_fridays(year_2020)
-    yr2020.append(year_2019[-1])
     yr2020 = pd.Series(yr2020)
     utc_dates = list(T.utc_dates(yr2020))
     
-    a  = list(T.bad_dates(utc_dates))
     dictionary = dict(zip(yr2020,utc_dates))
-    december_option = dictionary.get(datetime.date(2019, 12, 20))
+    december_option = dictionary.get("datetime.date(2020, 10, 16)")
     
-    table_T = T.options(str(december_option))[0]
-    table_T = pm.numeric(table_T)
+    table_T = T.options('1608249600')
+    
+    table_T = pm.numeric(table_T[0])
     T.price = float(T.price)
     buy_put = buy_puts().create_df(table_T, T.price)
     buy_call = buy_calls().create_df(table_T, T.price)
     sell_put = sell_puts().create_df(table_T, T.price)
     sell_call = sell_calls().create_df(table_T, T.price)
-    sell_call.to_csv('sell_calls.csv')
-    #p = Pool()
-    #price = list(p.map(T.options, a))
