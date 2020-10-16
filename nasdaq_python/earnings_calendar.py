@@ -39,7 +39,8 @@ class Earnings_Calendar:
           - - - -
           dictionary : Returns a JSON dictionary at a given URL.
         '''
-        page = requests.get(self.url, headers=self.hdrs, params={'date': date})
+        s = requests.Session()
+        page = s.get(self.url, headers=self.hdrs, params={'date': date})
         dictionary = page.json()
         return dictionary
 
