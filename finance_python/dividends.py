@@ -23,7 +23,7 @@ class basic(stock):
         start = format_date(start)
         end = format_date(end)
         url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
-        hdrs = headers(symbol).history(start, end)
+        hdrs = headers()
         history = scraper(symbol).__table__(url, hdrs)
         if len(history)>0:
             history = pd.concat(history, sort=True).astype(float, errors='ignore')
@@ -38,7 +38,7 @@ class basic(stock):
         symbol, e = [self.symbol, self.end]
         start = format_date(s)
         end = format_date(e)
-        hdrs = headers(symbol).dividends(start, end)
+        hdrs = headers()
         url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=" + str(start) + "&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
         dividends = scraper(symbol).__table__(url, hdrs)
         return dividends

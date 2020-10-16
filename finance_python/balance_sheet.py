@@ -20,7 +20,7 @@ class balance_sheet:
 
     def scrape(self):
         text_list = []
-        hdrs = headers(self.symbol).balancesheet()
+        hdrs = headers()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
         html = scraper().__general__(url, hdrs)
         s = html.findAll('span')

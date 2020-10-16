@@ -43,7 +43,7 @@ class stock:
         '''set sector and description '''
         symbol = self.symbol
         url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
-        hdrs = headers(symbol).profile()
+        hdrs = headers()
         s =  scraper().__profile__(url, hdrs)
         self.sector(s)
         self.description(s)
@@ -87,8 +87,7 @@ class stock:
         return url
 
     def history(self, start, end):
-        symbol = self.symbol
-        hdrs = headers(symbol).history(start, end)
+        hdrs = headers()
         url = self.__url__(start, end, fil = 'history')
         price_history = scraper().__table__(url, hdrs)
         if len(price_history)>0:
@@ -101,8 +100,7 @@ class stock:
 
 
     def dividends(self, start, end):
-        symbol = self.symbol
-        hdrs = headers(symbol).dividends(start, end)
+        hdrs = headers()
         url = self.__url__(start, end, fil = 'div')
         dividends = scraper().__table__(url, hdrs)
         if len(dividends)>1:

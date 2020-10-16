@@ -34,7 +34,7 @@ class Holders:
     def scrape(self):
         symbol = self.symbol
         url = 'https://ca.finance.yahoo.com/quote/'+ symbol +'/holders?p=' + symbol
-        tables = scraper(symbol).__table__(url, headers(symbol).holders())
+        tables = scraper(symbol).__table__(url, headers())
         return tables
 
     def MajorHolders(self, tables):

@@ -8,7 +8,7 @@ Activate the virtual environment:
 `source venv/bin/activate`
 
 Install dependencies:
-`pip install -f requirements.txt`
+`pip install -r requirements.txt`
 
 Run the setup script:
 `sh app_setup.sh`

@@ -23,7 +23,7 @@ class analysis:
 
     def scrape(self):
         symbol = self.symbol
-        hdrs = headers(symbol).analysis()
+        hdrs = headers()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/analysis?p=' + self.symbol
         a = scraper().__table__(url, hdrs)
         return a

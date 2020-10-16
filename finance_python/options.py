@@ -31,7 +31,7 @@ class options(stock):
     def options(self, utc_dates):
         self.expiry = utc_dates
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
-        self.hdrs = headers(self.symbol).options(self.expiry)
+        self.hdrs = headers()
         table = scraper().__table__(self.url, self.hdrs)
         return table
 

@@ -8,12 +8,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-
 from finance_python.headers import headers
-
-billions = lambda x: float(x)*1000
-thousands = lambda x: float(x)/1000
-keep_same = lambda x: x
 
 class statistics:
 
@@ -29,7 +24,7 @@ class statistics:
                    using headers defined in the init function,
                    returning a byte string of html code.
         '''
-        hdrs = headers(self.symbol).statistics()
+        hdrs = headers()
         page = requests.get(self.url, headers=hdrs)
         soup = BeautifulSoup(page.content, 'lxml')
         tables = soup.find_all('table')

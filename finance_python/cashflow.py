@@ -24,7 +24,7 @@ class cashflow:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
-        hdrs = headers(self.symbol).cashflow()
+        hdrs = headers()
         
         '''
         Important: Need to change the scraping method. 
