@@ -6,13 +6,13 @@ Created on Thu Aug 15 21:22:48 2019
 """
 import numpy as np
 import time
-from datetime import datetime, timedelta
+import pandas as pd 
 
 from finance_python.scrapers import scraper
 from finance_python.statistics import statistics
 from finance_python.analysis import analysis
 from finance_python.headers import headers
-from finance_python.price_history import price_history
+from finance_python.history_data import historical_data
 
 class stock:
     stocks_list = set()
@@ -26,14 +26,18 @@ class stock:
         '''
              start = datetime.today() - timedelta(days=365)
              end = datetime.today()
+             symbol = TRI or TRI.TO (Canada)
+             
+             Should import (from datetime import datetime, timedelta)
+
         '''
         self.symbol = symbol
         self.stocks_list.add(symbol)
         self.start = start
         self.end = end
         self.scrape()
-        self.history = self.history()
-        self.dividends = self.dividends()
+        self.price_history = self.price_history()
+        self.dividend_history = self.dividend_history()
         self.price = self.price()
         self.attributes = ['dividends', 'sector','description',
                            'history', 'price', 'analyze()', 'stats()']
@@ -66,52 +70,32 @@ class stock:
             price = np.nan
         return price
 
-    def __url__(self, fil):
+    def price_history(self):
+        ''':returns price history in dataframe '''
+        price = historical_data(self.symbol, self.start, self.end, 'history')
+        return price.history
+
+
+    def dividend_history(self):
         '''
-        Parameters
-        ----------
-        start : start date as datetime object
-        end : end date as datetime object
-        fil : either history or div as string
-
-        Returns
-        -------
-        html : returns table from html --- still needs to be cleaned
-
+        :return: Dividend history in dataframe
         '''
-        symbol = self.symbol
-        start = self.start
-        end = self.end
-        start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
-        url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&"+fil+"=history&frequency=1d"
-        return url
-
-    def history(self):
-        history = price_history(self.symbol, self.start, self.end)
-        return history.price_history
-
-
-    def dividends(self):
-        hdrs = headers()
-        url = self.__url__(fil = 'div')
-        dividends = scraper().__table__(url, hdrs)
-        if len(dividends)>1:
-            index = len(dividends)
-            dividends = dividends.drop(index-1)
-            dividends = dividends.set_index('Date')
-            dividends  = dividends['Dividends']
+        dividends = historical_data(self.symbol, self.start, self.end, 'div')
+        if len(dividends.history)>1:
+            dividends  = dividends.history['Dividends']
             dividends = dividends.str.replace(r'\Dividend', '').astype(float)
-            dividends.name = self.symbol
-        return dividends
+            dividends.name = self.symbol , "Dividends"
+        return pd.DataFrame(dividends)
 
     def stats(self):
+        ''' scrapes the statistics tab on yahoo finance'''
         stats = statistics(self.symbol)
         self.statistics = stats.statistics
         self.stats_list.append(self.statistics)
         self.attributes.append(stats.attributes)
 
     def analyze(self):
+        ''' Scrapes the analysis tab on yahoo finance '''
         a = analysis(self.symbol)
         clean = analysis(self.symbol).clean(a.df)
         if len(a.df)>0:

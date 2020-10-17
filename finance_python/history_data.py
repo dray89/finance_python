@@ -6,20 +6,22 @@ import concurrent.futures
 from finance_python.headers import headers
 from finance_python.scrapers import scraper
 
-class price_history():
+class historical_data():
 
-    def __init__(self, symbol, start, end):
+    def __init__(self, symbol, start, end, fil='history'):
         '''
-
         :param symbol: example "AAPL, or TRI.TO"
-        :param start: Start date as datetime object
-        :param end: End date as datetime object
+        :param start: Start date as datetime object 
+                      start = datetime.today() - timedelta(days=365)
+        :param end: End date as datetime object 
+                    end = datetime.today()
+        :param fil: 'history' or 'div' for dividend
         '''
         self.symbol = symbol
         self.start = start
         self.end = end
-        self.urls = self.__urls__()
-        self.price_history = self.scrape_threading()
+        self.urls = self.__urls__(fil)
+        self.history = self.scrape_threading()
         
     def scrape_history(self, url):
         '''
@@ -47,9 +49,9 @@ class price_history():
         return date_str
 
     def __clean_history__(self, price_history):
-        history = price_history.drop(len(price_history) - 1)
-        history = history.set_index('Date')
-        return history
+        price_history = price_history.drop(len(price_history) - 1)
+        price_history = price_history.set_index('Date')
+        return price_history
 
     def __check__(self, s, e):
         if np.busday_count(np.datetime64(s, "D"), np.datetime64(e, "D")) > 100:
@@ -81,7 +83,7 @@ class price_history():
             starts.append(e)
         return starts
 
-    def __urls__(self):
+    def __urls__(self, fil):
         '''
 
         Returns
@@ -95,8 +97,8 @@ class price_history():
         for d in range(len(starts) - 1):
             start = str(self.__format_date__(starts[d]))
             end = str(self.__format_date__(starts[d + 1]))
-            url = "HTTP://finance.yahoo.com/quote/{0}/history?period1={1}&period2={2}&interval=1d&filter=history&frequency=1d"
-            url = url.format(symbol, start, end)
+            url = "HTTP://finance.yahoo.com/quote/{0}/history?period1={1}&period2={2}&interval=1d&filter={3}&frequency=1d"
+            url = url.format(symbol, start, end, fil)
             urls.append(url)
         return urls
 
@@ -108,7 +110,7 @@ class price_history():
         
         with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
             history = list(executor.map(self.scrape_history, self.urls))
-        return pd.concat(history)
+        return pd.concat(history, sort=False)
 '''
         
 if __name__ == "__main__":
