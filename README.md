@@ -1,4 +1,4 @@
-My first Python coding project. Yes, I've recreated the wheel here as there are many programs to scrape Yahoo Finance. Nevertheless, recreating the wheel is a great way to learn how to program.
+My first Python coding project. Yes, I've recreated the wheel here as there are many programs to scrape Yahoo Finance. Nevertheless, recreating the wheel is a great way to learn how to code.
 
 Yahoo Finance has changed its website since this was first created. Thus, it can no longer scrape the financials tab of the Yahoo Finance website. Nevertheless, it can still scrape price and dividend history, statistics, and analysis tabs. 
 
