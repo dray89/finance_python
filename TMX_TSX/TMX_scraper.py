@@ -3,6 +3,8 @@
 
 @author: rayde
 """
+import pandas
+
 from tmx_headers import headers
 from TMX_urls import tmx_urls
 from sector_mapping import sector_map
@@ -11,12 +13,17 @@ from nasdaq_calendars import dividend_calendar
 class tmx:
     def __init__(self):
         self.attributes = []
+        self.hdrs = {"Accept": "*/*",
+                "DNT": 1,
+                "Origin": "https://web.tmxmoney.com",
+                "Referer": "https://web.tmxmoney.com/screener.php?qm_page=88665",
+                "Sec-Fetch-Mode": "cors",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
 
     def bysector(self, sector):
         sector_code = sector_map().get_code(sector)
         url = tmx_urls.bysector(str(sector_code))
-        hdrs = headers.general()
-        dictionary = dividend_calendar().scraper(url, hdrs)
+        dictionary = dividend_calendar().scraper(url, self.hdrs)
         return dictionary
 
     def get_peers(self, sector):
