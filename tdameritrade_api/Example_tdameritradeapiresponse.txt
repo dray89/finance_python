@@ -9,7 +9,7 @@ decoded code: Grpm3ndIxh11TV6zNIMNMl36LVERXf74hj+lr9xw67doabFKW0PD8ms08CqdBE84Gx
 
 grant_type: authorization_code
 code = decoded code
-client_id = ABC98765@AMER.OAUTHAP
+client_id = 'EXAMPLE@AMER.OAUTHAP' 
 redirect_uri = http://127.0.0.1
 
 Request

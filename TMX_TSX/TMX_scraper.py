@@ -4,11 +4,10 @@
 @author: rayde
 """
 import pandas
-
-from tmx_headers import headers
+import requests
+import json
 from TMX_urls import tmx_urls
 from sector_mapping import sector_map
-from nasdaq_calendars import dividend_calendar
 
 class tmx:
     def __init__(self):
@@ -19,11 +18,29 @@ class tmx:
                 "Referer": "https://web.tmxmoney.com/screener.php?qm_page=88665",
                 "Sec-Fetch-Mode": "cors",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"}
+    
+    def scraper(self, url, hdrs):
+        '''
 
+        Parameters
+        ----------
+        url : URL string
+        hdrs : Header information
+
+        Returns
+        -------
+        dictionary : Returns a JSON dictionary at a given URL.
+
+        '''
+        page = requests.get(url, params = hdrs)
+        page = page.content
+        dictionary = json.loads(page)
+        return dictionary
+    
     def bysector(self, sector):
         sector_code = sector_map().get_code(sector)
         url = tmx_urls.bysector(str(sector_code))
-        dictionary = dividend_calendar().scraper(url, self.hdrs)
+        dictionary = self.scraper(url, self.hdrs)
         return dictionary
 
     def get_peers(self, sector):

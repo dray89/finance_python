@@ -1,0 +1,5709 @@
+<html>
+<head>
+<title>TD Ameritrade</title>
+<link rel="stylesheet" type="text/css" href="/amer/css/universal.css">
+<link rel="stylesheet" type="text/css" href="/amer/css/headers.css">
+<link rel="stylesheet" type="text/css" href="/amer/css/contact.css">
+<script language="JavaScript" src="/amer/scripts/universal.js" type="text/javascript"></script>	
+<script language="JavaScript" src="/amer/scripts/help.js" type="text/javascript"></script>	
+</head>
+<body>
+<a name="top"></a>
+
+<div class="navigationPopup">
+
+<table cellspacing="0">
+	<tr>
+		<td colspan="3"><div class="spacer" style="height:15px;">&nbsp;</div></td>
+	</tr>
+	<tr>
+		<td style="padding-bottom:5px;">
+<img src='/amer/images/logo.gif' alt='Home'>
+
+</td>
+		<td width="100%"><div class="spacer">&nbsp;</div></td>
+		<td><a href="#" id="btnClosePopup" class="btnLinkOff" onClick="window.close();return false;" style="margin-right:10px;">Close&nbsp;&nbsp;|&nbsp;&nbsp;X</a></td>
+	</tr>
+	<tr>
+		<td colspan="3" class="nullNav"><div class="spacer">&nbsp;</div></td>
+	</tr>
+</table>
+<script language="javascript">
+	//initialize form buttons
+	btnInit("btnClosePopup",true,true);
+</script>
+
+</div>
+
+
+
+<script>
+	// in grid legacy page called from iframe, so reach to the top
+	// if it is not defined check if it is in nested frames or popup if yes reach to the top then look for opener
+	// if not in nested frame too then this is an error condition so do not set the globals 		
+	// grds check to stop at the grid opener and not to look for further openers if any
+	var findTopWin = function(){	
+		if(parent.grds){	
+			return parent;
+		}else{				
+			var win = window;
+			// There is a condition where the following while can enter an endless
+			// loop.   So, we're checking to see if we've seen a window already or
+			// not and existing the loop if we have.
+			var seen = [];
+			while(win.top.opener){			 
+				if (seen.filter(function(seenWin) { return seenWin === win; }).length) {
+						// We couldn't find what we were looking for, and are in an endless 
+						// loop, so returning false.
+						return false;					
+				}
+				//if condition to check for grds
+				if(win.top.grds){				  
+					return win.top;
+				}
+				seen.push(win);	
+				win = win.top.opener;		
+			}
+			return win.top;					
+		}
+	};	
+	var topWin = findTopWin();	
+	// define globals for site tracking here
+	if(topWin){
+		if(topWin.grds){		
+		s=topWin.s;	
+		//TODO: Change it to postMessage and test it with popups and IE
+		if(topWin.TDAG && topWin.TDAG.analytics && topWin.TDAG.analytics.track && !window.TDAG){			
+			window.TDAG = {};
+			window.TDAG.analytics = topWin.TDAG.analytics;								
+		}			
+		//addOmEvent = topWin.addOmEvent;
+		//convertOmChars = topWin.convertOmChars;
+		convertOmChars =function(value) {
+			if (value.indexOf("&amp;") != -1)
+			value = value.replace(/&amp;/g, "&");
+			if (value.indexOf("&nbsp;") != -1)
+				value = value.replace(/&nbsp;/g, " ");
+			value = value.replace(/&reg;|&trade;|&rsquo;|&quot;|\<sup\>|\<\/sup\>|\<strong\>|\<\/strong\>/gi, "");
+			return value;
+		}
+		addOmEvent = function(eventName) {
+			if (s) {	
+			s.linkTrackVars = 'events';
+			s.events = eventName;
+			s.linkTrackEvents = s.events;		
+			s.tl(true, 'o', s.pageName);
+		}	
+		s.linkTrackVars = "";
+		s.events = "";
+		s.linkTrackEvents = "";
+		return;
+		}	
+		}
+	}
+ var omnSiteReference = "grd";
+  
+ 
+ $(window).bind("load", function() {  
+ 	if(s){ 
+	var fileInfo = "legal/margin_reqs.html PHMarginRequirements";
+	s.pageName = omnSiteReference + ":review page:pop up";
+	s.prop44 = fileInfo.toLowerCase();
+	if(s.pageName){
+	if(window.TDAG && window.TDAG.analytics && window.TDAG.analytics.track){
+		window.TDAG.analytics.track({actionName: "pageName",
+    			details: [s.pageName],
+    			context: "",
+    			ignoreSC: (typeof s=="undefined")         					
+    	});
+	}else{
+		if(typeof s!=="undefined"){
+			s.hier1 = s.pageName.replace(/:/g, "/");
+			s.t();
+		}
+	}
+}
+
+	s.prop44 = "";
+	}
+ });	
+  
+  
+ 
+ 
+  
+ 
+ 
+ 
+</script>	
+
+
+
+
+
+ 
+<div class="titlePopup">
+
+<table cellspacing="0" class="title">
+	<tr>
+		<td><div class="spacer" style="width:10px;">&nbsp;</div></td>
+		<td><span id="datetimeDisplay">Sat Oct 17 2020 3:11:00 pm ET</span></td>		
+		
+		<td id="offerContainer" style="display:none;"><div class="spacer" style="width:17px;">&nbsp;</div></td>
+		<td width="100%" style="padding-left: 10px;"></td>
+			
+	
+	
+	
+	
+		<td><div class="spacer" style="width:10px;">&nbsp;</div></td>
+</tr>
+</table>
+</div>
+	
+
+
+<br>
+
+
+
+
+
+<div class="contentFramePopup">
+
+<div class="mainTitle">Securities with Special Margin Requirements </div>
+<!-- Start Content -->
+
+<b>Overview</b>
+<p>
+	Here are individual securities (sorted alphabetically by symbol) that are held at higher maintenance requirements (refer to this list often as it changes frequently): 
+</p>
+
+<p>
+	To search for a specific security, select the corresponding letter (for example, "<u>J</u>" for JCP), then type Ctrl + F (or Command + F if on a Mac), enter the name of the company or symbol you are searching for in the search box, and select Enter. 
+</p>
+
+<p>
+	Review the <a href="/cgi-bin/apps/u/PLoad?pagename=legal/margin_minimum_reqs.html">Minimum Equity and Options Equity Requirements</a>.* For more information about margin accounts at TD Ameritrade, see the <a href="http://www.tdameritrade.com/forms/AMTD086.pdf" target="_blank">Margin Account Handbook</a>.
+</p>
+<hr>
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=A">A</a> |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=B">B</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=C">C</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=D">D</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=E">E</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=F">F</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=G">G</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=H">H</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=I">I</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=J">J</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=K">K</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=L">L</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=M">M</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=N">N</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=O">O</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=P">P</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=Q">Q</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=R">R</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=S">S</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=T">T</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=U">U</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=V">V</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=W">W</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=X">X</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=Y">Y</a>  |
+<a href="/cgi-bin/apps/u/MarginReq?pagehandler=PHMarginRequirements&filter=Z">Z</a>  
+<p>
+
+As of: 10/17/2020
+<br><br>
+<b class="blue">A</b>
+<table width="500" border="1" class="tabular">
+	<tr>
+		<td width="18%" class="header"><b>Symbol</b></td>
+		<td width="18%" class="header"><b>Company Name</b></td>
+		<td width="18%" class="header"><b>Margin %</b></td>
+		
+		<td colspan="3" class="header" style="text-align:center"><b>Concentration Requirements</b></td>
+		
+	</tr>
+	<tr>
+		<td width="18%" class="header"></td>
+		<td width="18%" class="header"></td>
+		<td width="18%" class="header"></td>
+		
+		<td class="header" style="text-align:center"><b>50%</b></td>
+		<td class="header" style="text-align:center"><b>70%</b></td>
+		<td class="header" style="text-align:center"><b>90%</b></td>
+		
+	</tr>
+    
+	<tr>
+		<td></td>
+		<td></td>
+		<td align="center"></td>
+		
+		<td align="center"></td>
+		<td align="center"></td>
+		<td align="center"></td>
+		
+	</tr>
+    
+	<tr>
+		<td>AA</td>
+		<td>ALCOA CORPORATION COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAHMX</td>
+		<td>ABERDEEN FUNDS HIGH YIELD MNGD DUR MUNI A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAL</td>
+		<td>AMERICAN AIRLINES GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAMC</td>
+		<td>ALTISOURCE ASSET MGMT CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAN</td>
+		<td>AARONS INC 1:1 EXC 10/19/20 00258R109</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAOI</td>
+		<td>APPLIED OPTOELECTRONICS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAPL</td>
+		<td>APPLE INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAWW</td>
+		<td>ATLAS AIR WORLDWIDE HLDGS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AAXJ</td>
+		<td>ISHARES TRUST MSCI AC ASIA ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">-</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABB</td>
+		<td>ABB LTD ADR SPONSORED</td>
+		<td align="center">-</td>
+		
+		<td align="center">-</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABBV</td>
+		<td>ABBVIE INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABC</td>
+		<td>AMERISOURCEBERGEN CORPORATION COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABEO</td>
+		<td>ABEONA THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABHFX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INC MUNI BOND F1</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABHIX</td>
+		<td>AMERICAN CENTURY INVESTMENTS HIGH-YIELD INVESTOR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABHYX</td>
+		<td>AMERICAN CENTURY INVESTMENTS HIGH-YIELD MUNI INVESTOR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABIO</td>
+		<td>ARCA BIOPHARMA INC COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABR</td>
+		<td>ARBOR REALTY TRUST INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABRpA</td>
+		<td>ARBOR REALTY TRUST INC 8.250% PRF SERAUSD25.00</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABRpB</td>
+		<td>ARBOR REALTY TRUST INC 7.75% CUM PFD SERB</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABRpC</td>
+		<td>ARBOR REALTY TRUST INC 8.5% CUM RED PRF SER C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABT</td>
+		<td>ABBOTT LABORATORIES COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABTFX</td>
+		<td>ALLIANCEBERNSTEIN FUNDS HIGH INCOME MUNI C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABTHX</td>
+		<td>ALLIANCEBERNSTEIN FUNDS HIGH INCOME MUNI A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ABTYX</td>
+		<td>ALLIANCEBERNSTEIN FUNDS HIGH INCOME MUNI ADVISOR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AC</td>
+		<td>ASSOCIATED CAP GROUP INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACA</td>
+		<td>ARCOSA INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACAD</td>
+		<td>ACADIA PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACB</td>
+		<td>AURORA CANNABIS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACBI</td>
+		<td>ATLANTIC CAP BANCSHARES INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACCD</td>
+		<td>ACCOLADE INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACEL</td>
+		<td>ACCEL ENTERTAINMENT INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACER</td>
+		<td>ACER THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACET</td>
+		<td>ADICET BIO INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACGL</td>
+		<td>ARCH CAPITAL GROUP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACGLO</td>
+		<td>ARCH CAPITAL GROUP 5.45% NON CUM DEP RP 1/1000</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACGLP</td>
+		<td>ARCH CAPITAL GROUP DEPOSITARY SH REPSTG 1/1000</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACH</td>
+		<td>ALUMINUM CRP OF CHINA (CHALCO) ADR SPONSORED</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACHV</td>
+		<td>ACHIEVE LIFE SCIENCE INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACIA</td>
+		<td>ACACIA COMMUNICATIONS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACIO</td>
+		<td>ETF SERIES SOLUTIONS APTUS COLLARED ETF</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACIU</td>
+		<td>AC IMMUNE SA COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACLS</td>
+		<td>AXCELIS TECHNOLOGIES INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACMR</td>
+		<td>ACM RESEARCH INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACN</td>
+		<td>ACCENTURE PLC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACNB</td>
+		<td>ACNB CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACOR</td>
+		<td>ACORDA THERAPEUTICS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACRE</td>
+		<td>ARES COMMERCIAL REAL ESTATE COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACRX</td>
+		<td>ACELRX PHARMACEUTICALS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACST</td>
+		<td>ACASTI PHARMA INC COM CL A</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACTDX</td>
+		<td>INVESCO FUNDS HIGH YIELD MUNI Y</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACTFX</td>
+		<td>INVESCO FUNDS HIGH YIELD MUNI C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACTG</td>
+		<td>ACACIA RESEARCH CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACTHX</td>
+		<td>INVESCO FUNDS HIGH YIELD MUNI A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACU</td>
+		<td>ACME UNITED CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACV</td>
+		<td>ALLIANZGI INCOME & GROWTH OPP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACWI</td>
+		<td>ISHARES TRUST MSCI ACWI ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACWX</td>
+		<td>ISHARES TRUST MSCI ACWI EX US ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">-</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ACY</td>
+		<td>AEROCENTURY CORP COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADAP</td>
+		<td>ADAPTIMMUNE THERAPEUTICS PLC ADR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADCT</td>
+		<td>ADC THERAPEUTICS SA COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADES</td>
+		<td>ADV EMISSIONS SOLUTIONS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADI</td>
+		<td>ANALOG DEVICES INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADM</td>
+		<td>ARCHER-DANIELS-MIDLAND CO COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADMA</td>
+		<td>ADMA BIOLOGICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADMS</td>
+		<td>ADAMAS PHARMACEUTICALS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADNT</td>
+		<td>ADIENT PLC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADP</td>
+		<td>AUTOMATIC DATA PROCESSING INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADPT</td>
+		<td>ADAPTIVE BIOTECHNOLOGIES CORP COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADS</td>
+		<td>ALLIANCE DATA SYSTEM COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADSK</td>
+		<td>AUTODESK INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADT</td>
+		<td>ADT INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADTN</td>
+		<td>ADTRAN INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADUS</td>
+		<td>ADDUS HOMECARE CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ADVM</td>
+		<td>ADVERUM BIOTECHNOLOGIES INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AE</td>
+		<td>ADAMS RESOURCES & ENERGY INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEB</td>
+		<td>AEGON NV FLOATING RATE PERP CAP SECS</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEDC</td>
+		<td>AMER ENERGY DEVELOPMENT CORP COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEE</td>
+		<td>AMEREN CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEFC</td>
+		<td>AEGON FUNDING COMPANY LLC 5.1% SUB NTS DUE 15/12/49</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEGN</td>
+		<td>AEGION CORPORATION COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEIS</td>
+		<td>ADVANCED ENERGY INDUSTRIES COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AELpA</td>
+		<td>AMER EQY INVEST LIFE HOLDING C 5.95% DEP SH REP 1/1000 NON</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AELpB</td>
+		<td>AMER EQY INVEST LIFE HOLDING C 6.625% DEP SH REP 1/1000</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEM</td>
+		<td>AGNICO EAGLE MINES LTD COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEO</td>
+		<td>AMERICAN EAGLE OUTFITTERS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEP</td>
+		<td>AMERICAN ELECTRIC POWER CO INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEPPL</td>
+		<td>AMERICAN ELECTRIC POWER CO INC UNIT EX 031522</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AER</td>
+		<td>AERCAP HOLDINGS N.V. COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AERG</td>
+		<td>APPLIED ENERGETICS INC COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AERI</td>
+		<td>AERIE PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AES</td>
+		<td>AES CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AESE</td>
+		<td>ALLIED ESPORTS ENTERTAINMENT I COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEY</td>
+		<td>ADDVANTAGE TECH GP COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEYE</td>
+		<td>AUDIOEYE INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AEZS</td>
+		<td>AETERNA ZENTARIS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFC</td>
+		<td>ALLIED CAPITAL CORP 6.875% PRF 15/04/2047</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFG</td>
+		<td>AMERICAN FINANCIAL GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFGB</td>
+		<td>AMERICAN FINANCIAL GROUP INC 5.875%SUB DEB 30/03/2059</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFGC</td>
+		<td>AMERICAN FINANCIAL GROUP INC 5.125% SUB DEB DUE 2059</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFGE</td>
+		<td>AMERICAN FINANCIAL GROUP INC 4.5% SUB DEB DUE 15/09</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFGH</td>
+		<td>AMERICAN FINANCIAL GROUP INC 6% PRF 15/11/55 USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFI</td>
+		<td>ARMSTRONG FLOORING INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFIB</td>
+		<td>ACUTUS MEDICAL INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFIN</td>
+		<td>AMERICAN FINANCE TRUST INC COM CLASS A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFINP</td>
+		<td>AMERICAN FINANCE TRUST INC 7.5% CUM RED PER PRF STK SE</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFL</td>
+		<td>AFLAC INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFMD</td>
+		<td>AFFIMED N V COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AFYA</td>
+		<td>AFYA LIMITED COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGCO</td>
+		<td>AGCO CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGCZ</td>
+		<td>ANDES GOLD CORP COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGDAX</td>
+		<td>ALLIANCEBERNSTEIN FUNDS HIGH INCOME A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGDCX</td>
+		<td>ALLIANCEBERNSTEIN FUNDS HIGH INCOME C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGDYX</td>
+		<td>ALLIANCEBERNSTEIN FUNDS HIGH INCOME ADVISOR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGE</td>
+		<td>AGEX THERAPEUTICS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGEN</td>
+		<td>AGENUS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGFS</td>
+		<td>AGROFRESH SOLUTIONS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGG</td>
+		<td>ISHARES TRUST CORE US AGGBD ET ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGGZF</td>
+		<td>AG GROWTH INTERNATIONAL INC COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGI</td>
+		<td>ALAMOS GOLD INC COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGIO</td>
+		<td>AGIOS PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGLE</td>
+		<td>AEGLEA BIOTHERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGM</td>
+		<td>FED AGRI MTG CORP COM CL C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGM/A</td>
+		<td>FED AGRI MTG CORP COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGMH</td>
+		<td>AGM GROUP HOLDINGS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGMpC</td>
+		<td>FED AGRI MTG CORP 6% NON-CUM PFD SERC</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGMpD</td>
+		<td>FED AGRI MTG CORP 5.7% NON CUM PFD STK SER D</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGMpE</td>
+		<td>FED AGRI MTG CORP 5.7% NON CUM PFD STK SER E</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGMpF</td>
+		<td>FED AGRI MTG CORP 5.25% NON CUM PRF STOCK</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGNC</td>
+		<td>AGNC INVESTMENT CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGNCM</td>
+		<td>AGNC INVESTMENT CORP 6.875% DEP SHS REP PFD SR D</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGNCN</td>
+		<td>AGNC INVESTMENT CORP 7% CUM RED REP 1/1000 INT P</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGNCO</td>
+		<td>AGNC INVESTMENT CORP 6.5% DEP SHS REP 1/1000 CUM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGNCP</td>
+		<td>AGNC INVESTMENT CORP 6.125% CUM RED PRF STK SER</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGOpE</td>
+		<td>ASSURED GUARANTY MUNI HLDGS IN 6.25% PRF NTS 1/11/2102 USD</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGOpF</td>
+		<td>ASSURED GUARANTY MUNI HLDGS IN 5.6% PRF 15/07/2103 USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGQ</td>
+		<td>PROSHARES TRUST II ULTRA SILVER NEW ETF</td>
+		<td align="center">60%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">60%</td>
+		<td align="center">60%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGR</td>
+		<td>AVANGRID INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGRO</td>
+		<td>ADECOAGRO S A COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGRX</td>
+		<td>AGILE THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGS</td>
+		<td>PLAYAGS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGT</td>
+		<td>ISHARES TRUST MSCI ARGENTINA ETF</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGTC</td>
+		<td>APPLIED GENETIC TECH CORP COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AGYS</td>
+		<td>AGILYSYS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHCO</td>
+		<td>ADAPTHEALTH CORP COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHHYX</td>
+		<td>AIM INVEST SECURITIES FUNDS IN HIGH-YIELD Y</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHHpA</td>
+		<td>ARMADA HOFFLER PPTYS INC 6.75% CUM RED PERP PRF STK</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHICX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INC MUNI BOND C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHIFX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INCOME TRUST F2</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHITX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INCOME TRUST A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHLpC</td>
+		<td>ASPEN INSURANCE HLDGS 5.95%NON CUM FXD FLTG RATE</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHLpD</td>
+		<td>ASPEN INSURANCE HLDGS 5.625%NON CUM PERP PFD SHS</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHLpE</td>
+		<td>ASPEN INSURANCE HLDGS 5.625 DEP REP 1/1000TH PFD</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHMFX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INC MUNI BOND F2</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHPI</td>
+		<td>ALLIED HEALTHCARE PRODUCTS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHT</td>
+		<td>ASHFORD HOSPITALITY TRUST INC COM SHS</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHTCX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INCOME TRUST C</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHTFX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INCOME TRUST F1</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHTpD</td>
+		<td>ASHFORD HOSPITALITY TRUST INC 8.45% CUM PRF STK SERD</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHTpF</td>
+		<td>ASHFORD HOSPITALITY TRUST INC 7.375% PFD CUM SER F USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHTpG</td>
+		<td>ASHFORD HOSPITALITY TRUST INC CUM PFD SER G</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHTpH</td>
+		<td>ASHFORD HOSPITALITY TRUST INC 7.5% CUM PRF SER H USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHYMX</td>
+		<td>ABERDEEN FUNDS HIGH YIELD MNGD DUR MUNI I</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AHYVX</td>
+		<td>AMERICAN CENTURY INVESTMENTS HIGH-YIELD A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AI</td>
+		<td>ARLINGTON ASSET INVEST CORP CL A NEW</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIEQ</td>
+		<td>ETF MANAGERS TRUST AI POWERED EQT ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIGpA</td>
+		<td>AMER INTL GRP INC 5.85%NON CUM PER DEP SHS RE</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIH</td>
+		<td>AESTHETIC MEDICAL INTL HLDGS G ADR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIM</td>
+		<td>AIM IMMUNOTECH INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIMT</td>
+		<td>AIMMUNE THERAPEUTICS INC CSH MRG 34.50/SH 10/14/20</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AINC</td>
+		<td>ASHFORD INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIOAX</td>
+		<td>COLUMBIA FUNDS INCOME OPP A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIRG</td>
+		<td>AIRGAIN INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIRT</td>
+		<td>AIR T INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIW</td>
+		<td>ARLINGTON ASSET INVEST CORP 6.625% PRF USD25 (1/05/23)</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIZ</td>
+		<td>ASSURANT INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIZP</td>
+		<td>ASSURANT INC 6.5% MANDTRY CNV PFD STK</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AIpB</td>
+		<td>ARLINGTON ASSET INVEST CORP 7% CUM PRF 12/05/2022 SER B</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AJG</td>
+		<td>GALLAGHER (ARTHUR J) & CO COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AJX</td>
+		<td>GREAT AJAX CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AJXA</td>
+		<td>GREAT AJAX CORP 7.25% SR CONV NTS 30/04/24</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKAM</td>
+		<td>AKAMAI TECHNOLOGIES COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKBA</td>
+		<td>AKEBIA THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKER</td>
+		<td>AKERS BIOSCIENCES INC COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKO/A</td>
+		<td>EMBOTELLADORA ANDINA SA ADR SPONSORED</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKO/B</td>
+		<td>EMBOTELLADORA ANDINA SA ADR SPONSORED</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKRO</td>
+		<td>AKERO THERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKTS</td>
+		<td>AKOUSTIS TECHNOLOGIES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKTX</td>
+		<td>AKARI THERAPEUTICS PLC ADR</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AKUS</td>
+		<td>AKOUOS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AL</td>
+		<td>AIR LEASE CORP COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALB</td>
+		<td>ALBEMARLE CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALBO</td>
+		<td>ALBIREO PHARMA INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALC</td>
+		<td>ALCON AG COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALCO</td>
+		<td>ALICO INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALDX</td>
+		<td>ALDEYRA THERAPEUTICS COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALEC</td>
+		<td>ALECTOR INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALEX</td>
+		<td>ALEXANDER & BALDWIN INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALFA</td>
+		<td>ETF SERIES SOLUTIONS ALPCLONE ALTER ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALG</td>
+		<td>ALAMO GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALGS</td>
+		<td>ALIGOS THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALGT</td>
+		<td>ALLEGIANT TRAVEL COMPANY COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALIM</td>
+		<td>ALIMERA SCIENCES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALINpA</td>
+		<td>ALTERA INFRASTRUCTURE LP 7.25% CUM RED PFD UNT SER A</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALINpB</td>
+		<td>ALTERA INFRASTRUCTURE LP 8.5% RED PFD UNIT SER B</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALINpE</td>
+		<td>ALTERA INFRASTRUCTURE LP 8.875% CUM RED PFD UNIT SER</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALK</td>
+		<td>ALASKA AIR GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALKS</td>
+		<td>ALKERMES PLC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALL</td>
+		<td>ALLSTATE CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLE</td>
+		<td>ALLEGION PLC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLK</td>
+		<td>ALLAKOS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLO</td>
+		<td>ALLOGENE THERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLT</td>
+		<td>ALLOT LTD COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLY</td>
+		<td>ALLY FINANCIAL INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLYpA</td>
+		<td>GMAC CAPITAL TRUST I 8.125% PRF 15/02/2040 USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLpB</td>
+		<td>ALLSTATE CORP 5.1% PRF 15/01/2053</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLpG</td>
+		<td>ALLSTATE CORP DEP SHS REPSTG 1/1000TH INT</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLpH</td>
+		<td>ALLSTATE CORP DEP SHS REP 1/1000 NON CUM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALLpI</td>
+		<td>ALLSTATE CORP 4.750% DEP SHS REP 1/1000TH</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALNA</td>
+		<td>ALLENA PHARMACEUTICALS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALNY</td>
+		<td>ALNYLAM PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALOT</td>
+		<td>ASTRONOVA INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALPN</td>
+		<td>ALPINE IMMUNE SCIENCES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALPpQ</td>
+		<td>ALABAMA POWER CO 5% CUM PFD CL A USD25</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALSK</td>
+		<td>ALASKA COMMUNICATIONS SYS GRP COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALSN</td>
+		<td>ALLISON TRANSMISSION HLDGS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALT</td>
+		<td>ALTIMMUNE INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALTA</td>
+		<td>ALTABANCORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALTG</td>
+		<td>ALTA EQUIPMENT GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALVR</td>
+		<td>ALLOVIR INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ALpA</td>
+		<td>AIR LEASE CORP 6.150%NON CUM PER PFD FXD F</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AM</td>
+		<td>ANTERO MIDSTREAM CORPORATION COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMAG</td>
+		<td>AMAG PHARMACEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMAT</td>
+		<td>APPLIED MATERIALS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMBA</td>
+		<td>AMBARELLA INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMBC</td>
+		<td>AMBAC FINANCIAL GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMC</td>
+		<td>AMC ENTERTAINMENT HOLDINGS INC COM CL A</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMCX</td>
+		<td>AMC NETWORKS INC COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AME</td>
+		<td>AMETEK INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMEH</td>
+		<td>APOLLO MEDICAL HOLDINGS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMGN</td>
+		<td>AMGEN INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHIX</td>
+		<td>AMERICAN FUNDS AMERICAN HIGH INC MUNI BOND A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHYX</td>
+		<td>AIM INVEST SECURITIES FUNDS IN HIGH-YIELD A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHpD</td>
+		<td>AMERICAN HOMES 4 RENT 6.5% CUM RED PERP PRF USD2</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHpE</td>
+		<td>AMERICAN HOMES 4 RENT PERP CUM RED PFD SER E</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHpF</td>
+		<td>AMERICAN HOMES 4 RENT CUM RED PER PFD SHS F USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHpG</td>
+		<td>AMERICAN HOMES 4 RENT 5.875% CUM RED PERP PRF SHS</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMHpH</td>
+		<td>AMERICAN HOMES 4 RENT 6.25%CUM RED PREP PFD SER H</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMNB</td>
+		<td>AMERICAN NATIONAL BANKSHARES COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMOT</td>
+		<td>ALLIED MOTION TECHNOLGIES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMOV</td>
+		<td>AMERICA MOVIL SAB DE CV ADR SPONSORED</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMP</td>
+		<td>AMERIPRISE FINANCIAL INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMPE</td>
+		<td>AMPIO PHARMACEUTICALS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMPH</td>
+		<td>AMPHASTAR PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMPY</td>
+		<td>AMPLIFY ENERGY CORP COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMRB</td>
+		<td>AMERICAN RIVER BANKSHARES COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMRH</td>
+		<td>AMERI HOLDINGS INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMRK</td>
+		<td>A MARK PRECIOUS METALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMRN</td>
+		<td>AMARIN CORP ADR SPONSORED</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMRS</td>
+		<td>AMYRIS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMRX</td>
+		<td>AMNEAL PHARMACEUTICALS INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMSC</td>
+		<td>AMERICAN SUPERCONDUCTOR CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMSF</td>
+		<td>AMERISAFE INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMSWA</td>
+		<td>AMERICAN SOFTWARE INC COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMTB</td>
+		<td>AMERANT BANCORP INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMTD</td>
+		<td>TD AMERITRADE HOLDING CORP 1.0837:1 EXC 10/6/20 808513105</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMTI</td>
+		<td>APPLIED MOLECULAR TRANSPORT IN COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMU</td>
+		<td>UBS AG LONDON ILN ()ALERIAN MLP IDX ETN</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMWD</td>
+		<td>AMERICAN WOODMARK CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMWL</td>
+		<td>AMERICAN WELL CORP COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AMZN</td>
+		<td>AMAZON COM INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AN</td>
+		<td>AUTONATION INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANAB</td>
+		<td>ANAPTYSBIO INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANAT</td>
+		<td>AMERICAN NATIONAL GROUP INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANDE</td>
+		<td>ANDERSONS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANET</td>
+		<td>ARISTA NETWORKS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">-</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANF</td>
+		<td>ABERCROMBIE & FITCH CO COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANGI</td>
+		<td>ANGI HOMESERVICES INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANGO</td>
+		<td>ANGIODYNAMICS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANHpA</td>
+		<td>ANWORTH MORTGAGE ASSET CORP 8.625% PRF SERA USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANHpB</td>
+		<td>ANWORTH MORTGAGE ASSET CORP 6.25% CNV PFD SHS USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANHpC</td>
+		<td>ANWORTH MORTGAGE ASSET CORP 7.625% PRF SER C</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANIK</td>
+		<td>ANIKA THERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANIP</td>
+		<td>ANI PHARMACEUTICALS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANIX</td>
+		<td>ANIXA BIOSCIENCES INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANSS</td>
+		<td>ANSYS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANTE</td>
+		<td>AIRNET TECHNOLOGY INC ADR</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANTM</td>
+		<td>ANTHEM INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANVS</td>
+		<td>ANNOVIS BIO INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ANY</td>
+		<td>SPHERE 3D CORP NEW COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AON</td>
+		<td>AON PLC (IE) COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AOS</td>
+		<td>SMITH A O CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AOSL</td>
+		<td>ALPHA & OMEGA SEMI COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AOUT</td>
+		<td>AMERICAN OUTDOOR BRANDS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AP</td>
+		<td>AMPCO-PITTSBURGH CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APA</td>
+		<td>APACHE CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APD</td>
+		<td>AIR PRODUCTS & CHEMICALS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APDFX</td>
+		<td>ARTISAN FUNDS HIGH INCOME ADVISOR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APDN</td>
+		<td>APPLIED DNA SCIENCES INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APEI</td>
+		<td>AMERICAN PUBLIC EDUCATION INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APG</td>
+		<td>API GROUP CORPORATION COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APGI</td>
+		<td>AMERICAN POWER GROUP CORP COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APH</td>
+		<td>AMPHENOL CORP COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APHA</td>
+		<td>APHRIA INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APHFX</td>
+		<td>ARTISAN FUNDS HIGH INCOME INST</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>API</td>
+		<td>AGORA INC ADR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APLE</td>
+		<td>APPLE HOSPITALITY REIT INC COM NEW</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APLS</td>
+		<td>APELLIS PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APLT</td>
+		<td>APPLIED THERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APOP</td>
+		<td>CELLECT BIOTECHNOLOGY LTD ADR SPONSORED</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APOpA</td>
+		<td>APOLLO GLOBAL MANAGEMENT INC 6.375% PFD STK SER A USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APOpB</td>
+		<td>APOLLO GLOBAL MANAGEMENT INC 6.375% PFD STK SER B USD25</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APPF</td>
+		<td>APPFOLIO INC COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APPS</td>
+		<td>DIGITAL TURBINE INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APRE</td>
+		<td>APREA THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APRN</td>
+		<td>BLUE APRON HOLDINGS INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APT</td>
+		<td>ALPHA PRO TECH COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APTO</td>
+		<td>APTOSE BIOSCIENCES INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APTS</td>
+		<td>PFD APARTMENT COMMUNITIES INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APTV</td>
+		<td>APTIV PLC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APTVpA</td>
+		<td>APTIV PLC 5.5% MANDATORY CNV PFD SHS</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APTX</td>
+		<td>APTINYX INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>APYX</td>
+		<td>APYX MEDICAL CORPORATION COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AQB</td>
+		<td>AQUABOUNTY TECHNOLOGIES INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AQN</td>
+		<td>ALGONQUIN POWER & UTILITIES CO COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">-</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AQNA</td>
+		<td>ALGONQUIN POWER & UTILITIES CO 6.875% FIX FLT RT SUB NTS</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AQNB</td>
+		<td>ALGONQUIN POWER & UTILITIES CO 6.2% SUB NT FIX/FLT 2019A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AQST</td>
+		<td>AQUESTIVE THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AR</td>
+		<td>ANTERO RESOURCES CORPORATION COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARA</td>
+		<td>AMERICAN RENAL HOLDINGS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARACX</td>
+		<td>CIM REAL ASSETS & CREDIT A</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARAV</td>
+		<td>ARAVIVE INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARCH</td>
+		<td>ARCH RESOURCES INC COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARCO</td>
+		<td>ARCOS DORADOS HOLDINGS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARCT</td>
+		<td>ARCTURUS THERAPEUTICS HLDG INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARD</td>
+		<td>ARDAGH GROUP S A COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARDS</td>
+		<td>ARIDIS PHARMACEUTICAL INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARDX</td>
+		<td>ARDELYX INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARES</td>
+		<td>ARES MANAGEMENT CORPORATION COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARESpA</td>
+		<td>ARES MANAGEMENT CORPORATION 7% PRF STOCK SERIES A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARGD</td>
+		<td>ARGO GROUP US INC 6.5% SENIOR NOTES DUE 2042</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARGT</td>
+		<td>GLOBAL X FDS GB MSCI AR ETF</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARGX</td>
+		<td>ARGENX SE ADR SPONSORED</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARI</td>
+		<td>APOLLO COMMERCIAL REAL ESTATE COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARKG</td>
+		<td>ARK ETF TR GENOMIC REV ETF</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARKK</td>
+		<td>ARK ETF TR INNOVATION ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARKQ</td>
+		<td>ARK ETF TR AUTNMUS TECHNLGY ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARKR</td>
+		<td>ARK RESTAURANTS CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARKW</td>
+		<td>ARK ETF TR NEXT GNRTN INTER ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARL</td>
+		<td>AMERICAN REALTY INVESTORS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARLO</td>
+		<td>ARLO TECHNOLOGIES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARLP</td>
+		<td>ALLIANCE RESOURCE PARTNERS LP SBI</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARMK</td>
+		<td>ARAMARK COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARMP</td>
+		<td>ARMATA PHARMACEUTICALS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARNA</td>
+		<td>ARENA PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARNC</td>
+		<td>ARCONIC CORPORATION COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARNGF</td>
+		<td>ARGONAUT GOLD INC COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AROC</td>
+		<td>ARCHROCK INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AROW</td>
+		<td>ARROW FINANCIAL CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARQT</td>
+		<td>ARCUTIS BIOTHERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARR</td>
+		<td>ARMOUR RESIDENTIAL REIT INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARRY</td>
+		<td>ARRAY TECHNOLOGIES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARRpC</td>
+		<td>ARMOUR RESIDENTIAL REIT INC 7% CUM RED PFD STK SER C</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARTFX</td>
+		<td>ARTISAN FUNDS HIGH INCOME INVESTOR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARTL</td>
+		<td>ARTELO BIOSCIENCES INC COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARTNA</td>
+		<td>ARTESIAN RESOURCES CORP COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARTW</td>
+		<td>ART'S-WAY MANUFACTURING CO INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARVN</td>
+		<td>ARVINAS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARW</td>
+		<td>ARROW ELECTRONICS INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARWR</td>
+		<td>ARROWHEAD PHARMACEUTICALS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARYB</td>
+		<td>ARYA SCIENCES ACQUISITION CORP COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARYBU</td>
+		<td>ARYA SCIENCES ACQUISITION CORP UNIT 1 CL A & 1/3 WT EXP</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ARYC</td>
+		<td>ARRAYIT CORP COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASAN</td>
+		<td>ASANA INC COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASAQ/U</td>
+		<td>ATLANTIC AVENUE ACQUISITION CO UNIT 1 CL A & 1/2 RED WT EX</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASBpC</td>
+		<td>ASSOCIATED BANC-CORP PERP PFD SER C</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASBpD</td>
+		<td>ASSOCIATED BANC-CORP DEP SHS REPSTG 1/40TH INT P</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASC</td>
+		<td>ARDMORE SHIPPING CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASEA</td>
+		<td>GLOBAL X FDS GBL X FTSE ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASH</td>
+		<td>ASHLAND GLOBAL HOLDINGS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASHAX</td>
+		<td>ALLIANZGI SHORT DURATION HIGH INCOME A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASHIX</td>
+		<td>ALLIANZGI SHORT DURATION HIGH INC INST</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASHPX</td>
+		<td>ALLIANZGI SHORT DURATION HIGH INCOME P</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASHR</td>
+		<td>DBX ETF TRUST XTRACK HRVST CSI ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASHS</td>
+		<td>DBX ETF TRUST XTRACK CSI 500 A ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASHX</td>
+		<td>DBX ETF TRUST XTRACK MSCI CHIN ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASIX</td>
+		<td>ADVANSIX INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASMB</td>
+		<td>ASSEMBLY BIOSCIENCES INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASND</td>
+		<td>ASCENDIS PHARMA A/S ADR</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASO</td>
+		<td>ACADEMY SPORTS & OUTDOORS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASPN</td>
+		<td>ASPEN AEROGELS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASPS</td>
+		<td>ALTISOURCE PORTFOL COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASPU</td>
+		<td>ASPEN GROUP INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASRV</td>
+		<td>AMERISERV FINANCIAL INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASRVP</td>
+		<td>AMERISERV FINL CAP TR I 8.45% PRF BEN UNS A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASTC</td>
+		<td>ASTROTECH CORPORATION COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASTE</td>
+		<td>ASTEC INDUSTRIES INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASUR</td>
+		<td>ASURE SOFTWARE INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASX</td>
+		<td>ASE TECHNOLOGY HOLDING CO LTD ADR SPONSORED</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ASYS</td>
+		<td>AMTECH SYSTEMS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AT</td>
+		<td>ATLANTIC POWER CORP COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATAX</td>
+		<td>AMERICA FIRST MULTIFAMILY INV BEN UNIT CERT</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATCOpD</td>
+		<td>ATLAS CORP 7.95% SER D CUM RED PER SHS</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATCOpE</td>
+		<td>ATLAS CORP 8.25% SER E CUM RED PER PFD</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATCOpG</td>
+		<td>ATLAS CORP 8.2% CUM RED PER PFD SHS G</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATCOpH</td>
+		<td>ATLAS CORP 7.875% CUM RED PER PFD SR H</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATCOpI</td>
+		<td>ATLAS CORP SER I FIX/FLTG CUM RED PFD</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATCV</td>
+		<td>ATC VENTURE GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATEC</td>
+		<td>ALPHATEC HLDGS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATEN</td>
+		<td>A10 NETWORKS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATEX</td>
+		<td>ANTERIX INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATH</td>
+		<td>ATHENE HOLDING LTD COM CL A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHA</td>
+		<td>ATHIRA PHARMA INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHE</td>
+		<td>ALTERITY THERAPEUTICS LIMITED ADR SPONSORED</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHM</td>
+		<td>AUTOHOME INC ADR</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHX</td>
+		<td>ATHERSYS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHpA</td>
+		<td>ATHENE HOLDING LTD 6.35%DEP 1/1000TH PERP NON</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHpB</td>
+		<td>ATHENE HOLDING LTD 5.625%DEP REP 1/1000TH NONC</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATHpC</td>
+		<td>ATHENE HOLDING LTD 6.325% DEP SHS RE 1/1000 NO</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATI</td>
+		<td>ALLEGHENY TECHNOLOGIES INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATIPX</td>
+		<td>AQUILA FUNDS THREE PEAKS HIGH INCOME I</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATKR</td>
+		<td>ATKORE INTERNATIONAL GROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATLC</td>
+		<td>ATLANTICUS HLDGS CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATLO</td>
+		<td>AMES NATIONAL CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATNI</td>
+		<td>ATN INTERNATIONAL INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATNM</td>
+		<td>ACTINIUM PHARMACEUTICALS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATNX</td>
+		<td>ATHENEX INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATO</td>
+		<td>ATMOS ENERGY CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATOM</td>
+		<td>ATOMERA INCORPORATED COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATOS</td>
+		<td>ATOSSA THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATPAX</td>
+		<td>AQUILA FUNDS THREE PEAKS HIGH INCOME A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATPYX</td>
+		<td>AQUILA FUNDS THREE PEAKS HIGH INCOME Y</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATR</td>
+		<td>APTARGROUP INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATRA</td>
+		<td>ATARA BIOTHERAPEUTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATRI</td>
+		<td>ATRION CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATRO</td>
+		<td>ASTRONICS CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATRS</td>
+		<td>ANTARES PHARMA INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATV</td>
+		<td>ACORN INTERNATIONAL INC ADR</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATVI</td>
+		<td>ACTIVISION BLIZZARD INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>ATXI</td>
+		<td>AVENUE THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AU</td>
+		<td>ANGLOGOLD ASHANTI LTD ADR SPONSORED</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUBAP</td>
+		<td>ATLANTIC UNION BANKSHARES CORP 6.875% DEP SH RP 1/400 NON</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUBN</td>
+		<td>AUBURN NATL BANCORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUDC</td>
+		<td>AUDIOCODES COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUPH</td>
+		<td>AURINIA PHARMACEUTICALS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUTL</td>
+		<td>AUTOLUS THERAPEUTICS PLC ADR</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUTO</td>
+		<td>AUTOWEB INC COM</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AUY</td>
+		<td>YAMANA GOLD INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVAL</td>
+		<td>GRUPO AVAL ACCIONES Y VALORES ADR</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVCT</td>
+		<td>AMER VIRTUAL CLOUD TECH INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVD</td>
+		<td>AMERICAN VANGUARD CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVDL</td>
+		<td>AVADEL PHARMACEUTICALS PLC ADR</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVDV</td>
+		<td>AMERICAN CENTURY INVESTMENTS INTL SMCP VLU ETF</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVEO</td>
+		<td>AVEO PHARMACEUTICALS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVGO</td>
+		<td>BROADCOM INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVGOP</td>
+		<td>BROADCOM INC 8% MANDATORY CONVERTIBLE PR</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVID</td>
+		<td>AVID TECHNOLOGY INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVNS</td>
+		<td>AVANOS MEDICAL INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVNT</td>
+		<td>AVIENT CORPORATION COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVNW</td>
+		<td>AVIAT NETWORKS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVO</td>
+		<td>MISSION PRODUCE INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVRO</td>
+		<td>AVROBIO INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVRPX</td>
+		<td>STONE RIDGE TRUST III ALL ASSET VAR RISK PREMIUM I</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVTR</td>
+		<td>AVANTOR INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVTRpA</td>
+		<td>AVANTOR INC 6.250% PFD MND CNV SER A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVUV</td>
+		<td>AMERICAN CENTURY INVESTMENTS US SML CP VALU ETF</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVXL</td>
+		<td>ANAVEX LIFE SCIENC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AVYA</td>
+		<td>AVAYA HOLDINGS CORP COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AWK</td>
+		<td>AMER WATER WORKS CO INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AWRE</td>
+		<td>AWARE INC MASSACHUSETTS COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXAS</td>
+		<td>ABRAXAS PETROLEUM CORP 1:20 R/S 10/19/20 003830304</td>
+		<td align="center">70%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXDX</td>
+		<td>ACCELERATE DIAGNOSTICS INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXGN</td>
+		<td>AXOGEN INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXGT</td>
+		<td>AXOVANT GENE THERAPIES LTD COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXL</td>
+		<td>AMER AXLE & MANUFACTURING HLDG COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXLA</td>
+		<td>AXCELLA HEALTH INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">60%</td>
+		<td align="center">80%</td>
+		<td align="center">80%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXNX</td>
+		<td>AXONICS MODULATION TECHNLOGS I COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXP</td>
+		<td>AMERICAN EXPRESS CO COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXR</td>
+		<td>AMREP CORP COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXSM</td>
+		<td>AXSOME THERAPEUTICS INC COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXSpE</td>
+		<td>AXIS CAPITAL HOLDINGS LTD DEP SHS REP 1/100TH PFD SER</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXTA</td>
+		<td>AXALTA COATING SYSTEMS LTD COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXTI</td>
+		<td>AXT INC COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AXU</td>
+		<td>ALEXCO RESOURCE CORP COM</td>
+		<td align="center">50%</td>
+		
+		<td align="center">70%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AYBAX</td>
+		<td>ALLIANZGI HIGH YIELD BOND A</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AYBIX</td>
+		<td>ALLIANZGI HIGH YIELD BOND INST</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AYMIX</td>
+		<td>AMERICAN CENTURY INVESTMENTS HIGH-YIELD MUNI I</td>
+		<td align="center">40%</td>
+		
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		<td align="center">40%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZEK</td>
+		<td>THE AZEK COMPANY INC COM CL A</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZGFF</td>
+		<td>AZTECA GOLD CORPORATION COM</td>
+		<td align="center">100%</td>
+		
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		<td align="center">100%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZN</td>
+		<td>ASTRAZENECA ADR SPONSORED</td>
+		<td align="center">-</td>
+		
+		<td align="center">-</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZO</td>
+		<td>AUTOZONE INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZPN</td>
+		<td>ASPEN TECHNOLOGY INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		<td align="center">30%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZRE</td>
+		<td>AZURE POWER GLOBAL LIMITED COM</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZUL</td>
+		<td>AZUL SA ADR UNSPONSORED</td>
+		<td align="center">40%</td>
+		
+		<td align="center">50%</td>
+		<td align="center">70%</td>
+		<td align="center">70%</td>
+		
+	</tr>
+    
+	<tr>
+		<td>AZZ</td>
+		<td>AZZ INC COM</td>
+		<td align="center">-</td>
+		
+		<td align="center">40%</td>
+		<td align="center">50%</td>
+		<td align="center">50%</td>
+		
+	</tr>
+    
+</table>
+<table class="toplink"><tr>
+<td><hr></td>
+<td><div class="spacer" style="width: 5px;">&nbsp;</div></td>
+<td><a href="#top"><b>^&nbsp;Top</b></a></td>
+</tr></table>
+<div class="footnote">* Options are not suitable for all investors as the special risks inherent to options trading may expose investors to potentially rapid and substantial losses. Please read <a href="http://www.optionsclearing.com/about/publications/character-risks.jsp" target="_blank">Characteristics and Risks of Standardized Options</a> before investing in options.</div>
+</div>
+<!-- End Content -->
+</div>
+</body>
+</html>
+

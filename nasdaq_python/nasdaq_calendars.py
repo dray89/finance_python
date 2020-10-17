@@ -3,7 +3,7 @@
 Created on Tue Oct  8 20:03:46 2019
 @author: rayde
 """
-from nasdaq_headers import headers
+from nasdaq_python.nasdaq_headers import headers
 from nasdaq_urls import nasdaq_urls
 import pandas, json, requests, numpy as np
 from multiprocessing import Pool
