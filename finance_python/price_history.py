@@ -30,6 +30,7 @@ class price_history():
         hdrs = headers()
         price_history = scraper().__table__(url, hdrs)
         price_history = self.__clean_history__(price_history[0])
+        time.sleep(0.25)
         return price_history
 
     def __getStarts__(self):
