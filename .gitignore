@@ -1,5 +1,6 @@
 .DS_Store
-stocks.db 
+stocks.db
+.idea 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
