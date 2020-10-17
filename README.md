@@ -10,4 +10,4 @@ Nasdaq: Nasdaq earnings and dividend calendars
 
 TMX: Pulls TSX stock symbols and quotes by symbol or sector.
 
-TDAmeritrade API: I can't actually ever publish full code for this because I'm concerned about hackers accessing my TDAmeritrade account. There's still some work I need to do with it like setting it up to renew auth codes upon expiration to avoid me having to do this manually. I'm putting these to do's on my calendar in the future.
+TDAmeritrade API: I can't actually ever publish full code for this because I'm concerned about hackers accessing my TDAmeritrade account. There's still some work I need to do with it like setting it up to renew auth codes upon expiration to avoid me having to do this manually. I'm putting these "to do's" on my calendar in the future.
