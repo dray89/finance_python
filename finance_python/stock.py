@@ -4,7 +4,6 @@ Created on Thu Aug 15 21:22:48 2019
 @author: rayde
 
 """
-import pandas as pd
 import numpy as np
 import time
 from datetime import datetime, timedelta
@@ -13,7 +12,7 @@ from finance_python.scrapers import scraper
 from finance_python.statistics import statistics
 from finance_python.analysis import analysis
 from finance_python.headers import headers
-
+from finance_python.price_history import price_history
 
 class stock:
     stocks_list = set()
@@ -23,7 +22,7 @@ class stock:
     fin_list = list()
     a_list = list()
 
-    def __init__(self, symbol, start=datetime.today() - timedelta(days=365), end=datetime.today(), sort=True):
+    def __init__(self, symbol, start, end):
         '''
              start = datetime.today() - timedelta(days=365)
              end = datetime.today()
@@ -33,8 +32,8 @@ class stock:
         self.start = start
         self.end = end
         self.scrape()
-        self.history = self.history(start, end)
-        self.dividends = self.dividends(start, end)
+        self.history = self.history()
+        self.dividends = self.dividends()
         self.price = self.price()
         self.attributes = ['dividends', 'sector','description',
                            'history', 'price', 'analyze()', 'stats()']
@@ -67,7 +66,7 @@ class stock:
             price = np.nan
         return price
 
-    def __url__(self, start, end, fil):
+    def __url__(self, fil):
         '''
         Parameters
         ----------
@@ -81,27 +80,21 @@ class stock:
 
         '''
         symbol = self.symbol
+        start = self.start
+        end = self.end
         start = int(time.mktime(datetime.strptime(start.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         end = int(time.mktime(datetime.strptime(end.strftime("%Y-%m-%d"), "%Y-%m-%d").timetuple()))
         url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&"+fil+"=history&frequency=1d"
         return url
 
-    def history(self, start, end):
-        hdrs = headers()
-        url = self.__url__(start, end, fil = 'history')
-        price_history = scraper().__table__(url, hdrs)
-        if len(price_history)>0:
-            history = pd.concat(price_history, sort=True).astype(float, errors='ignore')
-            history = history.drop(len(history) - 1)
-            history = history.set_index('Date')
-        else:
-            print(self.symbol, ': Error cleaning history dataframe. Is it the right symbol?')
-        return history
+    def history(self):
+        history = price_history(self.symbol, self.start, self.end)
+        return history.price_history
 
 
-    def dividends(self, start, end):
+    def dividends(self):
         hdrs = headers()
-        url = self.__url__(start, end, fil = 'div')
+        url = self.__url__(fil = 'div')
         dividends = scraper().__table__(url, hdrs)
         if len(dividends)>1:
             index = len(dividends)
