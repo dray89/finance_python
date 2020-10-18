@@ -1,10 +1,12 @@
-My first Python coding project. Yes, I've recreated the wheel here as there are many programs to scrape Yahoo Finance. Nevertheless, recreating the wheel is a great way to learn how to program.
+My first Python coding project. Yes, I've recreated the wheel here as there are many programs to scrape Yahoo Finance. Nevertheless, recreating the wheel is a great way to learn how to code.
 
-I haven't had time to really maintain the code. Yahoo Finance has changed its website since this was first created. Thus, it can no longer scrape the financials tab of the Yahoo Finance website. However as of mid-October 2020, I'm doing some maintenance. 
+Yahoo Finance has changed its website since this was first created. Thus, it can no longer scrape the financials tab of the Yahoo Finance website. Nevertheless, it can still scrape price and dividend history, statistics, holders, options, and analysis tabs. 
+
+I haven't had time to really maintain the code. However as of mid-October 2020, I'm doing some maintenance. 
  
 I've used it for my job at the Motley Fool. I sometimes pull inspiration from it for Medium.com articles.
 
-Yahoo Finance: Just added multithreading to pull years of price history data. 
+Yahoo Finance: Just added multithreading to pull years of price and dividend history data (more than 100 rows is the standard for any given timeframe). Also scrapes sector, description, current price, analysis, and statistics tab. 
 
 Nasdaq: Nasdaq earnings and dividend calendars
 
