@@ -38,9 +38,9 @@ class stock:
         self.scrape()
         self.price_history = self.price_history()
         self.dividend_history = self.dividend_history()
-        self.price = self.price()
-        self.attributes = ['dividends', 'sector','description',
-                           'history', 'price', 'analyze()', 'stats()']
+        self.current_price = self.current_price()
+        self.attributes = ['price_history', 'sector','description',
+                           'dividend_history', 'price', 'analyze()', 'stats()']
 
     def scrape(self):
         '''set sector and description '''
@@ -63,7 +63,7 @@ class stock:
         except:
             self.description = "could not find description information"
 
-    def price(self):
+    def current_price(self):
         try:
             price = self.history['Close*'][0]
         except:
