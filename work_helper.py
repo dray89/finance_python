@@ -12,7 +12,7 @@ template_down = "{0} (TSX:{1}) fell to ${2} during the March market sell-off fro
 template_up = "{0} (TSX:{1}) rose from a 52-week low of ${2} to a 52-week high of ${3} after the March 2020 market sell-off. At the time of writing, the stock is trading for ${4} per share. The dividend yield is {5} annually."
 
 
-symbol_list = ["SHOP.TO"]
+symbol_list = ["SHOP.TO", "KXS.TO", "OTEX.TO"]
 template = template_down
 
 for each in symbol_list:
@@ -23,11 +23,10 @@ for each in symbol_list:
     current_price = info.current_price
     description = info.description
     statistics = info.stats()
-    # high = stats.statistics[1].at['52 Week High 3',1]
+    high = statistics[1].at['52 Week High 3','Value']
     
+    low = statistics[1].at['52 Week Low 3','Value']
     
-    #low = stats.statistics[1].at['52 Week Low 3',1]
+    dividend = statistics[1].at['Forward Annual Dividend Yield 4', 'Value']
     
-    #dividend = stats.statistics[1].at['Forward Annual Dividend Yield 4',1]
-    
-    #print(template.format(symbol, symbol.strip(".TO"), low, high, current_price, dividend) + description)
+    print(template.format(symbol, symbol.strip(".TO"), low, high, current_price, dividend) + description)

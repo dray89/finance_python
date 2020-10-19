@@ -67,7 +67,7 @@ class stock:
 
     def current_price(self):
         try:
-            price = self.history['Close*'][0]
+            price = self.price_history['Close*'][0]
         except:
             price = np.nan
         return price
