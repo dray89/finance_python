@@ -4,23 +4,21 @@ Created on Thu Nov 14 10:03:08 2019
 
 @author: rayde
 """
-try:
-    from stock import stock
-    from scrapers import scraper
-    from headers import headers
-    from pandas_methods import pandas_methods as pm
-except:
-    from finance_python.stock import stock
-    from finance_python.scrapers import scraper
-    from finance_python.headers import headers
-    from finance_python.pandas_methods import pandas_methods as pm
+
+from finance_python.scrapers import scraper
+from finance_python.headers import headers
+from finance_python.pandas_methods import pandas_methods as pm
 
 import datetime
 import calendar
 from datetime import date, timedelta
 import pandas as pd 
 
-class options(stock):
+class Options():
+    def __init__(self,symbol, year):
+        self.symbol = symbol 
+        self.year = year
+        
     def utc_dates(self, year_series):
         dt = year_series.apply(lambda x: datetime.datetime.combine(x, datetime.datetime.min.time()))
         utc_dates = dt.apply(lambda x: x.tz_localize('utc').timetuple())
@@ -164,12 +162,12 @@ class buy_puts:
         if purchase_price==None:
             purchase_price = 0 - table['Last Price.1']
         return purchase_price
-    
+'''    
 if __name__ == '__main__':
     start = date.today() - timedelta(days=365*15)
     end = date.today()
 
-    T = options('T', start, end)
+    T = options('T')
 
     year_2020 = T.option_dates(2020)
     yr2020 = T.third_fridays(year_2020)
@@ -187,3 +185,4 @@ if __name__ == '__main__':
     buy_call = buy_calls().create_df(table_T, T.price)
     sell_put = sell_puts().create_df(table_T, T.price)
     sell_call = sell_calls().create_df(table_T, T.price)
+'''

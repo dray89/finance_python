@@ -5,7 +5,6 @@ Created on Thu Aug 15 21:22:48 2019
 
 """
 import numpy as np
-import time
 import pandas as pd 
 
 from finance_python.scrapers import scraper
@@ -13,6 +12,9 @@ from finance_python.statistics import statistics
 from finance_python.analysis import analysis
 from finance_python.headers import headers
 from finance_python.history_data import historical_data
+from finance_python.holders import Holders
+from finance_python.Options import Options
+
 
 class stock:
     stocks_list = set()
@@ -115,6 +117,14 @@ class stock:
 
         self.a_list.append(self.symbol)
         self.attributes.append(a.attributes)
+    
+    def options(self, year):
+        option_data = Options(self.symbol, year)
+        return options
+    
+    def holders(self):
+        holders = Holders()
+        return holders.tables
 
     '''
     DEPRECATED: 
