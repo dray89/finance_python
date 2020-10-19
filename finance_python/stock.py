@@ -87,7 +87,7 @@ class stock:
             dividends  = dividends.history['Dividends']
             dividends = dividends.str.replace(r'\Dividend', '').astype(float)
             dividends.name = self.symbol , "Dividends"
-        return pd.DataFrame(dividends)
+            return pd.DataFrame(dividends)
 
     def stats(self):
         ''' scrapes the statistics tab on yahoo finance'''
@@ -95,6 +95,7 @@ class stock:
         self.statistics = stats.statistics
         self.stats_list.append(self.statistics)
         self.attributes.append(stats.attributes)
+        return stats.statistics
 
     def analyze(self):
         ''' Scrapes the analysis tab on yahoo finance '''
