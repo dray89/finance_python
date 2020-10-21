@@ -43,7 +43,7 @@ class dividend_calendar:
         dictionary : Returns a JSON dictionary at a given URL.
 
         '''
-        page = requests.get(url, params = hdrs)
+        page = requests.get(url, hdrs = hdrs)
         page = page.content
         dictionary = json.loads(page)
         return dictionary
