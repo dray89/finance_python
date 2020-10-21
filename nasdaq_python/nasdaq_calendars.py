@@ -118,7 +118,7 @@ class dividend_calendar:
     def dictionary_output(self, symbol):
         d = {symbol:self.__price__(self.quote(symbol))}
         return d
-
+'''
 if __name__ == '__main__':
     
     february = dividend_calendar('2020', '02')
@@ -150,3 +150,4 @@ if __name__ == '__main__':
     df = df.sort_values('return', ascending=False)
     df = df.dropna(how='any')
     df = df.set_index('companyName')
+'''
