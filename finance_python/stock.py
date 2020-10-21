@@ -119,7 +119,7 @@ class stock:
     
     def options(self, year):
         option_data = Options(self.symbol, year)
-        return options
+        return option_data
     
     def holders(self):
         holders = Holders()
