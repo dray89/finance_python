@@ -26,7 +26,7 @@ class Options():
     def options(self, utc_dates):
         self.expiry = utc_dates
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
-        table = scraper().__table__(self.url)
+        table = scraper(self.url).__table__()
         return table
 
     def option_dates(self, year):

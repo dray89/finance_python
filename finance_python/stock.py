@@ -36,18 +36,18 @@ class stock:
         self.stocks_list.add(symbol)
         self.start = start
         self.end = end
-        self.scrape()
+        self.scrapeProfile()
         self.price_history = self.price_history()
         self.dividend_history = self.dividend_history()
         self.current_price = self.current_price()
         self.attributes = ['price_history', 'sector','description',
                            'dividend_history', 'price', 'analyze()', 'stats()']
 
-    def scrape(self):
+    def scrapeProfile(self):
         '''set sector and description '''
         symbol = self.symbol
         url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
-        s =  scraper().__profile__(url)
+        s =  scraper(url).__profile__()
         self.sector(s)
         self.description(s)
 

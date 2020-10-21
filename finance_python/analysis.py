@@ -20,9 +20,12 @@ class analysis:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/analysis?p=' + self.symbol
-        a = scraper().__table__(url)
+        a = scraper(url).__table__()
         return a
 
     def clean(self, df):
-        table = lambda x: df[x].set_index(df[x].columns[0])
+        try:
+            table = lambda x: df[x].set_index(df[x].columns[0])
+        except: 
+            pass
         return table

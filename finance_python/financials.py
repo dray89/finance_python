@@ -18,7 +18,7 @@ class financials:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        table = scraper().__table__(url)
+        table = scraper(url).__table__()
         #table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 

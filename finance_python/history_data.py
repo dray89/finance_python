@@ -28,7 +28,7 @@ class historical_data():
         :param url: URL location of stock price history
         :return: price history
         '''
-        price_history = scraper().__table__(url)
+        price_history = scraper(url).__table__()
         price_history = self.__clean_history__(price_history[0])
         time.sleep(0.25)
         return price_history

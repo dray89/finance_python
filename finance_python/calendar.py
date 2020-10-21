@@ -11,4 +11,4 @@ class calendar:
     def __init__(self, date= date.today()):
         self.date = date
         self.url = "https://ca.finance.yahoo.com/calendar/earnings?&day=" + str(self.date)
-        self.calendar = scraper().__table__(self.url)
+        self.calendar = scraper(self.url).__table__()

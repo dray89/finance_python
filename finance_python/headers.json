@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 21 12:52:44 2020
-
-@author: rayde
-"""
-
-
 {"authority": "finance.yahoo.com",
             "method": "GET",
             "scheme": "https",
