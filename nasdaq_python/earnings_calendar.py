@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
-import time, pandas, requests, lxml
-from lxml import html
+from datetime import datetime
+import pandas 
+from nasdaq_python.nasdaq_main import NasdaqData
 
-class Earnings_Calendar:
+class Earnings_Calendar(NasdaqData):
     # class attributes
     calendars = []
     url = 'https://api.nasdaq.com/api/calendar/earnings'
@@ -28,41 +28,6 @@ class Earnings_Calendar:
         # instance attributes
         self.year = int(year)
         self.month = int(month)
-
-    def scraper(self, date):
-        '''
-          Parameters
-          - - - - -
-          date: datetime object
-
-          Returns
-          - - - -
-          dictionary : Returns a JSON dictionary at a given URL.
-        '''
-        page = requests.get(self.url, headers=self.hdrs, params={'date': date})
-        dictionary = page.json()
-        return dictionary
-
-    def dict_to_df(self, dicti):
-        '''
-        Parameters
-        ----------
-        dicti : Output from the scraper method as input.
-
-        Returns
-        -------
-        calendar : Dataframe of stocks with that earnings date
-        Appends the dataframe to one of the class attributes
-
-        If the date is formatted, it will append a dataframe
-        to the calendars list (class attribute). Otherwise, it will
-        return an empty dataframe.
-        '''
-        rows = dicti.get('data', dict({'rows': 1}))
-        rows = rows.get('rows', '')
-        earnings_calendar = pandas.DataFrame(rows)
-        self.calendars.append(earnings_calendar)
-        return earnings_calendar
 
     def date_str(self, day):
         date_obj = datetime(self.year, self.month, day)
@@ -91,10 +56,11 @@ class Earnings_Calendar:
         '''
         self.day = day
         date_str = self.date_str(day)
-        dicti = self.scraper(date_str)
+        dicti = self.scraper(self.url, kwargs={'date':date_str})
         self.dict_to_df(dicti)
         return dicti
-
+    
+    
 if __name__ == '__main__':
     import calendar
     year = 2020

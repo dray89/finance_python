@@ -3,12 +3,11 @@
 Created on Tue Oct  8 20:03:46 2019
 @author: rayde
 """
-from nasdaq_python.nasdaq_headers import headers
 from nasdaq_urls import nasdaq_urls
-import pandas, json, requests, numpy as np
-from multiprocessing import Pool
+import pandas
+from nasdaq_python.nasdaq_main import NasdaqData
 
-class dividend_calendar:
+class dividend_calendar(NasdaqData):
         
 
     calendars = []
@@ -30,23 +29,6 @@ class dividend_calendar:
         self.year = year
         self.month = month
 
-    def scraper(self, url, hdrs):
-        '''
-
-        Parameters
-        ----------
-        url : URL string
-        hdrs : Header information
-
-        Returns
-        -------
-        dictionary : Returns a JSON dictionary at a given URL.
-
-        '''
-        page = requests.get(url, hdrs = hdrs)
-        page = page.content
-        dictionary = json.loads(page)
-        return dictionary
 
     def calendar(self, day):
         '''
@@ -66,59 +48,13 @@ class dividend_calendar:
         dictionary['data']['calendar']['rows'] => returns list of dicts
         
         '''
-        self.day = str(day)
-        hdrs = headers.exdividend(self.year, self.month, self.day)
-        url = nasdaq_urls.exdividend(self.year, self.month, self.day)
-        dictionary = self.scraper(url, hdrs)
+        day = str(day)
+        url = nasdaq_urls.exdividend(self.year, self.month, day)
+        dictionary = self.scraper(url)
         self.dict_to_df(dictionary)
         return dictionary
 
-    def dict_to_df(self, dictionary):
-        '''        
 
-        Parameters
-        ----------
-        dictionary : Takes output from the calendar method as input.
-
-        Returns
-        -------
-        calendar : Pandas dataframe of the stocks which have an exdividend date on a particular day.
-        appends the dataframe to either calendars or errrors. If the data provided is a nontrading day, 
-        then the method will append an error message with 'bad or no parameter [date]' to the errors dataframe.
-
-        '''
-        try:
-             rows = dictionary.get('data').get('calendar').get('rows')
-             calendar = pandas.DataFrame(rows)
-             self.calendars.append(calendar)
-        except:
-            rows = dictionary.get('status').get('bCodeMessage')
-            calendar = pandas.DataFrame(rows)
-            self.errors.append(calendar)
-        return calendar
-
-    def quote(self, symbol):
-        hdrs = headers.quote(symbol)
-        url = nasdaq_urls.quote(symbol)
-        dictionary = self.scraper(url, hdrs)
-        return dictionary
-
-    def __price__(self, quote):
-        ''' 
-        float(rows['data']['primaryData']['lastSalePrice'].strip('$'))
-
-        '''
-        try:
-            price = float(quote['data']['primaryData']['lastSalePrice'].strip('$'))
-        except:
-            price = np.nan
-        finally:
-            return price
-
-    def dictionary_output(self, symbol):
-        d = {symbol:self.__price__(self.quote(symbol))}
-        return d
-'''
 if __name__ == '__main__':
     
     february = dividend_calendar('2020', '02')
@@ -129,25 +65,15 @@ if __name__ == '__main__':
     february.calendars
 
     concat = pandas.concat(february.calendars)
-
-    p = Pool()
-    price = list(p.map(february.dictionary_output, list(concat['symbol'])))
-
-    d = {}
-    for each in range(len(price)):
-        d.update(price[each])
-
-    price = pandas.DataFrame(d, index=['symbol'], dtype=float).T
-    price.columns = ['price']
-    price.index.name = 'symbol'
-
+    symbol_list = list(concat['symbol'])
+    
+    price = february.price_dataframe(symbol_list)
     df = concat.merge(price, on='symbol')
-
-    df['cost per 100'] = df['price']*100
+    
+    df['cost for 100'] = df['price']*100
     df['dividend_total'] = 100*df['dividend_Rate']
-    df['return'] = df['dividend_total']*100/df['cost per 100']
+    df['return'] = df['dividend_total']*100/df['cost for 100']
 
     df = df.sort_values('return', ascending=False)
     df = df.dropna(how='any')
     df = df.set_index('companyName')
-'''
