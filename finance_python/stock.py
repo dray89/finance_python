@@ -10,7 +10,6 @@ import pandas as pd
 from finance_python.scrapers import scraper
 from finance_python.statistics import statistics
 from finance_python.analysis import analysis
-from finance_python.headers import headers
 from finance_python.history_data import historical_data
 from finance_python.holders import Holders
 from finance_python.Options import Options
@@ -48,8 +47,7 @@ class stock:
         '''set sector and description '''
         symbol = self.symbol
         url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
-        hdrs = headers()
-        s =  scraper().__profile__(url, hdrs)
+        s =  scraper().__profile__(url)
         self.sector(s)
         self.description(s)
 

@@ -8,8 +8,6 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-from finance_python.headers import headers
-
 class statistics:
 
     def __init__(self, symbol):
@@ -24,8 +22,7 @@ class statistics:
                    using headers defined in the init function,
                    returning a byte string of html code.
         '''
-        hdrs = headers()
-        page = requests.get(self.url, headers=hdrs)
+        page = requests.get(self.url)
         soup = BeautifulSoup(page.content, 'lxml')
         tables = soup.find_all('table')
         table_list = [pd.read_html(str(tables[x])) for x in range(len(tables))]

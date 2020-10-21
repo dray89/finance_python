@@ -5,17 +5,13 @@ Created on Mon Oct 28 17:25:19 2019
 @author: rayde
 """
 import pandas as pd
-import numpy as np
-import math
 from stock import stock
 from dates import format_date
 
 try:
     from scrapers import scraper
-    from headers import headers
 except:
     from finance_python.scrapers import scraper
-    from finance_python.headers import headers
 
 class basic(stock):
     def history(self, start):
@@ -23,8 +19,7 @@ class basic(stock):
         start = format_date(start)
         end = format_date(end)
         url = 'https://finance.yahoo.com/quote/' + symbol + "/history?period1="+str(start)+"&period2=" + str(end) + "&interval=1d&filter=history&frequency=1d"
-        hdrs = headers()
-        history = scraper(symbol).__table__(url, hdrs)
+        history = scraper(symbol).__table__(url)
         if len(history)>0:
             history = pd.concat(history, sort=True).astype(float, errors='ignore')
             history = history.drop(len(history) - 1)
@@ -38,9 +33,8 @@ class basic(stock):
         symbol, e = [self.symbol, self.end]
         start = format_date(s)
         end = format_date(e)
-        hdrs = headers()
         url = "https://finance.yahoo.com/quote/" + symbol + "/history?period1=" + str(start) + "&period2="+ str(end) + "&interval=div%7Csplit&filter=div&frequency=1d"
-        dividends = scraper(symbol).__table__(url, hdrs)
+        dividends = scraper(symbol).__table__(url)
         return dividends
     
     def clean_dividends(self, dividends):

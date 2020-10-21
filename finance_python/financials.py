@@ -6,10 +6,8 @@ Created on Wed Jul 31 11:15:38 2019
 """
 from pandas import DataFrame
 import numpy as np
-import pandas as pd
 
 from scrapers import scraper
-from headers import headers
 
 class financials:
     def __init__(self, symbol):
@@ -19,9 +17,8 @@ class financials:
         self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
-        hdrs = headers()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        table = scraper().__table__(url, hdrs)
+        table = scraper().__table__(url)
         #table = pd.concat(table, sort=True).astype(float, errors='ignore')
         return table
 

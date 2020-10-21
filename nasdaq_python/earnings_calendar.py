@@ -6,11 +6,6 @@ class Earnings_Calendar(NasdaqData):
     # class attributes
     calendars = []
     url = 'https://api.nasdaq.com/api/calendar/earnings'
-    hdrs = {'Accept': 'application/json, text/plain, */*',
-            'DNT': "1",
-            'Origin': 'https://www.nasdaq.com/',
-            'Sec-Fetch-Mode': 'cors',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0)'}
 
     def __init__(self, year, month):
         '''

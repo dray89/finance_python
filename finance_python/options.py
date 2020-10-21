@@ -6,13 +6,10 @@ Created on Thu Nov 14 10:03:08 2019
 """
 
 from finance_python.scrapers import scraper
-from finance_python.headers import headers
 from finance_python.pandas_methods import pandas_methods as pm
 
 import datetime
 import calendar
-from datetime import date, timedelta
-import pandas as pd 
 
 class Options():
     def __init__(self,symbol, year):
@@ -29,8 +26,7 @@ class Options():
     def options(self, utc_dates):
         self.expiry = utc_dates
         self.url = "https://ca.finance.yahoo.com/quote/"+ self.symbol +"/options?date="+ self.expiry + "&p=" + self.symbol +"&straddle=true"
-        self.hdrs = headers()
-        table = scraper().__table__(self.url, self.hdrs)
+        table = scraper().__table__(self.url)
         return table
 
     def option_dates(self, year):

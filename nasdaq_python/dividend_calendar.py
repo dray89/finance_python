@@ -11,7 +11,7 @@ class dividend_calendar(NasdaqData):
         
 
     calendars = []
-    methods = 'scraper(url, hdrs), calendar(year, month, day)'
+    methods = 'calendar(year, month, day)'
 
     def __init__(self, year, month):
         '''

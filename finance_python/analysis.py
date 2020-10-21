@@ -8,11 +8,8 @@ Created on Thu Aug 15 22:30:46 2019
 
 try:
     from scrapers import scraper
-    from finance_python import headers
-
 except:
     from finance_python.scrapers import scraper
-    from finance_python.headers import headers
 
 class analysis:
     def __init__(self, symbol):
@@ -22,10 +19,8 @@ class analysis:
                            'eps_revisions', 'growth_estimates', "a_list"]
 
     def scrape(self):
-        symbol = self.symbol
-        hdrs = headers()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/analysis?p=' + self.symbol
-        a = scraper().__table__(url, hdrs)
+        a = scraper().__table__(url)
         return a
 
     def clean(self, df):

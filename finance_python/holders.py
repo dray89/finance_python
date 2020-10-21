@@ -4,13 +4,8 @@ Created on Fri Oct  4 18:43:36 2019
 
 @author: rayde
 """
-import pandas as pd
-import numpy as np
-import lxml, time
-from datetime import datetime
 
 from finance_python.scrapers import scraper
-from finance_python.headers import headers
 
 class Holders():
     def __init__(self, symbol):
@@ -20,7 +15,7 @@ class Holders():
     def scrape(self):
         symbol = self.symbol
         url = 'https://ca.finance.yahoo.com/quote/'+ symbol +'/holders?p=' + symbol
-        tables = scraper().__table__(url, headers())
+        tables = scraper().__table__(url)
         return tables
 
     def MajorHolders(self, tables):

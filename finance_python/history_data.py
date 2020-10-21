@@ -3,7 +3,6 @@ import time
 import numpy as np 
 import pandas as pd
 import concurrent.futures
-from finance_python.headers import headers
 from finance_python.scrapers import scraper
 
 class historical_data():
@@ -29,8 +28,7 @@ class historical_data():
         :param url: URL location of stock price history
         :return: price history
         '''
-        hdrs = headers()
-        price_history = scraper().__table__(url, hdrs)
+        price_history = scraper().__table__(url)
         price_history = self.__clean_history__(price_history[0])
         time.sleep(0.25)
         return price_history

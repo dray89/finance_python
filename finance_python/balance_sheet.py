@@ -9,7 +9,6 @@ import numpy as np
 
 
 from scrapers import scraper
-from headers import headers
 
 class balance_sheet:
     def __init__(self, symbol):
@@ -20,9 +19,8 @@ class balance_sheet:
 
     def scrape(self):
         text_list = []
-        hdrs = headers()
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/balance-sheet?p=' + self.symbol
-        html = scraper().__general__(url, hdrs)
+        html = scraper().__general__(url)
         s = html.findAll('span')
         for each in s:
             text_list.append(each.text)

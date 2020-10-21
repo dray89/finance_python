@@ -9,21 +9,25 @@ import pandas
 import lxml
 from bs4 import BeautifulSoup as soup
 from lxml import html
+import json
 
 class scraper:
     def __init__(self):
         pass
 
-    def __table__(self, url, hdrs):
+    def __table__(self, url):
+        header_file = open('headers.json', 'r')
+        hdrs = json.loads(header_file.read())
         page = requests.get(url, params=hdrs)
         tree = html.fromstring(page.content)
         table = tree.xpath('//table')
         table = list(map(lambda x: pandas.read_html(lxml.etree.tostring(table[x], method='xml'))[0], range(0,len(table))))
         return table
 
-    def __profile__(self, url, hdrs):
-        s = requests.Session()
-        page = s.get(url, params = hdrs)
+    def __profile__(self, url):
+        header_file = open('headers.json', 'r')
+        hdrs = json.loads(header_file.read())
+        page = requests.get(url, params = hdrs)
         page=soup(page.content, 'lxml')
         return page
     
