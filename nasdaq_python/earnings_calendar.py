@@ -1,5 +1,7 @@
-from datetime import datetime
-import pandas 
+from datetime import datetime, date
+import pandas
+import concurrent.futures
+
 from nasdaq_python.nasdaq_main import NasdaqData
 
 class Earnings_Calendar(NasdaqData):
@@ -52,14 +54,16 @@ class Earnings_Calendar(NasdaqData):
         self.day = day
         date_str = self.date_str(day)
         dicti = self.scraper(self.url, kwargs={'date':date_str})
-        self.dict_to_df(dicti)
-        return dicti
+        df = self.dict_to_df(dicti)
+        df['Date'] = date(year, month, int(day))
+        self.calendars.append(df)
+        return df
     
     
 if __name__ == '__main__':
     import calendar
     year = 2020
-    month = 3
+    month = 10
 
     # get number of days in month
     days_in_month = calendar.monthrange(year, month)[1]
@@ -71,7 +75,8 @@ if __name__ == '__main__':
     function = lambda days: march.earnings_calendar(days)
 
     # define iterator as a list of integers between 1 and the number of days in the month
-    iterator = list(range(1, days_in_month + 1))
+    #iterator = list(range(21, days_in_month + 1))
+    iterator = list(range(22, 23))
 
     # Scrape calendar for each day of the month
     objects = list(map(function, iterator))
@@ -79,35 +84,5 @@ if __name__ == '__main__':
     # concatenate all the calendars in the class attribute
     df = pandas.concat(march.calendars)
 
-    # Drop any rows with missing data
-    df = df.dropna(how='any')
-
     # set the dataframe's row index to the company name
-    df = df.set_index('name')
-
-    '''    
-    year = 2020 
-    month = 3
-    day = 2
-    date = datetime(year, month, day)
-    date = date.strftime(format='%Y-%m-%d')    
-
-    hdrs =  {'Accept': 'application/json, text/plain, */*',
-                 'DNT': "1",
-                 'Origin': 'https://www.nasdaq.com/',
-                 'Sec-Fetch-Mode': 'cors',
-                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0)'}
-
-    urls = 'https://api.nasdaq.com/api/calendar/earnings'
-    page = requests.get(urls, headers=hdrs, params=date)
-    dictionary = page.json()
-
-    rows = dictionary.get('data').get('rows')
-    rows 
-
-    cal = pandas.DataFrame(rows)
-    cal
-
-    df = cal.dropna(how='any')    
-    df = df.set_index('name')
-    '''
+    df = df.set_index('Date')

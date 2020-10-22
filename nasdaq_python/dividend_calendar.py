@@ -51,23 +51,24 @@ class dividend_calendar(NasdaqData):
         day = str(day)
         url = nasdaq_urls.exdividend(self.year, self.month, day)
         dictionary = self.scraper(url)
-        self.dict_to_df(dictionary)
-        return dictionary
+        df = self.dict_to_df(dictionary)
+        self.calendars.append(df)
+        return df
 
 
 if __name__ == '__main__':
     
-    february = dividend_calendar('2020', '02')
-    february
+    october = dividend_calendar('2020', '10')
+    october
     
-    objects = list(map(lambda days: february.calendar(days), list(range(32))))
+    objects = list(map(lambda days: october.calendar(days), list(range(32))))
     
-    february.calendars
+    october.calendars
 
-    concat = pandas.concat(february.calendars)
+    concat = pandas.concat(october.calendars)
     symbol_list = list(concat['symbol'])
     
-    price = february.price_dataframe(symbol_list)
+    price = october.price_dataframe(symbol_list)
     df = concat.merge(price, on='symbol')
     
     df['cost for 100'] = df['price']*100

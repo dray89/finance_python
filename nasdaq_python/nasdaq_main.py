@@ -80,7 +80,6 @@ class NasdaqData:
             #rows = dicti.get('data').get('rows')
             rows = dicti.get('data').get('calendar', dicti.get('data')).get('rows')
             calendar = pd.DataFrame(rows)
-            self.calendars.append(calendar)
             return calendar
         except:
             pass
