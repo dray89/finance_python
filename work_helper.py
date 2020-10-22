@@ -11,7 +11,7 @@ template_down = "{0} (TSX:{1}) fell to ${2} during the March market sell-off fro
 template_up = "{0} (TSX:{1}) rose from a 52-week low of ${2} to a 52-week high of ${3} after the March 2020 market sell-off. At the time of writing, the stock is trading for ${4} per share. The dividend yield is {5} annually."
 
 
-symbol_list = ["CNR.TO", "CP.TO"]
+symbol_list = ["BOS.TO", "SNC.TO"]
 template = template_up
 
 for each in symbol_list:
