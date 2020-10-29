@@ -12,7 +12,7 @@ from lxml import html
 import json
 
 class scraper:
-    header_file = open(r'./finance_python/headers.json', 'r')
+    header_file = open(r'C:/Users/rayde/iCloudDrive/GitHub/finance_python/finance_python/headers.json', 'r')
     hdrs = json.loads(header_file.read())
     
     def __init__(self, url):

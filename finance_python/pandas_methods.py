@@ -15,9 +15,8 @@ class pandas_methods:
 
     def numeric(df):
         '''convert df to numeric'''
-        for each in list(df.columns):
-            df.fillna(np.nan).astype(float, errors='ignore')
-            df[each] = pd.to_numeric(df[each], errors='coerce')
+        df = df.apply(lambda x: x.fillna(np.nan).astype(float, errors='ignore'))
+        df = df.apply(lambda x: pd.to_numeric(x, errors='coerce'))
         return df
 
     def append_rows(df, column_name, row_name, values ='as_series', d_type = float):
