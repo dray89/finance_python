@@ -4,8 +4,6 @@ Yahoo Finance has changed its website since this was first created. Thus, it can
 
 I haven't had time to really maintain the code. However as of mid-October 2020, I'm doing some maintenance. 
  
-I've used it for my job at the Motley Fool. I sometimes pull inspiration from it for Medium.com articles.
-
 Yahoo Finance: Just added multithreading to pull years of price and dividend history data (more than 100 rows is the standard for any given timeframe). Also scrapes sector, description, current price, analysis, and statistics tab. 
 
 Nasdaq: Nasdaq earnings and dividend calendars
