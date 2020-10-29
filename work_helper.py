@@ -6,12 +6,13 @@ Created on Wed Oct 14 13:55:10 2020
 """
 from datetime import datetime, timedelta
 from finance_python.stock import stock
+import re
 
 template_down = "{0} (TSX:{1}) fell to ${2} during the March market sell-off from a 52-week high of ${3}. At the time of writing, investors are trading the stock for ${4} per share. The annual dividend yield would be a great addition to your retirement portfolio at {5}."
 template_up = "{0} (TSX:{1}) rose from a 52-week low of ${2} to a 52-week high of ${3} after the March 2020 market sell-off. At the time of writing, the stock is trading for ${4} per share. The dividend yield is {5} annually."
 
-symbol_list = ["WEED.TO", "HEXO.TO", "ACB.TO"]
-template = template_down
+symbol_list = ["FNV.TO", "PSK.TO"]
+template = template_up
 
 for each in symbol_list:
     symbol = each 
@@ -26,4 +27,4 @@ for each in symbol_list:
     
     dividend = stats[1].at['Forward Annual Dividend Yield 4', 'Value']
     
-    print(template.format(symbol, symbol.strip(".TO"), low, high, current_price, dividend) + description)
+    print(template.format(symbol, re.sub(r"\.TO$", "", symbol), low, high, current_price, dividend) + description)

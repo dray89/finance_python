@@ -74,7 +74,7 @@ class historical_data():
             pages -= 1
 
     def __starts__(self, pages, s, e):
-        if pages == 0:
+        if pages == 0 | pages==1:
             pass
         else:
             starts = [s for s in self.__calc_start__(pages, s, e)]
