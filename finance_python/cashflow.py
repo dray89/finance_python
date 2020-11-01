@@ -7,28 +7,17 @@ Created on Thu Aug 15 22:29:56 2019
 
 import numpy as np
 from pandas import DataFrame
-import pandas as pd
-
-try:
-    from scrapers import scraper
-except:
-    from finance_python.scrapers import scraper
+from finance_python.scrapers import scraper
 
 class cashflow:
     def __init__(self, symbol):
         self.symbol = symbol.upper()
         self.cashflow = self.scrape()
-        #self.cashflow['Changes'] = self.changes()
         self.attributes = ['cashflow', 'cash_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
-        
-        '''
-        Important: Need to change the scraping method. 
-        '''
-        table = scraper(self.symbol).__table__(url)
-        #table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        table = scraper(url).__financials__(num_cols=5)        
         return table
 
     def clean(self, df):

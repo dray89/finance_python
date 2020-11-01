@@ -6,24 +6,17 @@ Created on Wed Jul 31 11:15:38 2019
 """
 from pandas import DataFrame
 import numpy as np
-import requests
-from lxml import html
+from finance_python.scrapers import scraper
 
-class financials:
+class Income:
     def __init__(self, symbol):
         self.symbol = symbol
-        self.financials = self.scrape()
-        #self.financials['Changes'] = self.changes()
+        self.income = self.scrape()
         self.attributes = ['financials', 'fin_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        response = requests.get(url)
-        tree = html.fromstring(response.content)
-        data = tree.xpath(r'//div[@class="M(0) Whs(n) BdEnd Bdc($seperatorColor) D(itb)"]//text()')
-        num_cols = 5
-        output = [data[i:i + num_cols] for i in range(0, len(data), num_cols)]
-        table = DataFrame(output[1:], columns=output[0]).set_index('Breakdown')
+        table = scraper(url).__financials__(num_cols=5)   
         return table
 
     def clean(self):

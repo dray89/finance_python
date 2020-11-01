@@ -13,6 +13,9 @@ from finance_python.analysis import analysis
 from finance_python.history_data import historical_data
 from finance_python.holders import Holders
 from finance_python.Options import Options
+from finance_python.income import Income
+from finance_python.balance_sheet import balance_sheet
+from finance_python.cashflow import cashflow
 
 
 class stock:
@@ -20,7 +23,7 @@ class stock:
     stats_list = list()
     bs_list = list()
     cash_list = list()
-    fin_list = list()
+    income_list = list()
     a_list = list()
 
     def __init__(self, symbol, start, end):
@@ -125,29 +128,21 @@ class stock:
         holders = Holders()
         return holders.tables
 
-    '''
-    DEPRECATED: 
-    YAHOO FINANCE CHANGED THEIR WEBSITE SINCE THIS WAS FIRST BUILT 
-    THESE FUNCTIONS NO LONGER WORK PROPERLY
     
     def balance(self):
-        
         bs = balance_sheet(self.symbol)
         self.balance_sheet = bs.balance_sheet
         self.bs_list.append(self.balance_sheet)
         self.attributes.append(bs.attributes)
 
     def cash(self):
-        
         cash = cashflow(self.symbol)
         self.cashflow = cash.cashflow
         self.cash_list.append(self.cashflow)
         self.attributes.append(cash.attributes)
 
-    def financial(self):
-        
-        fin = financials(self.symbol)
-        self.financials = fin.financials
-        self.fin_list.append(self.financials)
-        self.attributes.append(fin.attributes)
-    '''
+    def income(self):
+        inc = Income(self.symbol)
+        self.income = inc.income
+        self.income_list.append(self.income)
+        self.attributes.append(inc.attributes)

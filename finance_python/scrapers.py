@@ -29,6 +29,13 @@ class scraper:
         page=soup(self.page.content, 'lxml')
         return page
     
+    def __financials__(self, num_cols):
+        tree = html.fromstring(self.page.content)
+        data = tree.xpath(r'//div[@class="M(0) Whs(n) BdEnd Bdc($seperatorColor) D(itb)"]//text()')
+        output = [data[i:i + num_cols] for i in range(0, len(data), num_cols)]
+        table = pandas.DataFrame(output[1:], columns=output[0]).set_index('Breakdown')
+        return table 
+    
     '''
     DEPRECATED FUNCTIONS
 
