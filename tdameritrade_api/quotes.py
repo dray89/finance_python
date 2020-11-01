@@ -18,4 +18,4 @@ class quote:
     def get_quotes(self, symbol_list):
         url = 'https://api.tdameritrade.com/v1/marketdata/quotes?&symbol=' + symbol_list
         response = requests.get(url, headers=self.hdrs)
-        return response
+        return response.content
