@@ -5,8 +5,11 @@ Created on Tue Nov 26 05:11:26 2019
 @author: rayde
 """
 import requests 
+import json 
 
 class quote:
+    header_file = open("C:/Users/rayde/iCloudDrive/GitHub/finance_python/tdameritrade_api/headers.json", 'r')
+    hdrs = json.loads(header_file.read())
     def __init__(self, apikey):
         self.apikey = apikey
         

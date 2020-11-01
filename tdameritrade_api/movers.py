@@ -8,6 +8,8 @@ import requests
 import json
 
 class get_movers:
+    header_file = open("C:/Users/rayde/iCloudDrive/GitHub/finance_python/tdameritrade_api/headers.json", 'r')
+    hdrs = json.loads(header_file.read())
     
     def __init__(self, index, apikey=None, direction = 'up', change = 'percent'):
         '''
