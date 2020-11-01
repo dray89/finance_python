@@ -8,13 +8,14 @@ import requests
 
 class quote:
     def __init__(self, apikey):
+        self.apikey = apikey
         
     def get_quote(self, symbol):
         url = 'https://api.tdameritrade.com/v1/marketdata/'+ symbol +'/quotes'
-        response = requests.get(url)
-        return response
+        response = requests.get(url, headers=self.hdrs)
+        return response.content
         
     def get_quotes(self, symbol_list):
-        url = 'https://api.tdameritrade.com/v1/marketdata/quotes?apikey=' + apikey + '&symbol=' + symbol_list
-        response = requests.get(url)
+        url = 'https://api.tdameritrade.com/v1/marketdata/quotes?&symbol=' + symbol_list
+        response = requests.get(url, headers=self.hdrs)
         return response

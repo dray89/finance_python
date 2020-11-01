@@ -22,8 +22,8 @@ class get_price_history:
                  periodType='day', period=10, frequencyType='minute' , frequency=1,
                   needExtendedHoursData='true'):
         self.symbol = symbol
-        self.url = 'https://api.tdameritrade.com/v1/marketdata/'+ symbol + '/pricehistory'
-        self.periodtype  = periodType
+        self.url = 'https://api.tdameritrade.com/v1/marketdata/'+ symbol + '/pricehistory'        
+    
         
     def price_history(self):
         response = requests.get(self.url, headers=self.hdrs)
