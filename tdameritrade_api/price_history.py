@@ -5,6 +5,7 @@ Created on Tue Nov 26 04:58:54 2019
 @author: rayde
 """
 from datetime import date, timedelta
+import requests
 
 class get_price_history:
     '''
@@ -21,4 +22,7 @@ class get_price_history:
         
     def price_history(self, symbol):       
         self.url = 'https://api.tdameritrade.com/v1/marketdata/'+ symbol + '/pricehistory'
+        response = requests.get(self.url)
+        return response
+        
         

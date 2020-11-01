@@ -4,6 +4,7 @@ Created on Sun Dec  8 18:56:48 2019
 
 @author: rayde
 """
+import requests 
 
 class get_movers:
     def __init__(self, apikey, direction = 'up', change = 'percent'):
@@ -14,7 +15,9 @@ class get_movers:
         '''
     
     def get_movers(self, index):
-        self.url = 'https://api.tdameritrade.com/v1/marketdata/'+ index +'/movers'
+        url = 'https://api.tdameritrade.com/v1/marketdata/'+ index +'/movers'
+        response = requests.get(url)
+        return response
     
     
         
