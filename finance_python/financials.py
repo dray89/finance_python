@@ -6,8 +6,8 @@ Created on Wed Jul 31 11:15:38 2019
 """
 from pandas import DataFrame
 import numpy as np
-
-from scrapers import scraper
+import requests
+from lxml import html
 
 class financials:
     def __init__(self, symbol):
@@ -18,8 +18,12 @@ class financials:
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/financials?p=' + self.symbol
-        table = scraper(url).__table__()
-        #table = pd.concat(table, sort=True).astype(float, errors='ignore')
+        response = requests.get(url)
+        tree = html.fromstring(response.content)
+        data = tree.xpath(r'//div[@class="M(0) Whs(n) BdEnd Bdc($seperatorColor) D(itb)"]//text()')
+        num_cols = 5
+        output = [data[i:i + num_cols] for i in range(0, len(data), num_cols)]
+        table = DataFrame(output[1:], columns=output[0]).set_index('Breakdown')
         return table
 
     def clean(self):

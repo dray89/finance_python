@@ -5,7 +5,7 @@ Created on Thu Aug 15 21:22:48 2019
 
 """
 import numpy as np
-import pandas as pd 
+import pandas as pd
 
 from finance_python.scrapers import scraper
 from finance_python.statistics import statistics
