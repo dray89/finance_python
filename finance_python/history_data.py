@@ -68,10 +68,9 @@ class historical_data():
 
     def __calc_start__(self, pages, s, e):
         calendar_days = (e - s) / pages
-        while pages > 0:
+        for i in range(pages):
             s = s + calendar_days
             yield s
-            pages -= 1
 
     def __starts__(self, pages, s, e):
         if pages == 0 | pages==1:
