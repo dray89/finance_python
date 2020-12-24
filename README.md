@@ -1,4 +1,4 @@
-My first Python coding project. Yes, I've recreated the wheel here as there are many programs to scrape Yahoo Finance. Nevertheless, recreating the wheel is a great way to learn how to code.
+My first Python coding project.
  
 Yahoo Finance: Just added multithreading to pull years of price and dividend history data (more than 100 rows is the standard for any given timeframe). Also scrapes sector, description, current price, analysis, financials, and statistics tab.
 
