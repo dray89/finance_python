@@ -28,8 +28,7 @@ class stock:
 
     def __init__(self, symbol, start, end):
         '''
-             start = datetime.today() - timedelta(days=365)
-             end = datetime.today()
+
              symbol = TRI or TRI.TO (Canada)
              
              Should import (from datetime import datetime, timedelta)
@@ -41,7 +40,6 @@ class stock:
         self.end = end
         self.scrapeProfile()
         self.price_history = self.price_history()
-        self.dividend_history = self.dividend_history()
         self.current_price = self.current_price()
         self.attributes = ['price_history', 'sector','description',
                            'dividend_history', 'price', 'analyze()', 'stats()']
@@ -51,9 +49,17 @@ class stock:
         symbol = self.symbol
         url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
         s =  scraper(url).__profile__()
+        self.s = s
         self.sector(s)
         self.description(s)
-
+        self.name(s)
+        
+    def name(self, s):
+        try: 
+            self.name = s.find('h3', attrs={'class':'Fz(m) Mb(10px)'}).text
+        except:
+            self.name = "could not find name"
+            
     def sector(self, s):
         try:
             self.sector = s.find('span', string='Industry').find_next().text

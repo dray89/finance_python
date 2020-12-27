@@ -28,7 +28,6 @@ class basic(stock):
             print(symbol, ': Error cleaning history dataframe. Is it the right symbol?')
         return history
 
-
     def dividends(self, s):
         symbol, e = [self.symbol, self.end]
         start = format_date(s)

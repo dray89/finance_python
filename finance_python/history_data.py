@@ -16,7 +16,7 @@ class historical_data():
                     end = datetime.today()
         :param fil: 'history' or 'div' for dividend
         '''
-        self.symbol = symbol
+        self.symbol = symbol.upper()
         self.start = start
         self.end = end
         self.urls = self.__urls__(fil)
@@ -108,11 +108,9 @@ class historical_data():
         with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
             history = list(executor.map(self.scrape_history, self.urls))
         return pd.concat(history, sort=False)
-'''
         
 if __name__ == "__main__":
     from datetime import datetime, timedelta
-    start = datetime.today() - timedelta(days=365*10)
+    start = datetime.today() - timedelta(days=365*30)
     end = datetime.today()
-    aapl = price_history('aapl', start, end)
-'''
+    aapl = historical_data('aapl', start, end, fil ='div')
