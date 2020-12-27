@@ -16,6 +16,7 @@ from finance_python.Options import Options
 from finance_python.income import Income
 from finance_python.balance_sheet import balance_sheet
 from finance_python.cashflow import cashflow
+from finance_python.dividends import dividends
 
 
 class stock:
@@ -41,8 +42,8 @@ class stock:
         self.scrapeProfile()
         self.price_history = self.price_history()
         self.current_price = self.current_price()
-        self.attributes = ['price_history', 'sector','description',
-                           'dividend_history', 'price', 'analyze()', 'stats()']
+        self.attributes = ['price_history', 'sector','description', "price",
+                           'dividend_history()', 'analyze()', 'stats()']
 
     def scrapeProfile(self):
         '''set sector and description '''
@@ -81,7 +82,7 @@ class stock:
 
     def price_history(self):
         ''':returns price history in dataframe '''
-        price = historical_data(self.symbol, self.start, self.end, 'history')
+        price = historical_data(self.symbol, self.start, self.end)
         return price.history
 
 
@@ -89,12 +90,8 @@ class stock:
         '''
         :return: Dividend history in dataframe
         '''
-        dividends = historical_data(self.symbol, self.start, self.end, 'div')
-        if len(dividends.history)>1:
-            dividends  = dividends.history['Dividends']
-            dividends = dividends.str.replace(r'\Dividend', '').astype(float)
-            dividends.name = self.symbol , "Dividends"
-            return pd.DataFrame(dividends)
+        divs = dividends(self.symbol, self.start, self.end)
+        return divs.dividend_history
 
     def stats(self):
         ''' scrapes the statistics tab on yahoo finance'''

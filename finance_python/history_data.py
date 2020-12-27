@@ -7,19 +7,18 @@ from finance_python.scrapers import scraper
 
 class historical_data():
 
-    def __init__(self, symbol, start, end, fil='history'):
+    def __init__(self, symbol, start, end):
         '''
         :param symbol: example "AAPL, or TRI.TO"
         :param start: Start date as datetime object 
                       start = datetime.today() - timedelta(days=365)
         :param end: End date as datetime object 
                     end = datetime.today()
-        :param fil: 'history' or 'div' for dividend
         '''
         self.symbol = symbol.upper()
         self.start = start
         self.end = end
-        self.urls = self.__urls__(fil)
+        self.urls = self.__urls__()
         self.history = self.scrape_threading()
         
     def scrape_history(self, url):
@@ -80,7 +79,7 @@ class historical_data():
             starts.append(e)
         return starts
 
-    def __urls__(self, fil):
+    def __urls__(self):
         '''
 
         Returns
@@ -94,8 +93,8 @@ class historical_data():
         for d in range(len(starts) - 1):
             start = str(self.__format_date__(starts[d]))
             end = str(self.__format_date__(starts[d + 1]))
-            url = "HTTP://finance.yahoo.com/quote/{0}/history?period1={1}&period2={2}&interval=1d&filter={3}&frequency=1d"
-            url = url.format(symbol, start, end, fil)
+            url = "HTTP://finance.yahoo.com/quote/{0}/history?period1={1}&period2={2}&interval=1d&filter=history&frequency=1d"
+            url = url.format(symbol, start, end)
             urls.append(url)
         return urls
 
@@ -108,9 +107,10 @@ class historical_data():
         with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
             history = list(executor.map(self.scrape_history, self.urls))
         return pd.concat(history, sort=False)
-        
+'''     
 if __name__ == "__main__":
     from datetime import datetime, timedelta
     start = datetime.today() - timedelta(days=365*30)
     end = datetime.today()
-    aapl = historical_data('aapl', start, end, fil ='div')
+    aapl = historical_data('aapl', start, end)
+'''
