@@ -17,7 +17,7 @@ class scraper:
     
     def __init__(self, url):
         self.url = url
-        self.page = requests.get(url, params=self.hdrs)
+        self.page = requests.get(url, headers=self.hdrs)
 
     def __table__(self):
         tree = html.fromstring(self.page.content)
