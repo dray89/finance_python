@@ -5,7 +5,7 @@ Created on Mon Oct 28 17:25:19 2019
 @author: rayde
 """
 
-from dates import format_date
+from finance_python.dates import format_date
 
 try:
     from scrapers import scraper
