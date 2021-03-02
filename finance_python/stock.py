@@ -5,7 +5,6 @@ Created on Thu Aug 15 21:22:48 2019
 
 """
 import numpy as np
-import pandas as pd
 
 from finance_python.scrapers import scraper
 from finance_python.statistics import statistics
@@ -50,7 +49,6 @@ class stock:
         symbol = self.symbol
         url="https://finance.yahoo.com/quote/" + symbol + "/profile?p=" + symbol
         s =  scraper(url).__profile__()
-        self.s = s
         self.sector(s)
         self.description(s)
         self.name(s)
