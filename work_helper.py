@@ -37,7 +37,7 @@ def join_process(procs):
 
 
 if __name__ == "__main__":
-    symbol_list = ["BB.TO", "OTEX.TO"]
+    symbol_list = ["HPQ.V", "HIVE.V","FD.V"]
     template = template_up
     
     manager = multiprocessing.Manager()
