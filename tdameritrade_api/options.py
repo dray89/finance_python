@@ -9,7 +9,7 @@ import requests
 
 class get_option_chain:
     
-    header_file = open("C:/Users/rayde/iCloudDrive/GitHub/finance_python/tdameritrade_api/headers.json", 'r')
+    header_file = open(os.path.abspath("headers.json"), 'r')
     hdrs = json.loads(header_file.read())
     '''
     strikeCount: the number of strikes to return above and below the at-the-money price

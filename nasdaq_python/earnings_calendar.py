@@ -1,6 +1,5 @@
 from datetime import datetime, date
-import pandas
-import concurrent.futures
+
 
 from nasdaq_python.nasdaq_main import NasdaqData
 
@@ -55,13 +54,16 @@ class Earnings_Calendar(NasdaqData):
         date_str = self.date_str(day)
         dicti = self.scraper(self.url, kwargs={'date':date_str})
         df = self.dict_to_df(dicti)
-        df['Date'] = date(year, month, int(day))
+        df['Date'] = date(self.year, self.month, int(day))
         self.calendars.append(df)
         return df
     
-    
+'''    
 if __name__ == '__main__':
+    import pandas
+    import concurrent.futures
     import calendar
+    
     year = 2020
     month = 10
 
@@ -86,3 +88,4 @@ if __name__ == '__main__':
 
     # set the dataframe's row index to the company name
     df = df.set_index('Date')
+'''

@@ -6,9 +6,10 @@ Created on Sun Dec  8 18:56:48 2019
 """
 import requests 
 import json
+import os
 
 class get_movers:
-    header_file = open("C:/Users/rayde/iCloudDrive/GitHub/finance_python/tdameritrade_api/headers.json", 'r')
+    header_file = open(os.path.abspath("headers.json"), 'r')
     hdrs = json.loads(header_file.read())
     
     def __init__(self, index, apikey=None, direction = 'up', change = 'percent'):

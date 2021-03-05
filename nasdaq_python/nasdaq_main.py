@@ -12,7 +12,7 @@ import json
 import time
 import concurrent.futures
 from nasdaq_urls import nasdaq_urls
-
+import os
 
 class NasdaqData:
     def __init__(self):
@@ -97,7 +97,7 @@ class NasdaqData:
         dictionary : Returns a JSON dictionary at a given URL.
 
         '''
-        header_file = open('headers.json', 'r')
+        header_file = open(os.path.abspath("headers.json"), 'r')
         hdrs = json.loads(header_file.read())
         page = requests.get(url, headers = hdrs, params=kwargs)
         dictionary = page.json()
