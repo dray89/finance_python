@@ -6,6 +6,7 @@ Created on Tue Nov 26 04:29:48 2019
 """
 import json 
 import requests 
+import os
 
 class get_option_chain:
     
