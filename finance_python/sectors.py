@@ -4,6 +4,7 @@ Created on Sun Sep 15 13:03:31 2019
 
 @author: rayde
 """
+
 import os, sys
 
 class sector:
@@ -87,6 +88,3 @@ class sector:
                       "utilities":"Independent Power Producers, Utilities - Regulated" }
 
         return dictionary[self.sector]
-
-
-

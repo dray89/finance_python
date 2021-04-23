@@ -128,7 +128,6 @@ class stock:
     def holders(self):
         holders = Holders()
         return holders.tables
-
     
     def balance(self):
         bs = balance_sheet(self.symbol)
