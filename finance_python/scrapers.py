@@ -13,13 +13,18 @@ import json
 import os
 
 class scraper:
-    header_file = open(os.path.abspath("headers.json"), 'r')
-    hdrs = json.loads(header_file.read())
     
     def __init__(self, url):
         self.url = url
+        self.hdrs = self.__headers()
         self.page = requests.get(url, headers=self.hdrs)
 
+    def __headers(self, path= 'finance_python\headers.json'):
+        path = os.path.abspath(path)
+        with open(path, 'r') as header_file:
+            hdrs = json.loads(header_file.read())
+        return hdrs
+    
     def __table__(self):
         tree = html.fromstring(self.page.content)
         table = tree.xpath('//table')

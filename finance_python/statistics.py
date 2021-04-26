@@ -26,7 +26,7 @@ class statistics:
         soup = BeautifulSoup(page.content, 'lxml')
         tables = soup.find_all('table')
         table_list = [pd.read_html(str(tables[x])) for x in range(len(tables))]
-        table_list = self.statistics(table_list)
+        #table_list = self.statistics(table_list)
         return table_list
 
     def statistics(self, table_list):        
@@ -43,6 +43,7 @@ class statistics:
     
     def __indexLabelValuation__(self, df):
         column_list = list(df.columns)
+        column_list = [str(x) for x in column_list]
         column_list[0] = "Measure"
         column_list[1] = column_list[1].strip('As of Date: Current')
         df.columns = column_list
