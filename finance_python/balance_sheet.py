@@ -6,7 +6,7 @@ Created on Wed Jul 17 15:41:04 2019
 """
 from pandas import DataFrame
 import numpy as np
-from finance_python.scrapers import scraper
+from scrapers import scraper
 
 class balance_sheet:
     def __init__(self, symbol):
