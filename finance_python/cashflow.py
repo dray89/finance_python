@@ -13,7 +13,6 @@ class cashflow:
     def __init__(self, symbol):
         self.symbol = symbol.upper()
         self.cashflow = self.scrape()
-        self.attributes = ['cashflow', 'cash_list']
 
     def scrape(self):
         url = 'https://finance.yahoo.com/quote/' + self.symbol + '/cash-flow?p=' + self.symbol
